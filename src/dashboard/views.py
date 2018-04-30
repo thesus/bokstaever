@@ -12,8 +12,7 @@ class ImageView(View):
     template_name = 'dashboard/image/upload.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
@@ -21,4 +20,4 @@ class ImageView(View):
             save_image(form.cleaned_data['image'], 'aaa')
             return JsonResponse({'message': 'Successful'})
 
-        return render(request, self.template_name, {'form': form})
+        return JsonResponse({'message': form.errors})
