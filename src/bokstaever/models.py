@@ -7,7 +7,7 @@ class Image(models.Model):
     )
 
     def __str__(self):
-        return '{}.title'.format(self)
+        return '{0.title}'.format(self)
 
 
 class File(models.Model):
@@ -15,10 +15,17 @@ class File(models.Model):
         Image,
         on_delete=models.CASCADE
     )
-    path = models.ImageField(upload_to='upload')
+
+    height = models.PositiveIntegerField()
+    width = models.PositiveIntegerField()
+
+    path = models.ImageField(
+        upload_to='upload',
+        height_field='height',
+        width_field='width'
+    )
 
     def __str__(self):
-        return '{0}.title - {1}.height_field x {0}.width_field'.format(
-            self.image,
-            self.path
+        return '{0.image.title} - {0.height} x {0.width}'.format(
+            self
         )
