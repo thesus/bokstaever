@@ -1,0 +1,51 @@
+{% extends 'bokstaever/base.html' %}
+{% load static %}
+
+{% block content %}
+<form enctype="multipart/form-data" id="imageUpload" v-on:submit.prevent="uploadImage">
+    {% csrf_token %}
+    <input
+        type="file"
+        multiple
+        ref="upload"
+        accept="image/*"
+    >
+    <button type="submit">Submit</button>
+    <progress v-show="showProgress" :value="progress" max="100"></progress>
+</form>
+
+<script src="{% static 'js/axios.min.js' %}"></script>
+<script>
+    new Vue({
+        el: '#imageUpload',
+        refs: ['upload'],
+        data: {
+            'progress': 0
+        },
+        computed: {
+            showProgress () {
+                return this.progress > 0 && this.progress < 100
+            }
+        },
+        methods: {
+            uploadImage () {
+                let csrf_token = this.$el.firstChild.value
+                let image = this.$refs.upload.files[0]
+                let formData = new FormData()
+                formData.append('image', image)
+                axios({
+                    method: 'post',
+                    url: '/dashboard/images/upload/',
+                    data: formData,
+                    headers: {
+                        'X-CSRFToken': csrf_token,
+                    },
+                    onUploadProgress: (progressEvent) => {
+                        this.progress = (progressEvent.loaded / progressEvent.total) * 100
+                    }
+                })
+            }
+        }
+    })
+</script>
+{% endblock content %}
