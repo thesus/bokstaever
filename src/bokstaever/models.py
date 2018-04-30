@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.contrib.auth.models import User
+
+
 class Image(models.Model):
     title = models.CharField(
         max_length=200,
@@ -29,3 +32,21 @@ class File(models.Model):
         return '{0.image.title} - {0.height} x {0.width}'.format(
             self
         )
+
+
+class Post(models.Model):
+    headline = models.CharField(max_length=200)
+
+    image = models.ForeignKey(
+        Image,
+        on_delete=models.CASCADE
+    )
+
+    text = models.TextField()
+
+    published = models.DateField()
+    draft = models.BooleanField(default=False)
+
+    editors = models.ManyToManyField(User)
+
+    url_slug = models.CharField(max_length=200)
