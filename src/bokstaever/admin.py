@@ -3,7 +3,7 @@ from django.contrib import admin
 from bokstaever.models import (
     Image,
     File,
-    Post
+    Post,
 )
 
 admin.site.register(Image)

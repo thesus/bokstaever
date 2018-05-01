@@ -50,3 +50,21 @@ class Post(models.Model):
     editors = models.ManyToManyField(User)
 
     url_slug = models.CharField(max_length=200)
+
+
+class Settings(models.Model):
+    name = models.CharField(max_length=200)
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.__class__.objects.exclude(id=self.id).delete()
+        super(Settings, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        try:
+            return cls.object.get()
+        except cls.DoesNotExist:
+            return cls()

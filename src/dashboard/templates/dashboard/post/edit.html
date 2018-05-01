@@ -1,0 +1,51 @@
+{% extends 'bokstaever/base.html' %}
+{% load static %}
+
+{% block content %}
+<form id="editPost" v-on:submit.prevent="submitPost">
+    {% csrf_token %}
+    <input v-model="post.headline">
+    <textarea v-model="post.text"></textarea>
+    <button type="submit">Submit</button>
+</form>
+
+<script src="{% static 'js/axios.min.js' %}"></script>
+<script>
+    new Vue({
+        el: '#editPost',
+        data: {
+            'post': {},
+            csrf: null
+        },
+        mounted() {
+            this.$set(this, 'csrf', this.$el.firstChild.value)
+
+            this.getPost()
+        },
+        methods: {
+            getPost () {
+                axios({
+                    method: 'get',
+                    url: '{{ request.get_full_path }}',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then((response) => {
+                    let fields = response.data[0].fields
+                    this.post = fields
+                })
+            },
+            submitPost () {
+                axios({
+                    method: 'post',
+                    url: '{{ request.get_full_path }}',
+                    data: this.post,
+                    headers: {
+                        'X-CSRFToken': this.csrf
+                    }
+                })
+            }
+        }
+    })
+</script>
+{% endblock content %}
