@@ -13,6 +13,8 @@ from dashboard.images import save_image
 
 from bokstaever.models import Post
 
+import json
+
 class ImageView(View):
     form_class = ImageForm
     template_name = 'dashboard/image/upload.html'
@@ -23,8 +25,10 @@ class ImageView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
-            # RQ-worker :)
-            save_image(form.cleaned_data['image'], 'aaaeiuae')
+            save_image(
+                form.cleaned_data['image'],
+                form.cleaned_data['title']
+            )
             return JsonResponse({'message': 'Successful'})
 
         return JsonResponse({'message': form.errors})
@@ -50,9 +54,15 @@ class PostView(View):
             return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        print(request.readlines())
-        instance = Post.objects.get(pk=kwargs['id'])
-        form = self.form_class(request.POST, instance=instance)
-        print(form.errors)
+        data = json.loads(
+            request.body.decode('utf-8')
+        )
+        if 'id' in kwargs:
+            instance = Post.objects.get(pk=kwargs['id'])
+        else:
+            instance = Post()
+
+        form = self.form_class(data, instance=instance).save()
+        form.editors.add(request.user)
         form.save()
         return JsonResponse({})

@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.utils.text import slugify
+
 from django.contrib.auth.models import User
 
 
@@ -39,17 +41,24 @@ class Post(models.Model):
 
     image = models.ForeignKey(
         Image,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
     )
 
     text = models.TextField()
 
-    published = models.DateField()
+    published = models.DateField(auto_now_add=True)
     draft = models.BooleanField(default=False)
 
     editors = models.ManyToManyField(User)
 
     url_slug = models.CharField(max_length=200)
+
+    def save(self, *args, **kwargs):
+        if not self.url_slug:
+            self.url_slug = slugify(self.headline)
+        super().save(*args, **kwargs)
 
 
 class Settings(models.Model):

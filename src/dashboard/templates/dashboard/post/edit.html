@@ -31,8 +31,8 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     }
                 }).then((response) => {
-                    let fields = response.data[0].fields
-                    this.post = fields
+                    let data = response.data
+                    this.post = data[0] ? data[0].fields : {}
                 })
             },
             submitPost () {
@@ -41,7 +41,7 @@
                     url: '{{ request.get_full_path }}',
                     data: this.post,
                     headers: {
-                        'X-CSRFToken': this.csrf
+                        'X-CSRFToken': this.csrf,
                     }
                 })
             }
