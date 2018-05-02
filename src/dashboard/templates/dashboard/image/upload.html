@@ -42,6 +42,8 @@
                     data: formData,
                     headers: {
                         'X-CSRFToken': csrf_token,
+                        'Content-Type': 'multipart/form-data',
+
                     },
                     onUploadProgress: (progressEvent) => {
                         this.progress = (progressEvent.loaded / progressEvent.total) * 100

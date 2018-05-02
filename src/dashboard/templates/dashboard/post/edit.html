@@ -42,6 +42,7 @@
                     data: this.post,
                     headers: {
                         'X-CSRFToken': this.csrf,
+                        'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
             }
