@@ -4,6 +4,7 @@ from django.utils.text import slugify
 
 from django.contrib.auth.models import User
 
+from django.urls import reverse
 
 class Image(models.Model):
     title = models.CharField(
@@ -60,6 +61,8 @@ class Post(models.Model):
             self.url_slug = slugify(self.headline)
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('dashboard:post-edit', kwargs={'pk': self.pk})
 
 class Settings(models.Model):
     name = models.CharField(max_length=200)

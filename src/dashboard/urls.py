@@ -1,12 +1,15 @@
 from django.urls import path
 
 from dashboard.views import (
-    ImageView,
-    PostView
+    ImageCreate,
+    PostCreate,
+    PostUpdate
 )
 
+app_name = 'dashboard'
+
 urlpatterns = [
-    path('images/upload/', ImageView.as_view()),
-    path('post/edit/', PostView.as_view()),
-    path('post/edit/<int:id>', PostView.as_view())
+    path('images/upload/', ImageCreate.as_view(), name='image-create'),
+    path('post/edit/', PostCreate.as_view(), name='post-create'),
+    path('post/edit/<int:pk>', PostUpdate.as_view(), name='post-edit')
 ]
