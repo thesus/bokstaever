@@ -1,5 +1,4 @@
 {% extends 'bokstaever/base.html' %}
-{% load static %}
 
 {% block content %}
 <form enctype="multipart/form-data" id="imageUpload" v-on:submit.prevent="uploadImage">
@@ -9,13 +8,11 @@
         type="file"
         multiple
         ref="upload"
-        accept="image/*"
-    >
+        accept="image/*">
     <button type="submit">Submit</button>
     <progress v-show="showProgress" :value="progress" max="100"></progress>
 </form>
 
-<script src="{% static 'js/axios.min.js' %}"></script>
 <script>
     new Vue({
         el: '#imageUpload',

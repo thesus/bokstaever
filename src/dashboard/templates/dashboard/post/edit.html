@@ -1,5 +1,4 @@
-{% extends 'bokstaever/base.html' %}
-{% load static %}
+{% extends 'dashboard/base.html' %}
 
 {% block content %}
 <form id="editPost" v-on:submit.prevent="submitPost">
@@ -9,7 +8,6 @@
     <button type="submit">Submit</button>
 </form>
 
-<script src="{% static 'js/axios.min.js' %}"></script>
 <script>
     new Vue({
         el: '#editPost',
