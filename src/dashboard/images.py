@@ -44,3 +44,5 @@ def save_image(image, title):
                 '{0}_{1}.png'.format(instance.title, size),
                 ContentFile(f.getvalue())
             )
+
+    return instance.pk
