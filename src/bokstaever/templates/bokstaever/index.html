@@ -1,0 +1,9 @@
+{% extends 'bokstaever/base.html' %}
+
+{% block content %}
+
+{% for post in object_list %}
+<p>  {{ post.headline }}</p>
+{% endfor %}
+
+{% endblock content %}
