@@ -16,7 +16,7 @@ from dashboard.forms import (
 class ImageViewMixin:
     form_class = ImageForm
     template_name = 'dashboard/image/upload.html'
-    success_url = '/dashboard/images/upload/'
+    success_url = reverse_lazy('dashboard:image-create')
 
     def form_valid(self, form):
         form.create_images()
