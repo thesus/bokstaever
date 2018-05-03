@@ -2,3 +2,4 @@
 __pycache__
 *.pyc
 /src/upload
+/src/bokstaever/static/css/style.css*
