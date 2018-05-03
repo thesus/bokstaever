@@ -6,4 +6,4 @@ class PostListView(ListView):
     model = Post
 
     template_name = 'bokstaever/index.html'
-    paginate_by = 20
+    paginate_by = 9

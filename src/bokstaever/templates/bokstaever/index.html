@@ -1,4 +1,5 @@
 {% extends 'bokstaever/base.html' %}
+{% load random_color %}
 
 {% block content %}
     <div class="overview">
@@ -7,17 +8,17 @@
             <div class="image">
                 <svg viewBox="0 0 50 100" preserveAspectRatio="xMinYMax slice">
                     <defs>
-                        <pattern id="img{{ post.image.pk }}" patternUnits="userSpaceOnUse" width="100" height="100">
-                            <image xlink:href="{{ post.image.files.first.path.url }}" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice" />
+                        <pattern id="img{{ post.image.pk }}" patternUnits="userSpaceOnUse" width="100" height="50">
+                            <image xlink:href="{{ post.image.files.first.path.url }}" x="0" y="0" width="100%" height="50%" preserveAspectRatio="xMidYMid slice" />
                         </pattern>
                     </defs>
                     <polygon points="0,0 50,0 50,99.75 0,94.75" fill="url(#img{{ post.image.pk }})" />
-                    <line x1="-0.5" x2="50.5" y1="94.75" y2="99.75" stroke="red" stroke-width="0.5" stroke-linecap="butt"/>
+                    <line x1="-0.5" x2="50.5" y1="94.75" y2="99.75" stroke="{% random_color %}" stroke-width="0.5" stroke-linecap="butt"/>
                 </svg>
             </div>
             <div class="post-content">
-                  <h3>{{ post.headline }}</h3>
-                  <p>{{ post.text }}</p>
+                  <h2>{{ post.headline }}</h2>
+                  <p>{{ post.text | truncatewords:60 }}</p>
             </div>
         </div>
     {% endfor %}
