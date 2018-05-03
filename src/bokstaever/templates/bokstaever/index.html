@@ -3,7 +3,52 @@
 {% block content %}
 
 {% for post in object_list %}
-<p>  {{ post.headline }}</p>
+<div class="post">
+  <div class="image">
+    <svg viewBox="0 0 50 100" preserveAspectRatio="xMinYMax slice">
+      <defs>
+        <pattern id="img{{ post.image.pk }}" patternUnits="userSpaceOnUse" width="100" height="100">
+          <image xlink:href="{{ post.image.files.first.path.url }}" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMinYMin slice" />
+        </pattern>
+      </defs>
+      <polygon points="0,0 50,0 50,100 0,95" fill="url(#img{{ post.image.pk }})" />
+    </svg>
+  </div>
+  <div class="post-content">
+  <span>Some content</span>
+</div>
+    <h3>{{ post.headline }}</h3>
+    <p>{{ post.text }}</p>
+  </div>
+</div>
 {% endfor %}
 
+<style>
+.image svg {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+}
+.image {
+  height: 200px;
+  position: relative;
+}
+
+.post {
+  width: 30%;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.post-content {
+    background-color: white;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+}
+body {
+  background-color: tomato;
+}
+</style>
 {% endblock content %}
