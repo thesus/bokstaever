@@ -40,6 +40,10 @@
   .footer {
     float: right;
   }
+
+  @media screen and (max-width: 1000px) {
+      border: none !important;
+  }
 }
 
 .post-content {
@@ -54,10 +58,23 @@
 body {
   background-color: white;
   font-family: 'Open Sans';
+  @media screen and (max-width: 1000px) {
+    margin: 0;
+  }
 }
 
 .overview {
     column-count: 3;
+    @media screen and (min-width: 1800px) {
+        column-count: 3;
+    }
+    @media screen and (min-width: 1200px) and (max-width: 1799px){
+        column-count: 2;
+    }
+    @media screen and (max-width: 1000px) {
+        width: 100%;
+    }
+    column-count: 1;
     column-gap: 10px;
     width: 70%;
     margin: 0 auto;
