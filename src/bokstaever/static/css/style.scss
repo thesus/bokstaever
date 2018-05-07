@@ -8,13 +8,14 @@
 .image {
   height: 380px;
   position: relative;
+  width: 100%;
   svg {
-      position: relative;
+      position: absolute;
       top: 0;
-      left: 0;
-      width: 100%;
+      left: -2px;
+      width: calc(100% + 4px);
       height: 380px;
-      background-color: white;
+      background-color: transparent;
   }
 }
 
@@ -31,17 +32,27 @@
   break-inside: avoid-column;
   display: table;
   margin-bottom: 10px;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 0 0 10px 10px;
+  border-top: none;
+  color: #212529;
+
+  .footer {
+    float: right;
+  }
 }
 
 .post-content {
     background-color: white;
-    width: calc(100% - 20px);
+    width: calc(100%);
     border-radius: 0 0 10px 10px;
     padding: 10px;
+    border-top: none;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: #405670;
+  background-color: white;
   font-family: 'Open Sans';
 }
 
