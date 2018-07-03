@@ -1,4 +1,7 @@
 from django.urls import reverse_lazy
+
+from django.views.generic import TemplateView
+
 from django.views.generic.edit import (
     CreateView,
     UpdateView,
@@ -13,6 +16,10 @@ from dashboard.forms import (
 )
 
 
+class DashboardIndex(TemplateView):
+    template_name = 'dashboard/index.html'
+
+
 class ImageViewMixin:
     form_class = ImageForm
     template_name = 'dashboard/image/upload.html'
@@ -21,6 +28,7 @@ class ImageViewMixin:
     def form_valid(self, form):
         form.create_images()
         return super().form_valid(form)
+
 
 class ImageCreate(ImageViewMixin,
                   AjaxResponseMixin,
@@ -39,10 +47,12 @@ class PostViewMixin:
         self.object.save()
         return super().form_valid(form)
 
+
 class PostCreate(PostViewMixin,
                  AjaxResponseMixin,
                  CreateView):
     pass
+
 
 class PostUpdate(PostViewMixin,
                  AjaxResponseMixin,
