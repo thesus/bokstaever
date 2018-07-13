@@ -6,6 +6,19 @@
     <script src="{% static 'js/axios.min.js' %}"></script>
 {% endblock javascript %}
 
-{% block content %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock stylesheets %}
 
-{% endblock content %}
+{% block base %}
+    <ul class="navigation">
+        <li><a href="">Home</a></li>
+        <li><a href="">Dashboard</a></li>
+        <li><a href="">New Entry</a></li>
+        <li><a href="">New Picture</a></li>
+        <li><a href="">Posts</a></li>
+    </ul>
+    {% block content %}
+
+    {% endblock content %}
+{% endblock base %}
