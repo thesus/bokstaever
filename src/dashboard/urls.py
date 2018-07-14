@@ -4,7 +4,8 @@ from dashboard.views import (
     DashboardIndex,
     ImageCreate,
     PostCreate,
-    PostUpdate
+    PostUpdate,
+    PostList
 )
 
 app_name = 'dashboard'
@@ -13,5 +14,6 @@ urlpatterns = [
     path('', DashboardIndex.as_view(), name='dashboard-index'),
     path('images/upload/', ImageCreate.as_view(), name='image-create'),
     path('post/edit/', PostCreate.as_view(), name='post-create'),
-    path('post/edit/<int:pk>', PostUpdate.as_view(), name='post-edit')
+    path('post/edit/<int:pk>', PostUpdate.as_view(), name='post-edit'),
+    path('post/list/<int:page>', PostList.as_view(), name='post-list')
 ]

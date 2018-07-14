@@ -1,0 +1,35 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<ul id="postList">
+    <li v-for="item in posts">
+        {{ item }}
+    </li>
+</ul>
+<script>
+    new Vue({
+        el: '#postList',
+        data: {
+            'posts': {},
+        },
+        mounted() {
+            this.getPosts()
+        },
+        methods: {
+            getPosts () {
+                axios({
+                    method: 'get',
+                    url: '{{ request.get_full_path }}',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then((response) => {
+                    let data = response.data
+                    console.log(data)
+                    this.post = data[0] ? data[0].fields : {}
+                })
+            }
+        }
+    })
+</script>
+{% endblock content %}

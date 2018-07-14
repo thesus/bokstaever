@@ -1,6 +1,9 @@
 from django.urls import reverse_lazy
 
-from django.views.generic import TemplateView
+from django.views.generic import (
+    TemplateView,
+    ListView
+)
 
 from django.views.generic.edit import (
     CreateView,
@@ -10,13 +13,20 @@ from django.views.generic.edit import (
 
 from bokstaever.models import Post
 
-from dashboard.api import AjaxResponseMixin
+from dashboard.api import (
+    AjaxResponseMixin,
+    AjaxSerializeMixin,
+    AjaxSerializeListMixin
+)
+
 from dashboard.forms import (
     ImageForm,
 )
 
 
-class DashboardIndex(TemplateView):
+class DashboardIndex(AjaxSerializeMixin,
+                     ListView):
+    model = Post
     template_name = 'dashboard/index.html'
 
 
@@ -58,3 +68,12 @@ class PostUpdate(PostViewMixin,
                  AjaxResponseMixin,
                  UpdateView):
     pass
+
+
+class PostList(
+        AjaxSerializeListMixin,
+        ListView):
+    model = Post
+    template_name = 'dashboard/post/list.html'
+    paginate_by = 2
+    fields = ['headline', 'text']
