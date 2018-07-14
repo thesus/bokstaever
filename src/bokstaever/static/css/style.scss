@@ -1,0 +1,94 @@
+// Bootstrap 4.1 proposed font-stack
+$font-family-sans-serif:
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  "Roboto",
+  "Helvetica Neue", Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+
+.post {
+    &:nth-child(even) {
+      .image{
+         float: right;
+      }
+      .post-content {
+          float: left;
+      }
+    }
+    &:nth-child(odd) {
+      .post-content {
+        float: right;
+      }
+      .image {
+        float: left;
+      }
+    }
+    .post-content, .image {
+        width: calc(50% - 10px);
+        @media screen and (min-width: 581px) {
+            height: 100%;
+        }
+        @media screen and (max-width: 580px) {
+            width: 100% !important;
+        }
+    }
+    .post-content {
+        @media screen and (max-width: 990px) {
+            width: calc(65% - 10px);
+        }
+        @media screen and (max-width: 580px) {
+            margin-bottom: 15px;
+        }
+        color: #212529;
+        position: relative;
+        .post-text {
+            position: relative;
+            @media screen and (min-width: 581px) {
+                position: absolute;
+                width: 100%;
+                top: 30%;
+                transform: translateY(-30%);
+            }
+            p {
+                text-align: justify;
+            }
+
+            .footer {
+                float: right;
+            }
+        }
+    }
+    .image {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        @media screen and (max-width: 990px) {
+            width: calc(35% - 10px);
+        }
+        @media screen and (max-width: 580px) {
+            height: 300px;
+        }
+    }
+
+    display: block;
+    position: relative;
+    @media screen and (min-width: 581px) {
+        height: 300px;
+    }
+    width: 60%;
+    @media screen and (max-width: 1300px) {
+        width: 95%;
+    }
+    margin: auto auto 30px auto;
+}
+
+
+body {
+  // font-family: Georgia, serif;
+  font-family: $font-family-sans-serif;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
+}

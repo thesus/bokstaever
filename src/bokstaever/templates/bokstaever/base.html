@@ -1,12 +1,15 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<html>
-  <head>
-    <script src="{% static 'js/vue.js' %}"></script>
-  </head>
-  <body>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock stylesheets %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block base %}
     {% block content %}
 
     {% endblock content %}
-  </body>
-</html>
+{% endblock base %}

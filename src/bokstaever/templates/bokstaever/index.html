@@ -1,0 +1,22 @@
+{% extends 'bokstaever/base.html' %}
+{% load random_color %}
+{% load bokstaever %}
+
+{% block content %}
+    <div class="overview">
+    {% for post in object_list %}
+        <div class="post">
+            <span class="image" style="background-image: url({{ post.image.files.first.path.url }});" > </span>
+            <div class="post-content">
+                <div class="post-text">
+                  <h2>{{ post.headline }}</h2>
+                  <p>{{ post.text | truncatewords:60 }}</p>
+                  <div class="footer">
+                      {{ post.text | estimate_time }}, {{ post.published }} →
+                  </div>
+              </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock content %}

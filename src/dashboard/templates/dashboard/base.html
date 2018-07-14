@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block javascript %}
+    <script src="{% static 'js/vue.js' %}"></script>
+    <script src="{% static 'js/axios.min.js' %}"></script>
+{% endblock javascript %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock stylesheets %}
+
+{% block base %}
+<nav class="navbar">
+  <div class="container">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/dashboard/post/list/1">Posts</a></li>
+        <li><a href="">New Picture</a></li>
+    </ul>
+  </div>
+</nav>
+    {% block content %}
+
+    {% endblock content %}
+{% endblock base %}

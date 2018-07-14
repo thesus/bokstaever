@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 from django.urls import reverse
 
+
 class Image(models.Model):
     title = models.CharField(
         max_length=200,
@@ -19,7 +20,8 @@ class Image(models.Model):
 class File(models.Model):
     image = models.ForeignKey(
         Image,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='files'
     )
 
     height = models.PositiveIntegerField()
@@ -63,6 +65,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('dashboard:post-edit', kwargs={'pk': self.pk})
+
 
 class Settings(models.Model):
     name = models.CharField(max_length=200)
