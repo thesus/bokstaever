@@ -1,0 +1,18 @@
+.icon {
+    outline: none;
+    border: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    &.left {
+        background: transparent url("/static/svg/arrow-left.svg") 0px 0px no-repeat;
+        background-size: contain;
+    }
+
+    &.right {
+        background: transparent url("/static/svg/arrow-right.svg") 0px 0px no-repeat;
+        background-size: contain;
+    }
+
+}

@@ -75,5 +75,5 @@ class PostList(
         ListView):
     model = Post
     template_name = 'dashboard/post/list.html'
-    paginate_by = 4
+    paginate_by = 2
     fields = ['pk', 'headline', 'published', 'draft']
