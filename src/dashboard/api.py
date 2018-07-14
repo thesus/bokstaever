@@ -7,22 +7,32 @@ class AjaxSerializeListMixin:
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         if request.is_ajax():
-            print(response.context_data)
             objects = response.context_data['object_list']
+            data = {}
+            data['fields'] = []
             if objects:
-                data = serializers.serialize(
-                    'json',
-                    list(objects),
-                    fields=self.fields
+                for instance in objects:
+                    model = {}
+                    for field in self.fields:
+                        model[field] = getattr(instance, field)
+                    data['fields'].append(model)
+                data['pagination'] = self.pagination_infos(
+                    response.context_data['page_obj'],
+                    response.context_data['paginator']
                 )
-                print(dir(objects))
-                print(data)
-                print(dir(response.context_data['page_obj']))
-                return HttpResponse(data, content_type='application/json')
+                return JsonResponse(data, content_type='application/json')
             else:
                 return JsonResponse({})
         else:
             return response
+
+    def pagination_infos(self, page_obj, paginator):
+        data = {}
+        data['previous_page'] = page_obj.previous_page_number() if page_obj.has_previous() else None
+        data['next_page'] = page_obj.next_page_number() if page_obj.has_next() else None
+        data['current'] = page_obj.number
+        data['count'] = paginator.num_pages
+        return data
 
 class AjaxSerializeMixin:
     def get(self, request, *args, **kwargs):

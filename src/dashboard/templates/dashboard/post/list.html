@@ -1,17 +1,33 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<ul id="postList">
-    <li v-for="item in posts">
-        {{ item }}
-    </li>
-</ul>
+<div id="postList">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Headline</th>
+                <th>Draft</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="post in posts" @click="editPost(post.pk)" class="posts">
+                <td>{( post.pk )}</td>
+                <td>{( post.published )}</td>
+                <td>{( post.headline )}</td>
+                <td>{( post.draft )}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <script>
     new Vue({
         el: '#postList',
         data: {
-            'posts': {},
+            'posts': [],
         },
+        delimiters: ['{(', ')}'],
         mounted() {
             this.getPosts()
         },
@@ -25,9 +41,11 @@
                     }
                 }).then((response) => {
                     let data = response.data
-                    console.log(data)
-                    this.post = data[0] ? data[0].fields : {}
+                    this.$set(this, 'posts', data.fields ? data.fields : {})
                 })
+            },
+            editPost (pk) {
+                window.location.href = '/dashboard/post/edit/' + pk
             }
         }
     })
