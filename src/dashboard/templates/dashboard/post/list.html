@@ -37,6 +37,11 @@
         mounted() {
             this.getPosts()
         },
+        created() {
+             window.onpopstate = (e) => {
+                this.getPosts()
+            }
+        },
         methods: {
             getPosts () {
                 axios({
@@ -55,7 +60,7 @@
                 window.location.href = '/dashboard/post/edit/' + pk
             },
             changePage (page) {
-                window.history.pushState({}, '', '/dashboard/post/list/' + page)
+                history.pushState({}, '', '/dashboard/post/list/' + page)
                 this.getPosts()
             }
         }

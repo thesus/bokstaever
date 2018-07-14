@@ -71,29 +71,26 @@ table {
     }
 }
 
-button {
-    padding: 0;
-    outline: none;
-    border-style: none;
-    cursor: pointer;
-    opacity: 0.7;
-    &:focus, &:active, &:hover, &:visited {
-        border-style: none !important;
-        border: 0 !important;
-        outline: none !important;
-    }
-    &:hover {
-        opacity: 0.9;
-    }
-    &:disabled {
-        opacity: 0.4;
-    }
-}
-
 .pagination {
     margin: 20px auto auto auto;
     width: 45px;
     button {
         margin: 1px;
+        padding: 0;
+        outline: none;
+        border-style: none;
+        cursor: pointer;
+        opacity: 0.7;
+        &:focus, &:active, &:hover, &:visited {
+            border-style: none !important;
+            border: 0 !important;
+            outline: none !important;
+        }
+        &:hover {
+            opacity: 0.9;
+        }
+        &:disabled {
+            opacity: 0.4;
+        }
     }
 }
