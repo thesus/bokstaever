@@ -34,6 +34,7 @@ class AjaxSerializeListMixin:
         data['count'] = paginator.num_pages
         return data
 
+
 class AjaxSerializeMixin:
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)

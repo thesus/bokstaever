@@ -1,16 +1,27 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<form enctype="multipart/form-data" id="imageUpload" v-on:submit.prevent="uploadImage">
+<form enctype="multipart/form-data" id="imageUpload" v-on:submit.prevent="uploadAll">
     {% csrf_token %}
-    <input v-model="title">
-    <input
-        type="file"
-        multiple
-        ref="upload"
-        accept="image/*">
-    <button type="submit">Submit</button>
-    <progress v-show="showProgress" :value="progress" max="100"></progress>
+    <table class="table">
+        <tr>
+            <td>Image</td>
+            <td>
+                <input
+                    type="file"
+                    multiple
+                    ref="upload"
+                    accept="image/*"
+                    @change="imageSelect">
+            </td>
+        </tr>
+    </table>
+    <div v-for="image in images" v-if="images">
+        <img class="image-preview" :src="image.url">
+        <input type="text" v-model="image.title">
+        <progress :value="image.progress" max="100" v-show="showProgress(image)"></progress>
+    </div>
+    <button class="btn btn-default btn-right" type="submit">Submit</button>
 </form>
 
 <script>
@@ -19,20 +30,37 @@
         refs: ['upload'],
         data: {
             'progress': 0,
-            'title': null
-        },
-        computed: {
-            showProgress () {
-                return this.progress > 0 && this.progress < 100
-            }
+            'images': []
         },
         methods: {
-            uploadImage () {
+            showProgress: function (image) {
+                return image.progress > 0 && image.progress < 100
+            },
+            imageSelect (event) {
+                this.images = []
+                let images = this.$refs.upload.files
+                for (i = 0; i < images.length; i++) {
+                    let name = images[i].name
+                    let title = name.substring(0, name.lastIndexOf('.'))
+
+                    this.images.push({
+                        'title': title,
+                        'file': images[i],
+                        'url': URL.createObjectURL(images[i]),
+                        'progress': 0
+                    })
+                }
+            },
+            uploadAll() {
+                for (i = 0; i < this.images.length; i++) {
+                    this.uploadImage(this.images[i])
+                }
+            },
+            uploadImage (image) {
                 let csrf_token = this.$el.firstChild.value
-                let image = this.$refs.upload.files[0]
                 let formData = new FormData()
-                formData.append('image', image)
-                formData.append('title', this.title)
+                formData.append('image', image.file)
+                formData.append('title', image.title)
                 axios({
                     method: 'post',
                     url: '/dashboard/images/upload/',
@@ -40,10 +68,9 @@
                     headers: {
                         'X-CSRFToken': csrf_token,
                         'Content-Type': 'multipart/form-data',
-
                     },
                     onUploadProgress: (progressEvent) => {
-                        this.progress = (progressEvent.loaded / progressEvent.total) * 100
+                        image.progress = (progressEvent.loaded / progressEvent.total) * 100
                     }
                 })
             }

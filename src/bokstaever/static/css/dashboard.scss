@@ -131,10 +131,17 @@ textarea {
     font-family: $font-family-sans-serif;
 }
 
-input {
+input[type=text] {
     border-radius: 0;
     border: 1px solid #ccc;
     height: 30px;
     width: 100%;
     padding: 15px;
+}
+
+img {
+    &.image-preview {
+        height: 120px;
+        width: 120px;
+    }
 }
