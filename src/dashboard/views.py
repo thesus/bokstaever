@@ -51,7 +51,7 @@ class ImageCreate(ImageViewMixin,
 
 class PostViewMixin:
     model = Post
-    fields = ['headline', 'text']
+    fields = ['headline', 'text', 'image']
     template_name = 'dashboard/post/edit.html'
 
     def form_valid(self, form):
