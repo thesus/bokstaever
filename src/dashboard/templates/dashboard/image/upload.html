@@ -19,10 +19,14 @@
     <div class="preview-container">
         <div class="preview" v-for="image in images" v-if="images">
             <div class="image-preview">
-                <img :src="image.url">
+                <img :src="image.url" :class="{uploading: showProgress(image)}">
+                <div
+                    class="progress"
+                    v-show="showProgress(image)"
+                    v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
+                </div>
             </div>
-            <input type="text" v-model="image.title">
-            <progress :value="image.progress" max="100" v-show="showProgress(image)"></progress>
+            <input type="text" v-model="image.title" :disabled="showProgress(image)">
         </div>
     </div>
     <button class="btn btn-default btn-right" type="submit">Submit</button>
@@ -61,6 +65,7 @@
                 }
             },
             uploadImage (image) {
+                image.progress = 0.1
                 let csrf_token = this.$el.firstChild.value
                 let formData = new FormData()
                 formData.append('image', image.file)

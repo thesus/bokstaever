@@ -160,7 +160,21 @@ $preview-size: 200px;
             width: $preview-size;
             height: $preview-size;
             margin-bottom: 2px;
+            position: relative;
+            img {
+                &.uploading {
+                    filter: brightness(0.6) blur(0.8px);
+                }
+            }
+            .progress {
+                position: absolute;
+                width: 2px;
+                height: 0%;
+                background-color: #ccc;
+                bottom: 5px;
+                right: 5px;
+                border-radius: 2px;
+            }
         }
     }
 }
-
