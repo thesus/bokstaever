@@ -16,10 +16,14 @@
             </td>
         </tr>
     </table>
-    <div v-for="image in images" v-if="images">
-        <img class="image-preview" :src="image.url">
-        <input type="text" v-model="image.title">
-        <progress :value="image.progress" max="100" v-show="showProgress(image)"></progress>
+    <div class="preview-container">
+        <div class="preview" v-for="image in images" v-if="images">
+            <div class="image-preview">
+                <img :src="image.url">
+            </div>
+            <input type="text" v-model="image.title">
+            <progress :value="image.progress" max="100" v-show="showProgress(image)"></progress>
+        </div>
     </div>
     <button class="btn btn-default btn-right" type="submit">Submit</button>
 </form>

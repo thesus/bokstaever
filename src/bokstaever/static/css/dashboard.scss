@@ -140,8 +140,27 @@ input[type=text] {
 }
 
 img {
-    &.image-preview {
-        height: 120px;
-        width: 120px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+$preview-size: 200px;
+
+.preview-container {
+    display: flex;
+    width: calc(100vw - 16px);
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: space-between;
+    .preview {
+        width: $preview-size;
+        margin: 5px;
+        .image-preview {
+            width: $preview-size;
+            height: $preview-size;
+            margin-bottom: 2px;
+        }
     }
 }
+
