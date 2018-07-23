@@ -3,9 +3,17 @@
 {% block content %}
 <form id="editPost" v-on:submit.prevent="submitPost">
     {% csrf_token %}
-    <input v-model="post.headline">
-    <textarea v-model="post.text"></textarea>
-    <button type="submit">Submit</button>
+    <table class="table">
+        <tr>
+            <td>Title</td>
+            <td><input v-model="post.headline"></td>
+       </tr>
+       <tr>
+           <td>Content</td>
+           <td><textarea v-model="post.text"></textarea></td>
+       </tr>
+    </table>
+    <button class="btn btn-default btn-right" type="submit">Submit</button>
 </form>
 
 <script>
