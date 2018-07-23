@@ -13,6 +13,9 @@ class Image(models.Model):
         unique=True
     )
 
+    def path(self):
+        return '{0}'.format(self.files.first().path.url)
+
     def __str__(self):
         return '{0.title}'.format(self)
 

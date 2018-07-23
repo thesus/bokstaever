@@ -14,7 +14,11 @@ class AjaxSerializeListMixin:
                 for instance in objects:
                     model = {}
                     for field in self.fields:
-                        model[field] = getattr(instance, field)
+                        value = getattr(instance, field)
+                        if callable(value):
+                            model[field] = value()
+                        else:
+                            model[field] = value
                     data['fields'].append(model)
                 data['pagination'] = self.pagination_infos(
                     response.context_data['page_obj'],

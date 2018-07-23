@@ -1,50 +1,37 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<div id="postList">
-    <table class="table table-list">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Headline</th>
-                <th>Draft</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="post in posts" @click="editPost(post.pk)" class="posts">
-                <td>{( post.pk )}</td>
-                <td>{( post.published )}</td>
-                <td>{( post.headline )}</td>
-                <td>{( post.draft )}</td>
-            </tr>
-        </tbody>
-    </table>
+<div id="imageList">
+    <div class="image-list">
+        <div v-for="image in images" class="thumbnail">
+            <img :src="image.path">
+        </div>
+    </div>
 
     <div class="pagination">
         <button :disabled="!pagination.previous_page" @click="changePage(pagination.previous_page)" class="icon left">
         <button :disabled="!pagination.next_page" @click="changePage(pagination.next_page)" class="icon right">
     </div>
-    <a class="btn btn-default btn-right" href="/dashboard/post/edit/">New Post</a>
+    <a class="btn btn-default btn-right" href="/dashboard/images/upload/">New Image</a>
 </div>
 <script>
     new Vue({
-        el: '#postList',
+        el: '#imageList',
         data: {
-            'posts': [],
+            'images': [],
             'pagination': {}
         },
         delimiters: ['{(', ')}'],
         mounted() {
-            this.getPosts()
+            this.getImages()
         },
         created() {
              window.onpopstate = (e) => {
-                this.getPosts()
+                this.getImages()
             }
         },
         methods: {
-            getPosts () {
+            getImages () {
                 axios({
                     method: 'get',
                     url: window.location.href,
@@ -53,16 +40,13 @@
                     }
                 }).then((response) => {
                     let data = response.data
-                    this.$set(this, 'posts', data.fields ? data.fields : {})
+                    this.$set(this, 'images', data.fields ? data.fields : {})
                     this.$set(this, 'pagination', data.pagination ? data.pagination : {})
                 })
             },
-            editPost (pk) {
-                window.location.href = '/dashboard/post/edit/' + pk
-            },
             changePage (page) {
-                history.pushState({}, '', '/dashboard/post/list/' + page)
-                this.getPosts()
+                history.pushState({}, '', '/dashboard/images/list/' + page)
+                this.getImages()
             }
         }
     })

@@ -187,3 +187,16 @@ $preview-size: 200px;
         }
     }
 }
+
+.image-list {
+    display: flex;
+    width: calc(100vw - 16px);
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: space-between;
+    .thumbnail {
+        width: $preview-size;
+        height: $preview-size;
+        margin: 5px;
+    }
+}
