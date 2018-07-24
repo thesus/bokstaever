@@ -1,54 +1,17 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<div id="imageList">
-    <div class="image-list">
-        <div v-for="image in images" class="thumbnail">
-            <img :src="image.path">
-        </div>
-    </div>
 
-    <div class="pagination">
-        <button :disabled="!pagination.previous_page" @click="changePage(pagination.previous_page)" class="icon left">
-        <button :disabled="!pagination.next_page" @click="changePage(pagination.next_page)" class="icon right">
-    </div>
-    <a class="btn btn-default btn-right" href="/dashboard/images/upload/">New Image</a>
+{% include 'dashboard/vue/image.html' %}
+
+<div id="imageList">
+    <image-list :history="true" />
 </div>
+
+<a class="btn btn-default btn-right" href="/dashboard/images/upload/">New Image</a>
 <script>
     new Vue({
         el: '#imageList',
-        data: {
-            'images': [],
-            'pagination': {}
-        },
-        delimiters: ['{(', ')}'],
-        mounted() {
-            this.getImages()
-        },
-        created() {
-             window.onpopstate = (e) => {
-                this.getImages()
-            }
-        },
-        methods: {
-            getImages () {
-                axios({
-                    method: 'get',
-                    url: window.location.href,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                }).then((response) => {
-                    let data = response.data
-                    this.$set(this, 'images', data.fields ? data.fields : {})
-                    this.$set(this, 'pagination', data.pagination ? data.pagination : {})
-                })
-            },
-            changePage (page) {
-                history.pushState({}, '', '/dashboard/images/list/' + page)
-                this.getImages()
-            }
-        }
     })
 </script>
 {% endblock content %}

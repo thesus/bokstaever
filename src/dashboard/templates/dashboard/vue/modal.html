@@ -1,0 +1,20 @@
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-content">
+                        <slot></slot>
+                    </div>
+                    <button class="btn btn-default btn-modal" @click="$emit('close')">Close</button>
+                </div>
+            </div>
+        </div>
+    </transition>
+</script>
+
+<script>
+    Vue.component('modal', {
+        template: '#modal-template'
+    })
+</script>

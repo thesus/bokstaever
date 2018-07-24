@@ -2,57 +2,8 @@
 
 {% block content %}
 
-<script type="text/x-template" id="modal-template">
-    <transition name="modal">
-        <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container">
-                    <div class="modal-content">
-                        <slot></slot>
-                    </div>
-                    <button class="btn btn-default btn-modal" @click="$emit('close')">Close</button>
-                </div>
-            </div>
-        </div>
-    </transition>
-</script>
-
-<script type="text/x-template" id="image-template">
-   <div class="image-list">
-        <div v-for="image in images" class="thumbnail">
-            <img :src="image.path" @click="$emit('selected', image)">
-        </div>
-    </div>
-</script>
-<script>
-    Vue.component('image-list', {
-        template: '#image-template',
-        delimiters: ['{(', ')}'],
-        mounted () {
-            this.getImages()
-        },
-        data () {
-            return {
-                images: []
-            }
-        },
-        methods: {
-            getImages () {
-                axios({
-                    method: 'get',
-                    url: '/dashboard/images/list/1',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                }).then((response) => {
-                    let data = response.data
-                    this.$set(this, 'images', data.fields ? data.fields : [])
-                })
-            }
-        }
-    })
-</script>
-
+{% include 'dashboard/vue/modal.html' %}
+{% include 'dashboard/vue/image.html' %}
 
 <div id="editPost">
 <form v-on:submit.prevent="submitPost">
@@ -75,13 +26,10 @@
 </form>
     <button type="iuae" @click="showModal = true">Select Image</button>
     <modal v-if="showModal" @close="showModal = false">
-        <image-list @selected="selectImage" />
+        <image-list @selected="selectImage"/>
     </modal>
 </div>
 <script>
-    Vue.component('modal', {
-        template: '#modal-template'
-    })
     new Vue({
         el: '#editPost',
         data: {
