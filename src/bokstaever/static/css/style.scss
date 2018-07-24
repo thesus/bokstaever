@@ -54,7 +54,7 @@ $font-family-sans-serif:
                 text-align: justify;
             }
 
-            .footer {
+            .post-footer {
                 float: right;
             }
         }
@@ -87,8 +87,110 @@ $font-family-sans-serif:
 body {
   // font-family: Georgia, serif;
   font-family: $font-family-sans-serif;
+  margin: 0;
 }
 
 h1, h2, h3 {
   font-weight: 400;
+}
+
+.pagination {
+    margin: auto;
+    width: 48px;
+    a:hover {
+        opacity: 0.8;
+    }
+    a.disabled {
+        opacity: 0.6;
+    }
+}
+
+.navbar {
+    display: block;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+
+    .container {
+        width: 100%;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0px 5px 0px 10px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        @media screen and (max-width: 700px) {
+            flex-flow: column;
+        }
+        @media screen and (min-width: 701px) {
+            li:not(:first-child):not(:last-child){
+                margin-left: 16px;
+                margin-right: 16px;
+            }
+            li:first-child {
+                margin-right: 16px;
+            }
+            li:last-child {
+                margin-left: 16px;
+            }
+        }
+        li {
+            text-transform: uppercase;
+            letter-spacing: .2rem;
+            position: relative;
+            line-height: 4rem;
+            height: 4rem;
+            a {
+                text-decoration: none;
+                color: #222;
+                width: 100%;
+                display: block;
+                margin: 0;
+                padding: 0;
+            }
+            @media screen and (max-width: 700px) {
+                &:not(:last-child) {
+                    border-bottom: 1px solid #eee;
+                }
+            }
+        }
+    }
+}
+
+.footer {
+    display: block;
+    background: #fdfdfd;
+    border-top: 1px solid #eee;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+
+    .container {
+        display: grid;
+        column-gap: 40px;
+        grid-template-areas:
+          'header header header'
+          'left right right';
+        width: 40%;
+        margin: auto;
+
+       .title {
+           grid-area: header;
+       }
+
+       .contact {
+          grid-area: left;
+          display: block;
+       }
+
+       .info {
+         grid-area: right;
+       }
+    }
 }

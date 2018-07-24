@@ -69,6 +69,10 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('dashboard:post-edit', kwargs={'pk': self.pk})
 
+    class Meta:
+        ordering = ['-published', '-pk']
+
+
 
 class Settings(models.Model):
     name = models.CharField(max_length=200)

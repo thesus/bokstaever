@@ -10,6 +10,6 @@ app_name = 'bokstaever'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls'), name='dashboard'),
-
-    path('', PostListView.as_view(), name='post-list')
+    path('', PostListView.as_view()),
+    path('<int:page>', PostListView.as_view(), name='post-list')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
