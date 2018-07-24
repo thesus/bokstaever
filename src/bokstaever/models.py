@@ -59,7 +59,7 @@ class Post(models.Model):
 
     editors = models.ManyToManyField(User)
 
-    url_slug = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200)
 
     def save(self, *args, **kwargs):
         if not self.url_slug:
