@@ -107,14 +107,15 @@ h1, h2, h3 {
 
 .navbar {
     display: block;
-    width: 100%;
+    width: calc(100% - 16px);
     background: #fff;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
+    margin: 8px 8px 10px 8px;
 
     .container {
         width: 100%;
+        margin: 0;
     }
 
     ul {
@@ -166,10 +167,8 @@ h1, h2, h3 {
     background: #fdfdfd;
     border-top: 1px solid #eee;
     position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
+    margin-top: 25px;
+    padding-bottom: 10px;
 
     .container {
         display: grid;
@@ -177,20 +176,35 @@ h1, h2, h3 {
         grid-template-areas:
           'header header header'
           'left right right';
-        width: 40%;
         margin: auto;
+        @media screen and (min-width: 1200px) {
+            width: 40%;
+        }
+        @media screen and (min-width: 700px) and (max-width: 1200px){
+            width: 70%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
 
        .title {
            grid-area: header;
+           letter-spacing: .05rem;
+           text-transform: uppercase;
        }
 
        .contact {
           grid-area: left;
           display: block;
+          a {
+            text-decoration: none;
+            color: #0088cc;
+          }
        }
 
        .info {
          grid-area: right;
+         color: #828282;
        }
     }
 }
