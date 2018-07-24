@@ -5,7 +5,8 @@ from dashboard.views import (
     ImageCreate,
     PostCreate,
     PostUpdate,
-    PostList
+    PostList,
+    ImageList
 )
 
 app_name = 'dashboard'
@@ -15,5 +16,6 @@ urlpatterns = [
     path('images/upload/', ImageCreate.as_view(), name='image-create'),
     path('post/edit/', PostCreate.as_view(), name='post-create'),
     path('post/edit/<int:pk>', PostUpdate.as_view(), name='post-edit'),
-    path('post/list/<int:page>', PostList.as_view(), name='post-list')
+    path('post/list/<int:page>', PostList.as_view(), name='post-list'),
+    path('images/list/<int:page>', ImageList.as_view(), name='image-list')
 ]

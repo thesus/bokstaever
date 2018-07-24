@@ -8,6 +8,10 @@ $font-family-sans-serif:
 
 $navbar-height: 4rem;
 
+body {
+    font-family: $font-family-sans-serif;
+}
+
 .navbar {
     display: block;
     width: 100%;
@@ -17,7 +21,6 @@ $navbar-height: 4rem;
     border-bottom: 1px solid #eee;
 
     ul {
-        font-family: $font-family-sans-serif;
         list-style: none;
         margin: 0 0 0 0;
         li {
@@ -49,31 +52,35 @@ div.container {
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+    &.table {
+        width: 100%;
+        border-collapse: collapse;
 
-    th, td {
-        text-align: left;
-        padding: 10px;
-        border-left: 0;
-        border-right: 0;
-        border-bottom: 1px solid #ddd;
-    }
-
-    tbody tr {
-        &:hover {
-            background-color: #f5f5f5
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-left: 0;
+            border-right: 0;
+            border-bottom: 1px solid #ddd;
         }
-    }
 
-    .posts {
-        cursor: pointer;
+        .posts {
+            cursor: pointer;
+        }
+
+        &.table-list {
+            tbody tr {
+                &:hover {
+                    background-color: #f5f5f5
+                }
+            }
+        }
     }
 }
 
 .pagination {
     margin: 20px auto auto auto;
-    width: 45px;
+    width: 48px;
     button {
         margin: 1px;
         padding: 0;
@@ -90,7 +97,154 @@ table {
             opacity: 0.9;
         }
         &:disabled {
+            cursor: default;
             opacity: 0.4;
         }
     }
+}
+
+a {
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 35px;
+}
+
+.btn {
+    &.btn-default {
+        background-color: rgb(44, 70, 127);
+        color: white;
+        border: none;
+        height: 35px;
+        cursor: pointer;
+        &:hover {
+            background-color: rgb(36, 57, 105);
+        }
+        margin: 8px;
+    }
+
+    &.btn-right {
+        float: right;
+    }
+}
+
+textarea {
+    width: 100%;
+    height: 250px;
+    resize: none;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    font-family: $font-family-sans-serif;
+}
+
+input[type=text] {
+    border-radius: 0;
+    border: 1px solid #ccc;
+    height: 30px;
+    width: 100%;
+    padding: 15px;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+$preview-size: 200px;
+
+.preview-container {
+    display: flex;
+    width: calc(100vw - 16px);
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: space-between;
+    .preview {
+        width: $preview-size;
+        margin: 5px;
+        .image-preview {
+            width: $preview-size;
+            height: $preview-size;
+            margin-bottom: 2px;
+            position: relative;
+            img {
+                &.uploading {
+                    filter: brightness(0.6) blur(0.8px);
+                }
+            }
+            .progress {
+                position: absolute;
+                width: 2px;
+                height: 0%;
+                background-color: #ccc;
+                bottom: 5px;
+                right: 5px;
+                border-radius: 2px;
+            }
+        }
+    }
+}
+
+.image-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-gap: 10px;
+    justify-content: space-between;
+    width: 100%;
+    .thumbnail {
+        width: $preview-size;
+        height: $preview-size;
+    }
+}
+
+.modal-mask {
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    transition: opacity .3s ease;
+    display: table;
+}
+
+.modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.modal-container {
+    width: 50%;
+    height: 70%;
+    background-color: #fff;
+    margin: 0px auto;
+    position: relative;
+    overflow: hidden;
+    .modal-content {
+        box-sizing: border-box;
+        padding: 8px;
+        width: 100%;
+        height: calc(100% - 65px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .btn-modal {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+    }
+}
+
+.modal-enter, .modal-leave-active {
+    opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  transform: scale(1.1);
 }

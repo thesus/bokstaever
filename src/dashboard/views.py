@@ -11,7 +11,10 @@ from django.views.generic.edit import (
     FormView
 )
 
-from bokstaever.models import Post
+from bokstaever.models import (
+    Post,
+    Image
+)
 
 from dashboard.api import (
     AjaxResponseMixin,
@@ -48,7 +51,7 @@ class ImageCreate(ImageViewMixin,
 
 class PostViewMixin:
     model = Post
-    fields = ['headline', 'text']
+    fields = ['headline', 'text', 'image']
     template_name = 'dashboard/post/edit.html'
 
     def form_valid(self, form):
@@ -77,3 +80,11 @@ class PostList(
     template_name = 'dashboard/post/list.html'
     paginate_by = 2
     fields = ['pk', 'headline', 'published', 'draft']
+
+class ImageList(
+        AjaxSerializeListMixin,
+        ListView):
+    model = Image
+    paginate_by = 18
+    template_name = 'dashboard/image/list.html'
+    fields = ['pk', 'title', 'path']

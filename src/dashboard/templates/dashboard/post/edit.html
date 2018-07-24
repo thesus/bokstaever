@@ -1,26 +1,57 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<form id="editPost" v-on:submit.prevent="submitPost">
-    {% csrf_token %}
-    <input v-model="post.headline">
-    <textarea v-model="post.text"></textarea>
-    <button type="submit">Submit</button>
-</form>
 
+{% include 'dashboard/vue/modal.html' %}
+{% include 'dashboard/vue/image.html' %}
+
+<div id="editPost">
+<form v-on:submit.prevent="submitPost">
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td>Title</td>
+            <td><input type="text" v-model="post.headline"></td>
+       </tr>
+       <tr>
+           <td>Content</td>
+           <td><textarea v-model="post.text"></textarea></td>
+       </tr>
+       <tr v-if="image">
+            <td>Image</td>
+            <td><img class="thumbnail" :src="image.path"></td>
+       </tr>
+    </table>
+    <button class="btn btn-default btn-right" type="submit">Submit</button>
+</form>
+    <button type="iuae" @click="showModal = true">Select Image</button>
+    <modal v-if="showModal" @close="showModal = false">
+        <image-list @selected="selectImage"/>
+    </modal>
+</div>
 <script>
     new Vue({
         el: '#editPost',
         data: {
-            'post': {},
-            csrf: null
+            post: {},
+            csrf: null,
+            image: null,
+            showModal: false
         },
         mounted() {
-            this.$set(this, 'csrf', this.$el.firstChild.value)
-
+            this.$set(
+                this,
+                'csrf',
+                document.getElementsByName('csrfmiddlewaretoken')[0].value
+            )
             this.getPost()
         },
         methods: {
+            selectImage (image) {
+                this.post['image'] = image.pk
+                this.image = image
+                this.showModal = false
+            },
             getPost () {
                 axios({
                     method: 'get',

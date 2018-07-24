@@ -2,7 +2,7 @@
 
 {% block content %}
 <div id="postList">
-    <table>
+    <table class="table table-list">
         <thead>
             <tr>
                 <th>ID</th>
@@ -25,6 +25,7 @@
         <button :disabled="!pagination.previous_page" @click="changePage(pagination.previous_page)" class="icon left">
         <button :disabled="!pagination.next_page" @click="changePage(pagination.next_page)" class="icon right">
     </div>
+    <a class="btn btn-default btn-right" href="/dashboard/post/edit/">New Post</a>
 </div>
 <script>
     new Vue({
