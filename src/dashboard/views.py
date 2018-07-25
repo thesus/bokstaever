@@ -11,6 +11,8 @@ from django.views.generic.edit import (
     FormView
 )
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from bokstaever.models import (
     Post,
     Image,
@@ -27,8 +29,8 @@ from dashboard.forms import (
     ImageForm,
 )
 
-
-class DashboardIndex(AjaxSerializeMixin,
+class DashboardIndex(LoginRequiredMixin,
+                     AjaxSerializeMixin,
                      ListView):
     model = Post
     template_name = 'dashboard/index.html'
@@ -44,7 +46,8 @@ class ImageViewMixin:
         return super().form_valid(form)
 
 
-class ImageCreate(ImageViewMixin,
+class ImageCreate(LoginRequiredMixin,
+                  ImageViewMixin,
                   AjaxResponseMixin,
                   FormView):
     pass
@@ -75,29 +78,31 @@ class PostViewMixin:
         return super().form_valid(form)
 
 
-class PostCreate(PostViewMixin,
+class PostCreate(LoginRequiredMixin,
+                 PostViewMixin,
                  AjaxResponseMixin,
                  CreateView):
     pass
 
 
-class PostUpdate(PostViewMixin,
+class PostUpdate(LoginRequiredMixin,
+                 PostViewMixin,
                  AjaxResponseMixin,
                  UpdateView):
     pass
 
 
-class PostList(
-        AjaxSerializeListMixin,
-        ListView):
+class PostList(LoginRequiredMixin,
+               AjaxSerializeListMixin,
+               ListView):
     model = Post
     template_name = 'dashboard/post/list.html'
     paginate_by = 2
     fields = ['pk', 'headline', 'published', 'draft']
 
-class ImageList(
-        AjaxSerializeListMixin,
-        ListView):
+class ImageList(LoginRequiredMixin,
+                AjaxSerializeListMixin,
+                ListView):
     model = Image
     paginate_by = 18
     template_name = 'dashboard/image/list.html'
