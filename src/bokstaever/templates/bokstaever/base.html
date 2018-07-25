@@ -9,7 +9,33 @@
 {% endblock javascript %}
 
 {% block base %}
+<input type="checkbox" class="menu-checkbox" id="menu">
+<nav class="navbar">
+     <label class="menu-toggle" for="menu"><span>Menu</span></label>
+        <div class="container">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/impressum">Impressum</a></li>
+                <li><a href="/login">Login</a></li>
+            </ul>
+         </div>
+    </nav>
+
     {% block content %}
 
     {% endblock content %}
+
+    <footer class="footer">
+        <div class="container">
+            <h3 class="title">Your awesome title</h4>
+            <div class="contact">
+                <span class="contact-type">E-Mail</span>
+                <span class="contact"><a href="mailto:your-email@domain.com">your-email@domain.com</a></span>
+            </div>
+            <div class="info">
+                Spaghetti western colonel mustard alpha trion gentleman villain joseph stalin old man in pub cappuccino catcher, spaghetti western gentleman old man in pub cappuccino catcher rock n roll star old man in pub helllloooo.
+            </div>
+       </div>
+   </footer>
 {% endblock base %}

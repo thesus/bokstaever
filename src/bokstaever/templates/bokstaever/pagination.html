@@ -1,0 +1,14 @@
+{% if page_obj.has_other_pages %}
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a class="icon left" href="/{{ page_obj.previous_page_number }}"></a>
+    {% else %}
+      <a class="icon left disabled"></a>
+    {% endif %}
+    {% if page_obj.has_next %}
+      <a class="icon right" href="/{{ page_obj.next_page_number }}"></a>
+    {% else %}
+      <a class="icon right disabled"></a>
+    {% endif %}
+  </div>
+{% endif %}
