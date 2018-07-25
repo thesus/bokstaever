@@ -3,7 +3,7 @@ FROM python:3.6
 COPY requirements/ /requirements
 
 RUN pip install gunicorn psycopg2
-RUN pip install -r ruqirements/base.txt
+RUN pip install -r requirements/base.txt
 
 COPY src/ /src
 
