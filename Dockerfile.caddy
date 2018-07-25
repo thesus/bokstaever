@@ -1,0 +1,18 @@
+FROM python:3.6 as builder
+
+# Install requirements.
+COPY requirements/ /requirements
+RUN pip install -r /requirements/base.txt
+
+# Copy source code.
+COPY src/ /src
+
+WORKDIR /src
+
+RUN export STATIC_ROOT=$(DJANGO_SETTINGS_MODULE=bokstaever.conf.settings.base python -c "from django.conf import settings; print(settings.STATIC_ROOT)") && \
+    python manage.py collectstatic --noinput && \
+    if [ "$STATIC_ROOT" != "$(readlink -f /static-root)" ]; then mv "$STATIC_ROOT" /static-root; fi
+
+FROM abiosoft/caddy:0.10.6
+COPY --from=builder /static-root /var/www
+COPY Caddyfile /etc/Caddyfile
