@@ -18,6 +18,7 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/impressum">Impressum</a></li>
                 {% if request.user.is_authenticated %}
+                  <li><a href="/dashboard">Dashboard</a></li>
                   <li><a href="/accounts/logout">Logout</a></li>
                 {% else %}
                   <li><a href="/accounts/login">Login</a></li>

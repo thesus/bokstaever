@@ -8,6 +8,7 @@ from django.views.generic import (
 from django.views.generic.edit import (
     CreateView,
     UpdateView,
+    DeleteView,
     FormView
 )
 
@@ -90,6 +91,12 @@ class PostUpdate(LoginRequiredMixin,
                  AjaxResponseMixin,
                  UpdateView):
     pass
+
+
+class PostDelete(LoginRequiredMixin,
+                 PostViewMixin,
+                 DeleteView):
+    template_name = 'dashboard/post/delete.html'
 
 
 class PostList(LoginRequiredMixin,

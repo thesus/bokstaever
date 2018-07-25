@@ -8,7 +8,7 @@
         <div class="post">
           <a href="/post/{{ post.slug }}">
             <span class="image" style="background-image: url({{ post.image.files.first.path.url }});" > </span>
-            <div class="post-content">
+            <div class="post-content" lang="en">
                 <div class="post-text">
                   <h2>{{ post.headline }}</h2>
                   <p>{{ post.text | truncatewords:60 }}</p>

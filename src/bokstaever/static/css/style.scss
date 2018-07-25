@@ -51,6 +51,8 @@ $font-family-sans-serif:
                 transform: translateY(-30%);
             }
             p {
+                hyphens: auto;
+                word-break: break-word;
                 text-align: justify;
             }
 
@@ -152,6 +154,7 @@ label.menu-toggle {
     display: block;
     text-indent: -9999px;
     background: #fff url(/static/svg/menu.svg) 50% 50% / 25px 25px no-repeat;
+    cursor: pointer;
 }
 
 .menu-checkbox {
