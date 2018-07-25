@@ -10,4 +10,4 @@ COPY src/ /src
 WORKDIR /src
 ENV DJANGO_SETTINGS_MODULE=bokstaever.conf.settings.base
 
-CMD ["/usr/local/bin/gunicorn", "-b" "0.0.0.0:80", "bokstaever.wsgi:application"]
+CMD /usr/local/bin/gunicorn -b 0.0.0.0:80 bokstaever.wsgi:application
