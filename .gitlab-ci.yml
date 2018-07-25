@@ -28,6 +28,8 @@ build-docker-image-caddy:
     - docker-cli
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+    SECRET_KEY: 'secret'
+    DATABASE_URL: 'sqlite3:///db.sqlite3'
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
   script:
