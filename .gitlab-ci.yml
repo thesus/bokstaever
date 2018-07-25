@@ -1,0 +1,36 @@
+stages:
+  - build
+
+cache:
+  paths:
+    - ~/.cache/pip/
+
+variables:
+  IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG
+  IMAGE_NAME_CADDY: $CI_REGISTRY_IMAGE/caddy:$CI_BUILD_REF_SLUG
+
+build-docker-image:
+  stage: build
+  tags:
+    - docker-cli
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  script:
+    - docker pull $IMAGE_NAME || /bin/true
+    - docker build --pull -t $IMAGE_NAME .
+    - docker push $IMAGE_NAME
+
+build-docker-image-caddy:
+  stage: build
+  tags:
+    - docker-cli
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  script:
+    - docker pull $IMAGE_NAME || /bin/true  # sic
+    - docker build --pull -f Dockerfile.caddy -t $IMAGE_NAME_CADDY .
+    - docker push $IMAGE_NAME_CADDY
