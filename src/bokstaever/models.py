@@ -73,7 +73,6 @@ class Post(models.Model):
         ordering = ['-published', '-pk']
 
 
-
 class SingletonModel(models.Model):
     class Meta:
         abstract = True
@@ -89,3 +88,5 @@ class SingletonModel(models.Model):
 
 class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')
+    email = models.EmailField(blank=True)
+    info = models.TextField(blank=True)
