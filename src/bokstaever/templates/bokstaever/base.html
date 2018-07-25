@@ -28,13 +28,15 @@
 
     <footer class="footer">
         <div class="container">
-            <h3 class="title">Your awesome title</h4>
+            <h3 class="title">{{ settings.name }}</h4>
             <div class="contact">
-                <span class="contact-type">E-Mail</span>
-                <span class="contact"><a href="mailto:your-email@domain.com">your-email@domain.com</a></span>
+                {% if settings.email %}
+                  <span class="contact-type">E-Mail</span>
+                  <span class="contact"><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></span>
+                {% endif %}
             </div>
             <div class="info">
-                Spaghetti western colonel mustard alpha trion gentleman villain joseph stalin old man in pub cappuccino catcher, spaghetti western gentleman old man in pub cappuccino catcher rock n roll star old man in pub helllloooo.
+                {{ settings.info }}
             </div>
        </div>
    </footer>
