@@ -4,7 +4,7 @@ services:
   web:
     image: dev.cryptec.at:5000/root/bokstaever:feature-deployment
     volumes:
-      - "media:/media"
+      - "media:/src/bokstaever/media"
     environment:
       DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
       ALLOWED_HOSTS: "['example.com']"
@@ -14,7 +14,7 @@ services:
   caddy:
     image: dev.cryptec.at:5000/root/bokstaever/caddy:feature-deployment
     volumes:
-      - "media:/media"
+      - "media:/srv/media"
     ports:
       - "80:80"
   db:

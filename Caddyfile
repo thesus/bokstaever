@@ -17,7 +17,7 @@
 }
 
 :80/media/ {
-    root /media/
+    root /srv/media/
 
     gzip
     log stdout
