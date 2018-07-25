@@ -13,7 +13,8 @@ from django.views.generic.edit import (
 
 from bokstaever.models import (
     Post,
-    Image
+    Image,
+    Settings
 )
 
 from dashboard.api import (
@@ -46,6 +47,19 @@ class ImageViewMixin:
 class ImageCreate(ImageViewMixin,
                   AjaxResponseMixin,
                   FormView):
+    pass
+
+class SettingsViewMixin:
+    fields = ['name', 'email', 'info']
+    template_name = 'dashboard/settings.html'
+
+    def get_object(self):
+        return Settings.load()
+
+
+class SettingsUpdate(SettingsViewMixin,
+                     AjaxResponseMixin,
+                     UpdateView):
     pass
 
 

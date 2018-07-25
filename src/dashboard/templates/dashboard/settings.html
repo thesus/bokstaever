@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div id="editSettings">
+  <form v-on:submit.prevent="submitSettings">
+    {% csrf_token %}
+    <table class="table">
+        <tr>
+            <td>Name</td>
+            <td><input type="text" v-model="settings.name"></td>
+       </tr>
+       <tr>
+           <td>E-Mail</td>
+           <td><input type="email" v-model="settings.email"></td>
+       </tr>
+       <tr>
+            <td>Info</td>
+            <td><textarea v-model="settings.info"></textarea></td>
+       </tr>
+    </table>
+    <button class="btn btn-default btn-right" type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+new Vue({
+    el: '#editSettings',
+    data: {
+      settings: {},
+      csrf: null
+    },
+    mounted () {
+      this.$set(
+        this,
+        'csrf',
+        document.getElementsByName('csrfmiddlewaretoken')[0].value
+      )
+      this.getSettings()
+    },
+    methods: {
+        getSettings () {
+          axios({
+            method: 'get',
+            url: '{{ request.get_full_path }}',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          }).then((response) => {
+            let data = response.data
+            this.settings = data[0] ? data[0].fields : {}
+          })
+        },
+        submitSettings () {
+          axios({
+            method: 'post',
+            url: '{{ request.get_full_path }}',
+            data: this.settings,
+            headers: {
+              'X-CSRFToken': this.csrf,
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          })
+        }
+    }
+})
+</script>
+{% endblock content %}
