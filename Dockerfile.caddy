@@ -8,6 +8,8 @@ RUN pip install -r /requirements/base.txt
 COPY src/ /src
 
 WORKDIR /src
+RUN export SECRET_KEY=secret
+RUN export DATABASE_URL=sqlite3:///db.sqlite3
 
 RUN export STATIC_ROOT=$(DJANGO_SETTINGS_MODULE=bokstaever.conf.settings.base python -c "from django.conf import settings; print(settings.STATIC_ROOT)") && \
     python manage.py collectstatic --noinput && \
