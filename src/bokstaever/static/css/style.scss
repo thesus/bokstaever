@@ -247,7 +247,12 @@ label.menu-toggle {
     }
 
     .post-content {
-        width: 50%;
+        @media screen and (min-width: 1300px) {
+            width: 45%;
+        }
+        @media screen and (min-width: 700px) and (max-width: 1300px) {
+            width: 60%;
+        }
         @media screen and (min-width: 500px) and (max-width: 700px) {
             width: 80%;
         }
@@ -255,15 +260,22 @@ label.menu-toggle {
             width: 95%;
         }
         margin: auto;
+        h1 {
+          //font-family: Georgia;
+          font-size: 40px;
+        }
 
         .text {
             text-align: justify;
+            word-break: break-word;
+            hyphens: auto;
+            font-size: 18px;
             p:first-child:first-letter {
               // color: #903;
               float: left;
               font-family: Georgia;
-              font-size: 47px;
-              line-height: 25px;
+              font-size: 55px;
+              line-height: 41px;
               padding: 3px 4px 0 0;
             }
         }
