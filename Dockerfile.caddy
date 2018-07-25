@@ -16,6 +16,16 @@ RUN export SECRET_KEY=secret && \
     python manage.py collectstatic --noinput && \
     if [ "$STATIC_ROOT" != "$(readlink -f /static-root)" ]; then mv "$STATIC_ROOT" /static-root; fi
 
+WORKDIR /
+
+RUN wget https://github.com/sass/dart-sass/releases/download/1.10.1/dart-sass-1.10.1-linux-x64.tar.gz
+RUN tar -xvf dart-sass-1.10.1-linux-x64.tar.gz
+
+WORKDIR /static-root/css
+
+RUN /dart-sass/sass icons.scss:icon.css dashboard.scss:dashboard.css style.scss:style.css
+RUN rm *.scss
+
 FROM abiosoft/caddy:0.10.6
 COPY --from=builder /static-root /var/www
 COPY Caddyfile /etc/Caddyfile
