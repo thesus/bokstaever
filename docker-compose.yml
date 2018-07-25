@@ -24,7 +24,7 @@ services:
     environment:
       POSTGRES_USER: bokstaever
       POSTGRES_PASSWORD: 3f893ef5c467799
-      POSTGRES_DB: dragonfruit
+      POSTGRES_DB: bokstaever
 
 volumes:
   db: {}
