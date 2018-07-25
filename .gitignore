@@ -1,7 +1,7 @@
 /venv
 __pycache__
 *.pyc
-/src/upload
+/src/bokstaever/media
 /src/bokstaever/static/css/style.css*
 /src/bokstaever/static/css/dashboard.css*
 /src/bokstaever/static/css/icons.css*
