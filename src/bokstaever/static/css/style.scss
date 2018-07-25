@@ -211,7 +211,8 @@ label.menu-toggle {
 }
 
 .detail-container {
-    .post-image {
+  .image-container {
+      .post-image {
         width: 100%;
         @media screen and (max-width: 500px) {
             height: 350px;
@@ -234,9 +235,19 @@ label.menu-toggle {
             height: 100%;
 
         }
+      }
+      .image-title {
+        margin: 8px auto 10px auto;
+        width: 80%;
+        display: block;
+        text-align: center;
+        font-size: 15px;
+        color: #828282;
+      }
     }
+
     .post-content {
-        width: 60%;
+        width: 50%;
         @media screen and (min-width: 500px) and (max-width: 700px) {
             width: 80%;
         }
@@ -247,6 +258,14 @@ label.menu-toggle {
 
         .text {
             text-align: justify;
+            p:first-child:first-letter {
+              // color: #903;
+              float: left;
+              font-family: Georgia;
+              font-size: 47px;
+              line-height: 25px;
+              padding: 3px 4px 0 0;
+            }
         }
     }
 }

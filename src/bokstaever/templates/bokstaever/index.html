@@ -6,6 +6,7 @@
     <div class="overview">
     {% for post in object_list %}
         <div class="post">
+          <a href="/post/{{ post.slug }}">
             <span class="image" style="background-image: url({{ post.image.files.first.path.url }});" > </span>
             <div class="post-content">
                 <div class="post-text">
@@ -16,6 +17,7 @@
                   </div>
               </div>
             </div>
+          </a>
         </div>
     {% endfor %}
     </div>
