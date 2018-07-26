@@ -14,32 +14,11 @@ class Image(models.Model):
         max_length=200,
         unique=True
     )
-
-    def path(self):
-        return '{0}'.format(self.files.first().path.url)
-
-    def __str__(self):
-        return '{0.title}'.format(self)
-
-
-class File(models.Model):
-    image = models.ForeignKey(
-        Image,
-        on_delete=models.CASCADE,
-        related_name='files'
     image = models.ImageField(
-        upload_to='upload'
-    )
-
-    height = models.PositiveIntegerField()
-    width = models.PositiveIntegerField()
-
-    path = models.ImageField(
         upload_to='upload',
-        height_field='height',
-        width_field='width'
+    )
     thumbnail = models.ImageField(
-        upload_to='thumnails'
+        upload_to='thumnails',
     )
 
     def save(self):
@@ -55,9 +34,6 @@ class File(models.Model):
         super(Image, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '{0.image.title} - {0.height} x {0.width}'.format(
-            self
-        )
         return '{0.title}'.format(self)
 
 
