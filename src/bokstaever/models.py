@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 
 from django.urls import reverse
 
+from bokstaever.images import resize
+
 
 class Image(models.Model):
     title = models.CharField(
@@ -25,6 +27,8 @@ class File(models.Model):
         Image,
         on_delete=models.CASCADE,
         related_name='files'
+    image = models.ImageField(
+        upload_to='upload'
     )
 
     height = models.PositiveIntegerField()
@@ -34,12 +38,27 @@ class File(models.Model):
         upload_to='upload',
         height_field='height',
         width_field='width'
+    thumbnail = models.ImageField(
+        upload_to='thumnails'
     )
+
+    def save(self):
+        if self.image:
+            self.image.path.save(
+                '{0}.png'.format(self.title),
+                resize(self.image, 1600)
+            )
+            self.thumbnail.path.save(
+                '{0}.png'.format(self.title),
+                resize(self.image, 1600)
+            )
+        super(Image, self).save(*args, **kwargs)
 
     def __str__(self):
         return '{0.image.title} - {0.height} x {0.width}'.format(
             self
         )
+        return '{0.title}'.format(self)
 
 
 class Post(models.Model):
