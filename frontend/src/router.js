@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from './views/Home.vue'
+
+import Dashboard from './views/dashboard/Dashboard.vue'
+import DashboardHome from './views/dashboard/Home.vue'
+
+import Public from './views/public/Public.vue'
+import PublicHome from './views/public/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -9,7 +14,20 @@ export default new VueRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Home
+      component: Dashboard,
+      children: [{
+        path: '',
+        component: DashboardHome
+      }]
     },
+    {
+      path: '',
+      name: 'public',
+      component: Public,
+      children: [{
+        path: '',
+        component: PublicHome
+      }]
+    }
   ]
 })
