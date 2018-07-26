@@ -1,25 +1,42 @@
 from django.urls import path
 
-from dashboard.views import (
-    DashboardIndex,
-    ImageCreate,
-    PostCreate,
-    PostUpdate,
-    PostDelete,
-    PostList,
-    ImageList,
-    SettingsUpdate
-)
+from django.views.generic import TemplateView
 
 app_name = 'dashboard'
 
-urlpatterns = [
-    path('', DashboardIndex.as_view(), name='dashboard-index'),
-    path('images/upload/', ImageCreate.as_view(), name='image-create'),
-    path('post/edit/', PostCreate.as_view(), name='post-create'),
-    path('post/edit/<int:pk>', PostUpdate.as_view(), name='post-edit'),
-    path('post/delete/<int:pk>', PostDelete.as_view(), name='post-delte'),
-    path('post/list/<int:page>', PostList.as_view(), name='post-list'),
-    path('images/list/<int:page>', ImageList.as_view(), name='image-list'),
-    path('settings/edit', SettingsUpdate.as_view(), name='settings-edit'),
-]
+urlpatterns = []
+pages = {
+    'image-upload': (
+        'images/edit/',
+        'dashboard/image/edit.html'
+    ),
+    'image-list': (
+        'images/list/',
+        'dashboard/image/list.html'
+    ),
+    'post-create': (
+        'posts/edit/',
+        'dashboard/post/edit.html'
+    ),
+    'post-edit':(
+        'posts/edit/<int:pk>',
+        'dashboard/post/edit.html'
+    ),
+    'post-list': (
+        'posts/list/',
+        'dashboard/post/list.html'
+    ),
+    'index': (
+        '',
+        'dashboard/index.html'
+    ),
+    'settings-edit': (
+        'settings/edit/',
+        'dashboard/settings.html'
+    )
+}
+
+for k, v in pages.items():
+    urlpatterns.append(
+        path(v[0], TemplateView.as_view(template_name=v[1]), name=k)
+    )

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     'bokstaever',
-    'dashboard'
+    'dashboard',
+    'api'
 ]
 
 MIDDLEWARE = [
