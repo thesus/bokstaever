@@ -26,5 +26,5 @@ def resize(image, width):
     original = IMG.open(image)
 
     with BytesIO() as f:
-        crop_image(original, size).save(f, format='png')
+        crop_image(original, width).save(f, format='png')
         return ContentFile(f.getvalue())

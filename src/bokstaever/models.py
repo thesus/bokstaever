@@ -21,15 +21,17 @@ class Image(models.Model):
         upload_to='thumnails',
     )
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if self.image:
-            self.image.path.save(
+            self.image.save(
                 '{0}.png'.format(self.title),
-                resize(self.image, 1600)
+                resize(self.image, 1600),
+                save=False
             )
-            self.thumbnail.path.save(
+            self.thumbnail.save(
                 '{0}.png'.format(self.title),
-                resize(self.image, 1600)
+                resize(self.image, 400),
+                save=False
             )
         super(Image, self).save(*args, **kwargs)
 

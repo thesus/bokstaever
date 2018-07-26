@@ -6,6 +6,9 @@ from bokstaever.models import (
     Settings
 )
 
-admin.site.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    readonly_fields = ['thumbnail']
+
+admin.site.register(Image, ImageAdmin)
 admin.site.register(Post)
 admin.site.register(Settings)
