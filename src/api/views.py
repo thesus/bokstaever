@@ -1,6 +1,8 @@
 from bokstaever.models import (
     Post,
-    Image
+    Image,
+
+    Settings
 )
 
 from api.serializers import (
@@ -8,16 +10,19 @@ from api.serializers import (
     PostListSerializer,
 
     ImageSerializer,
-    ImageListSerializer
+    ImageListSerializer,
+
+    SettingsSerializer
 )
 
 from api.viewsets import (
     MultiSerializerViewSet
 )
 
-from rest_framework import (
-    mixins,
-    generics
+from rest_framework.generics import (
+    GenericAPIView,
+    RetrieveAPIView,
+    UpdateAPIView
 )
 
 class PostViewSet(MultiSerializerViewSet):
@@ -43,3 +48,11 @@ class ImageViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'list': ImageListSerializer
     }
+
+
+class SettingsUpdateView(RetrieveAPIView,
+                         UpdateAPIView):
+    serializer_class = SettingsSerializer
+
+    def get_object(self):
+        return Settings.load()
