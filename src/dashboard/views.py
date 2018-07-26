@@ -26,9 +26,6 @@ from dashboard.api import (
     AjaxSerializeListMixin
 )
 
-from dashboard.forms import (
-    ImageForm,
-)
 
 class DashboardIndex(LoginRequiredMixin,
                      AjaxSerializeMixin,
@@ -38,7 +35,7 @@ class DashboardIndex(LoginRequiredMixin,
 
 
 class ImageViewMixin:
-    form_class = ImageForm
+    model = Image
     template_name = 'dashboard/image/upload.html'
     success_url = reverse_lazy('dashboard:image-create')
 
@@ -50,7 +47,7 @@ class ImageViewMixin:
 class ImageCreate(LoginRequiredMixin,
                   ImageViewMixin,
                   AjaxResponseMixin,
-                  FormView):
+                  CreateView):
     pass
 
 class SettingsViewMixin:
