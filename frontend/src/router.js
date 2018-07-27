@@ -13,20 +13,20 @@ export default new VueRouter({
   routes: [
     {
       path: '/dashboard',
-      name: 'dashboard',
       component: Dashboard,
       children: [{
         path: '',
-        component: DashboardHome
+        component: DashboardHome,
+        name: 'dashboard'
       }]
     },
     {
       path: '',
-      name: 'public',
       component: Public,
       children: [{
         path: '',
-        component: PublicHome
+        component: PublicHome,
+        name: 'home'
       }]
     }
   ]

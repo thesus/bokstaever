@@ -3,8 +3,8 @@
     <nav class="navbar">
       <div class="container">
         <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/dashboard">Dashboard</router-link></li>
+            <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+            <li><router-link :to="{ name: 'dashboard'}">Dashboard</router-link></li>
             <li><router-link to="/dashboard/post/list/1">Posts</router-link></li>
             <li><router-link to="/dashboard/images/list/1">Images</router-link></li>
             <li><router-link to="/dashboard/settings/edit">Settings</router-link></li>

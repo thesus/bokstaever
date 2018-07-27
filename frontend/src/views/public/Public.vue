@@ -5,8 +5,8 @@
       <label class="menu-toggle" for="menu"><span>Menu</span></label>
       <div class="container">
         <ul>
-          <li><router-link to="/">Home</router-link></li>
-          <li><a href="/about">About</a></li>
+          <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+          <li><router-link :to="{ name: 'dashboard'}">Dashboard</router-link></li>
           <li><a href="/impressum">Impressum</a></li>
           <li><a href="/accounts/login">Login</a></li>
         </ul>
