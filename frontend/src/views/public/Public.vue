@@ -13,8 +13,43 @@
       </div>
     </nav>
     <router-view/>
+    <footer class="footer">
+        <div class="container">
+            <h3 class="title">{{ info.name }}</h3>
+            <div class="contact">
+                  <span class="contact-type">E-Mail</span>
+                  <span class="contact"><a :href="'mailto:' + info.email">{{ info.email }}</a></span>
+            </div>
+            <div class="info">
+                {{ info.info }}
+            </div>
+       </div>
+   </footer>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      info: {}
+    }
+  },
+  mounted() {
+    this.getInfo()
+  },
+  methods: {
+    getInfo() {
+      this.$http({
+        method: 'get',
+        url: process.env.VUE_APP_API_ROOT + '/settings/'
+      }).then((response) => {
+        this.$set(this, 'info', response.data ? response.data : {})
+      })
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .navbar {
@@ -68,5 +103,53 @@ label.menu-toggle {
 
 .menu-checkbox:checked + .navbar {
     transform: translate3d(0, 0, 0);
+}
+
+
+.footer {
+    display: block;
+    background: #fdfdfd;
+    border-top: 1px solid #eee;
+    position: relative;
+    margin-top: 25px;
+    padding-bottom: 10px;
+
+    .container {
+        display: grid;
+        column-gap: 40px;
+        grid-template-areas:
+          'header header header'
+          'left right right';
+        margin: auto;
+        @media screen and (min-width: 1200px) {
+            width: 40%;
+        }
+        @media screen and (min-width: 700px) and (max-width: 1200px){
+            width: 70%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
+
+       .title {
+           grid-area: header;
+           color: #222;
+           text-transform: lowercase;
+       }
+
+       .contact {
+          grid-area: left;
+          display: block;
+          a {
+            text-decoration: none;
+            color: #0088cc;
+          }
+       }
+
+       .info {
+         grid-area: right;
+         color: #828282;
+       }
+    }
 }
 </style>

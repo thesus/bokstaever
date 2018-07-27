@@ -6,9 +6,9 @@
         <div class="post-content" lang="en">
             <div class="post-text">
               <h2>{{ post.headline }}</h2>
-              <p>{{ post.text }}</p>
+              <p>{{ post.text | truncatechars(400) }}</p>
               <div class="post-footer">
-                  {{ post.text }}, {{ post.published }} →
+                  {{ post.published }} →
               </div>
           </div>
         </div>
@@ -20,11 +20,15 @@
 
 <script>
 import Pagination from '@/components/Pagination'
+import { truncatechars } from '@/filters/Text.js'
 // @ is an alias to /src
 
 export default {
   components: {
     'pagination-component': Pagination
+  },
+  filters: {
+    'truncatechars': truncatechars
   },
   name: 'home',
   data () {

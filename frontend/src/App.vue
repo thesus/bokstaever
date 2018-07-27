@@ -16,6 +16,11 @@ $font-family-sans-serif:
 
 body {
     font-family: $font-family-sans-serif;
+    background-color: #fdfdfd;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
 }
 
 .icon {
