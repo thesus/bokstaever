@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="post" v-for="post in posts">
-      <router-link :to="{ name: 'detail', params: { slug: post.slug, id: post.id }}">
+      <router-link :to="{ name: 'detail', params: { id: post.id, slug: post.slug }}">
         <span class="image" :style="{ 'background-image': 'url(' + mediaRoot + post.image + ')' }"> </span>
         <div class="post-content" lang="en">
             <div class="post-text">
@@ -56,7 +56,6 @@ export default {
   },
   methods: {
     getPosts () {
-      console.log('fetching...')
       this.$http({
         method: 'get',
         url: this.apiRoot + '/posts/?limit=5&offset=' + this.getOffset,

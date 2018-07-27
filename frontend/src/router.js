@@ -6,6 +6,7 @@ import DashboardHome from './views/dashboard/Home.vue'
 
 import Public from './views/public/Public.vue'
 import PublicHome from './views/public/Home.vue'
+import PublicPost from './views/public/Post.vue'
 
 Vue.use(VueRouter)
 
@@ -23,14 +24,21 @@ export default new VueRouter({
     {
       path: '',
       component: Public,
-      children: [{
-        path: '',
-        component: PublicHome,
-        name: 'home',
-        props: (route) => {
-          ({ page: route.query.page ? route.query.page : 1 })
+      children: [
+        {
+          path: '',
+          component: PublicHome,
+          name: 'home',
+          props: (route) => {
+            ({ page: route.query.page ? route.query.page : 1 })
+          }
+        },
+        {
+          path: '/post/:id/:slug',
+          component: PublicPost,
+          name: 'detail',
         }
-      }]
+      ]
     }
   ],
   scrollBehavior (to, from, savedPosition) {

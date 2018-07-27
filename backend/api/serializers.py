@@ -7,18 +7,29 @@ from bokstaever.models import (
 )
 
 class PostSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+    image_title = serializers.SerializerMethodField()
+
     class Meta:
         model = Post
         fields = (
             'id',
             'headline',
-            'image',
             'text',
             'published',
             'draft',
-            'editors'
+            'editors',
+            'image',
+            'image_url',
+            'image_title'
         )
         read_only_fields = ('editors', )
+
+    def get_image_url(self, instance):
+        return instance.image.image.url
+
+    def get_image_title(self, instance):
+        return instance.image.title
 
 
 class PostListSerializer(serializers.ModelSerializer):
@@ -33,7 +44,7 @@ class PostListSerializer(serializers.ModelSerializer):
             'text',
             'published',
             'draft',
-            'editors'
+            'slug'
         )
 
     def get_image_url(self, instance):

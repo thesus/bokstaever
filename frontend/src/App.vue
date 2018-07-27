@@ -17,6 +17,7 @@ $font-family-sans-serif:
 body {
     font-family: $font-family-sans-serif;
     background-color: #fdfdfd;
+    margin: 0;
 }
 
 h1, h2, h3 {
