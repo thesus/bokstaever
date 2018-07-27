@@ -22,10 +22,22 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class PostListSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField('get_image_url')
+
     class Meta:
         model = Post
-        fields = ('id', 'headline', 'published', 'draft')
+        fields = (
+            'id',
+            'headline',
+            'image',
+            'text',
+            'published',
+            'draft',
+            'editors'
+        )
 
+    def get_image_url(self, instance):
+        return instance.image.image.url
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:

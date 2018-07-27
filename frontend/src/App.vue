@@ -17,4 +17,24 @@ $font-family-sans-serif:
 body {
     font-family: $font-family-sans-serif;
 }
+
+.icon {
+    outline: none;
+    border: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    &.left {
+        background: transparent url(/assets/svg/arrow-left.svg) 0px 0px no-repeat;
+        background-size: contain;
+    }
+
+    &.right {
+        background: transparent url(/assets/svg/arrow-right.svg) 0px 0px no-repeat;
+        background-size: contain;
+    }
+
+}
+
 </style>

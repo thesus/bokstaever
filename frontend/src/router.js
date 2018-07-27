@@ -26,7 +26,10 @@ export default new VueRouter({
       children: [{
         path: '',
         component: PublicHome,
-        name: 'home'
+        name: 'home',
+        props: (route) => {
+          ({ page: route.query.page ? route.query.page : 1 })
+        }
       }]
     }
   ]
