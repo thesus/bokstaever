@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <div class="post" v-for="post in posts">
+    <div class="post" v-for="post in posts.results">
       <router-link :to="{ name: 'detail', params: { id: post.id, slug: post.slug }}">
-        <span class="image" :style="{ 'background-image': 'url(' + mediaRoot + post.image + ')' }"> </span>
+        <span class="image" :style="{ 'background-image': 'url(' + $mediaRoot + post.image + ')' }"> </span>
         <div class="post-content" lang="en">
             <div class="post-text">
-              <h2>{{ post.headline }}</h2>
+              <h2>{{ posts.headline }}</h2>
               <p>{{ post.text | truncatechars(400) }}</p>
               <div class="post-footer">
                   {{ post.published }} →
@@ -14,14 +14,14 @@
         </div>
       </router-link>
     </div>
-    <pagination-component :count="getPages"/>
+    <pagination-component :count="posts.pages"/>
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination'
 import { truncatechars } from '@/filters/Text.js'
-// @ is an alias to /src
+
 
 export default {
   components: {
@@ -33,37 +33,25 @@ export default {
   name: 'home',
   data () {
     return {
-      apiRoot: process.env.VUE_APP_API_ROOT,
-      mediaRoot: process.env.VUE_APP_MEDIA_ROOT,
       postCount: null,
-      posts: [],
+      posts: {},
     }
   },
   mounted () {
     this.getPosts()
   },
   computed: {
-    getPages () {
-      let perPage = 5
-      return Math.ceil(this.postCount / perPage)
-    },
-    getOffset () {
-      return ((this.currentPage * 5) - 5)
-    },
     currentPage () {
-      return this.$route.query.page ? parseInt(this.$route.query.page) : 1
+      return parseInt(this.$route.query.page) || 1
     }
   },
   methods: {
-    getPosts () {
-      this.$http({
-        method: 'get',
-        url: this.apiRoot + '/posts/?limit=5&offset=' + this.getOffset,
-      }).then((response) => {
-        let data = response.data
-        this.$set(this, 'posts', data.results ? data.results : [])
-        this.$set(this, 'postCount', data.count ? data.count : 0)
-      })
+    async getPosts () {
+      this.$set(
+        this,
+        'posts',
+        await this.$api.getByPage('/posts/', 5, this.currentPage)
+      )
     }
   },
   watch: {
