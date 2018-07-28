@@ -39,13 +39,12 @@ export default {
     this.getInfo()
   },
   methods: {
-    getInfo() {
-      this.$http({
-        method: 'get',
-        url: process.env.VUE_APP_API_ROOT + '/settings/'
-      }).then((response) => {
-        this.$set(this, 'info', response.data ? response.data : {})
-      })
+    async getInfo() {
+      this.$set(
+        this,
+        'info',
+        await this.$api.get('/settings/')
+      )
     }
   }
 }

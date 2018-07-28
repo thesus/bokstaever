@@ -22,7 +22,6 @@
 import Pagination from '@/components/Pagination'
 import { truncatechars } from '@/filters/Text.js'
 
-
 export default {
   components: {
     'pagination-component': Pagination
@@ -33,7 +32,6 @@ export default {
   name: 'home',
   data () {
     return {
-      postCount: null,
       posts: {},
     }
   },
