@@ -20,7 +20,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 .navbar {
     display: block;
     width: calc(100% - 16px);

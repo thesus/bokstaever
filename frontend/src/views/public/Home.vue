@@ -60,7 +60,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" slot-scoped>
 .post {
     &:nth-child(even) {
       .image{

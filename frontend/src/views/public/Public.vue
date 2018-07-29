@@ -6,9 +6,22 @@
       <div class="container">
         <ul>
           <li><router-link :to="{ name: 'home' }">Home</router-link></li>
-          <li><router-link :to="{ name: 'dashboard'}">Dashboard</router-link></li>
+          <li>
+            <router-link v-if="isLoggedIn" :to="{ name: 'dashboard'}">
+              Dashboard
+            </router-link>
+          </li>
           <li><a href="/impressum">Impressum</a></li>
-          <li><a href="/accounts/login">Login</a></li>
+          <li>
+            <router-link v-if="isLoggedIn" :to="{ name: 'logout'}">
+              Logout
+            </router-link>
+          </li>
+          <li>
+            <router-link v-if="!isLoggedIn" :to="{ name: 'login'}">
+              Login
+            </router-link>
+          </li>
         </ul>
       </div>
     </nav>
@@ -37,6 +50,11 @@ export default {
   },
   mounted() {
     this.getInfo()
+  },
+  computed: {
+    isLoggedIn () {
+      return localStorage.getItem('jwt_token') ? true : false
+    }
   },
   methods: {
     async getInfo() {
