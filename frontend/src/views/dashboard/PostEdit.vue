@@ -33,12 +33,29 @@ export default {
   data () {
     return {
       post: {},
-      url: `/posts/${this.$route.params.id}/`,
-      showModal: false
+      url: 'null',
+      showModal: false,
     }
   },
   mounted () {
-    this.getPost()
+    if (!this.isNew) {
+      this.getPost()
+    }
+  },
+  computed: {
+    isNew () {
+      return this.$route.name === 'post-create'
+    },
+    getURL () {
+      if (!this.isNew) {
+        return `/posts/${this.$route.params.id}/`
+      } else {
+        return '/posts/'
+      }
+    },
+    getMethod () {
+      return this.isNew ? 'post' : 'put'
+    }
   },
   methods: {
     selectImage (image) {
@@ -55,7 +72,7 @@ export default {
     },
     async getPost () {
       this.setPost(
-          await this.$api.get(this.url, true)
+          await this.$api.get(this.getURL, true)
       )
     },
     async submitPost () {
@@ -65,9 +82,17 @@ export default {
         draft: false, // fixme
         image: this.post.image || null
       }
-      this.setPost(
-          await this.$api.post(this.url, data, true)
+      let response = await this.$api.send(
+        this.getURL,
+        data,
+        this.getMethod,
+        true
       )
+      if (this.isNew) {
+        this.$router.push({ name: 'post-edit', params: {'id': response.id }})
+      } else {
+        this.setPost(response)
+      }
     }
   }
 }

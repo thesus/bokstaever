@@ -56,6 +56,12 @@ const router = new VueRouter({
           beforeEnter: loginRequired
         },
         {
+          path: 'posts/edit/',
+          name: 'post-create',
+          component: PostEdit,
+          beforeEnter: loginRequired
+        },
+        {
           path: 'posts/edit/:id',
           name: 'post-edit',
           component: PostEdit,

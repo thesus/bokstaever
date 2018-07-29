@@ -26,9 +26,9 @@ const ApiPlugin = {
           return response.data
         })
       },
-      post: (url, data, authenticated=false) => {
+      send: (url, data, method, authenticated=false) => {
         let config = {
-          method: 'put',
+          method: method,
           url: this.apiRoot + url,
           data: data
         }

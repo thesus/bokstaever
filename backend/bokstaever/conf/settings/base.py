@@ -4,6 +4,7 @@ Settings for the bokstaever project.
 
 import os
 import environ
+import datetime
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -146,6 +147,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
     ]
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1)
 }
 
 # CORS
