@@ -23,7 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls'), name='dashboard'),
     path('api/', include('api.urls'), name='api'),
-    path('', PostListView.as_view()),
-    path('<int:page>', PostListView.as_view(), name='post-list'),
-    path('post/<slug:slug>', PostDetailView.as_view(), name='post-detail')
+    path('api/auth/', include('djoser.urls.jwt')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + authentication

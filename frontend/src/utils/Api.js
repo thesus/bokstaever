@@ -29,6 +29,22 @@ const ApiPlugin = {
           pages: pages,
           results: data.results
         }
+      },
+      authenticate: (username, password) => {
+        return Vue.axios({
+          method: 'post',
+          url: `${this.apiRoot}/auth/jwt/create/`,
+          data: {
+            username: username,
+            password: password
+          }
+        }).then((response) => {
+          let data = response.data
+          localStorage.setItem('jwt_token', data.token)
+          return true
+        }).catch((response) => {
+          return false
+        })
       }
     }
   }
