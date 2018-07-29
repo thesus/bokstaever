@@ -19,6 +19,8 @@ from api.viewsets import (
     MultiSerializerViewSet
 )
 
+from rest_framework.permissions import IsAuthenticated
+
 from rest_framework.generics import (
     GenericAPIView,
     RetrieveAPIView,
@@ -31,6 +33,13 @@ class PostViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'list': PostListSerializer
     }
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = []
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def perform_update(self, serializer):
         serializer.instance.editors.add(self.request.user.pk)

@@ -1,3 +1,11 @@
+let checkAuth = (config, authenticated) => {
+  if (authenticated) {
+    let token = localStorage.getItem('jwt_token')
+    config['headers'] = {'Authorization': 'JWT ' + token}
+  }
+  return config
+}
+
 const ApiPlugin = {
   apiRoot: process.env.VUE_APP_API_ROOT,
   mediaRoot: process.env.VUE_APP_MEDIA_ROOT,
@@ -7,18 +15,34 @@ const ApiPlugin = {
     Vue.prototype.$mediaRoot = this.mediaRoot
 
     Vue.prototype.$api = {
-      get: (url) => {
-        return Vue.axios({
+      get: (url, authenticated=false) => {
+        let config = {
           method: 'get',
-          url: this.apiRoot + url
-        }).then((response) => {
+          url: this.apiRoot + url,
+        }
+        checkAuth(config, authenticated)
+
+        return Vue.axios(config).then((response) => {
           return response.data
         })
       },
-      async getByPage (url, limit, page) {
+      post: (url, data, authenticated=false) => {
+        let config = {
+          method: 'put',
+          url: this.apiRoot + url,
+          data: data
+        }
+        checkAuth(config, authenticated)
+        console.log(config)
+        return Vue.axios(config).then((response) => {
+          return response.data
+        })
+      },
+      async getByPage (url, limit, page, authenticated=false) {
         let offset = limit * (page - 1)
         let data = await this.get(
-          `${url}?limit=${limit}&offset=${offset}`
+          `${url}?limit=${limit}&offset=${offset}`,
+          authenticated
         )
 
         let count = data.count || 0

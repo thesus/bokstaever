@@ -3,12 +3,16 @@ import VueRouter from 'vue-router'
 
 import Dashboard from './views/dashboard/Dashboard'
 import DashboardHome from './views/dashboard/Home'
+import PostList from './views/dashboard/PostList'
+import PostEdit from './views/dashboard/PostEdit'
+
 
 import Public from './views/public/Public'
 import PublicHome from './views/public/Home'
 import PublicPost from './views/public/Post'
 
 import Login from './views/auth/Login'
+import Logout from './views/auth/Logout'
 
 Vue.use(VueRouter)
 
@@ -38,18 +42,37 @@ const router = new VueRouter({
     {
       path: '/dashboard',
       component: Dashboard,
-      children: [{
-        path: '',
-        name: 'dashboard',
-        component: DashboardHome,
-        beforeEnter: loginRequired
-      }],
+      children: [
+        {
+          path: '',
+          name: 'dashboard',
+          component: DashboardHome,
+          beforeEnter: loginRequired
+        },
+        {
+          path: 'posts/list',
+          name: 'post-list',
+          component: PostList,
+          beforeEnter: loginRequired
+        },
+        {
+          path: 'posts/edit/:id',
+          name: 'post-edit',
+          component: PostEdit,
+          beforeEnter: loginRequired
+        }
+      ],
     },
     {
       path: '/login',
       name: 'login',
       component: Login,
       beforeEnter: loggedIn
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout,
     },
     {
       path: '',

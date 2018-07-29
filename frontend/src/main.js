@@ -12,7 +12,21 @@ Vue.use(ApiPlugin)
 Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
+
 new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+
+Vue.axios.interceptors.response.use (
+  (response) => {
+    return response
+  },
+  (error) => {
+    if (error && error.response && error.response.status === 401) {
+      router.push('logout')
+    } else {
+      return response
+    }
+  }
+)
