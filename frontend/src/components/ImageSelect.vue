@@ -5,7 +5,7 @@
         <img
          :src="$mediaRoot + image.thumbnail"
          :class="{ 'selected': isSelected(image.id) }"
-         @click="selectImage(image.id)"
+         @click="selectImage(image)"
         >
       </div>
     </div>
@@ -55,7 +55,8 @@ export default {
         await this.$api.getByPage('/images/', 15, this.page, true)
       )
     },
-    selectImage (id) {
+    selectImage (image) {
+      var id = image.id
       if (this.$props.multiple) {
         if (this.selected.includes(id)) {
           let index = this.selected.indexOf(id)
@@ -64,7 +65,7 @@ export default {
           this.selected.push(id)
         }
       } else {
-        this.$emit('selected', id)
+        this.$emit('selected', image)
       }
     }
   },

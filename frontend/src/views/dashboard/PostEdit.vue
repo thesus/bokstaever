@@ -13,9 +13,10 @@
         </table>
         <button class="btn btn-default btn-right" type="submit">Submit</button>
     </form>
+    <img :src="$mediaRoot + post.thumbnail_url" v-if="post.thumbnail_url">
     <button type="iuae" @click="showModal = true">Select Image</button>
     <modal-component v-if="showModal" @close="showModal = false">
-      <image-component multiple="true"/>
+      <image-component @selected="selectImage"/>
     </modal-component>
   </div>
 </template>
@@ -40,6 +41,11 @@ export default {
     this.getPost()
   },
   methods: {
+    selectImage (image) {
+      this.$set(this.post, 'image', image.id)
+      this.$set(this.post, 'thumbnail_url', image.thumbnail)
+      this.showModal = false
+    },
     setPost (data) {
       this.$set(
         this,
