@@ -14,15 +14,26 @@
         <button class="btn btn-default btn-right" type="submit">Submit</button>
     </form>
     <button type="iuae" @click="showModal = true">Select Image</button>
+    <modal-component v-if="showModal" @close="showModal = false">
+      <image-component multiple="true"/>
+    </modal-component>
   </div>
 </template>
 
 <script>
+import Modal from '@/components/Modal'
+import ImageSelect from '@/components/ImageSelect'
+
 export default {
+  components: {
+    'modal-component': Modal,
+    'image-component': ImageSelect
+  },
   data () {
     return {
       post: {},
-      url: `/posts/${this.$route.params.id}/`
+      url: `/posts/${this.$route.params.id}/`,
+      showModal: false
     }
   },
   mounted () {
