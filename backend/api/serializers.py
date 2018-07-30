@@ -62,13 +62,13 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ImageListSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.SerializerMethodField('get_thumbnail_url')
+    thumbnail = serializers.SerializerMethodField()
 
     class Meta:
         model = Image
         fields = ('id', 'title', 'thumbnail')
 
-    def get_thumbnail_url(self, instance):
+    def get_thumbnail(self, instance):
         return instance.thumbnail.url
 
 
