@@ -10,7 +10,7 @@
 }
 
 :80/static/ {
-    root /var/www
+    root /srv/backend
 
     gzip
     log stdout
@@ -21,4 +21,8 @@
 
     gzip
     log stdout
+}
+
+:8080 {
+  root /srv/frontend
 }
