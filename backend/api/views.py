@@ -16,10 +16,14 @@ from api.serializers import (
 )
 
 from api.viewsets import (
-    MultiSerializerViewSet
+    MultiSerializerViewSet,
+    ConditionalAuthenticationMixin
 )
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly
+)
 
 from rest_framework.generics import (
     GenericAPIView,
@@ -27,19 +31,16 @@ from rest_framework.generics import (
     UpdateAPIView
 )
 
-class PostViewSet(MultiSerializerViewSet):
+class PostViewSet(ConditionalAuthenticationMixin,
+                  MultiSerializerViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     serializer_action_classes = {
         'list': PostListSerializer
     }
-
-    def get_permissions(self):
-        if self.action in ['list', 'retrieve']:
-            permission_classes = []
-        else:
-            permission_classes = [IsAuthenticated]
-        return [permission() for permission in permission_classes]
+    unauthenticated_actions = [
+        'list', 'retrieve'
+    ]
 
     def perform_update(self, serializer):
         serializer.instance.editors.add(self.request.user.pk)
@@ -57,11 +58,12 @@ class ImageViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'list': ImageListSerializer
     }
+    permission_classes = (IsAuthenticated,)
 
 
 class SettingsUpdateView(RetrieveAPIView,
                          UpdateAPIView):
     serializer_class = SettingsSerializer
-
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     def get_object(self):
         return Settings.load()

@@ -45,7 +45,6 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     'bokstaever',
-    'dashboard',
     'api'
 ]
 
@@ -73,7 +72,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'bokstaever.context_processors.info'
             ],
         },
     },
@@ -125,9 +123,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
+
 STATIC_ROOT = 'static'
 
 STATIC_URL = '/static/'
@@ -154,4 +153,4 @@ JWT_AUTH = {
 }
 
 # CORS
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST')
