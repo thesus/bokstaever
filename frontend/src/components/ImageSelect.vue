@@ -31,12 +31,18 @@ export default {
   filters: {
     'pluralize': pluralize
   },
-  props: ['multiple'],
+  props: {
+    'multiple': Boolean,
+    'limit': {
+      type: Number,
+      default: 15
+    }
+  },
   data () {
     return {
       images: {},
       page: 1,
-      selected: []
+      selected: [],
     }
   },
   mounted () {
@@ -52,7 +58,7 @@ export default {
       this.$set(
         this,
         'images',
-        await this.$api.getByPage('/images/', 15, this.page, true)
+        await this.$api.getByPage('/images/', this.limit, this.page, true)
       )
     },
     selectImage (image) {

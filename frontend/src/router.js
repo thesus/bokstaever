@@ -6,6 +6,8 @@ import DashboardHome from './views/dashboard/Home'
 import PostList from './views/dashboard/PostList'
 import PostEdit from './views/dashboard/PostEdit'
 
+import ImageList from './views/dashboard/ImageList'
+import ImageUpload from './views/dashboard/ImageUpload'
 
 import Public from './views/public/Public'
 import PublicHome from './views/public/Home'
@@ -65,6 +67,18 @@ const router = new VueRouter({
           path: 'posts/edit/:id',
           name: 'post-edit',
           component: PostEdit,
+          beforeEnter: loginRequired
+        },
+        {
+          path: 'images/list',
+          name: 'image-list',
+          component: ImageList,
+          beforeEnter: loginRequired
+        },
+        {
+          path: 'image/upload',
+          name: 'image-upload',
+          component: ImageUpload,
           beforeEnter: loginRequired
         }
       ],

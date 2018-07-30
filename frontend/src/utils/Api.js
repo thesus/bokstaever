@@ -20,7 +20,7 @@ const ApiPlugin = {
           method: 'get',
           url: this.apiRoot + url,
         }
-        checkAuth(config, authenticated)
+        config = checkAuth(config, authenticated)
 
         return Vue.axios(config).then((response) => {
           return response.data
@@ -32,11 +32,26 @@ const ApiPlugin = {
           url: this.apiRoot + url,
           data: data
         }
-        checkAuth(config, authenticated)
-        console.log(config)
+        config = checkAuth(config, authenticated)
+
         return Vue.axios(config).then((response) => {
           return response.data
         })
+      },
+      sendFile: (url, data, method='post', authenticated=false, instance) => {
+        let config =  {
+          method: 'post',
+          url: this.apiRoot + url,
+          data: data,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          onUploadProgress: (progressEvent) => {
+            instance.progress = (progressEvent.loaded / progressEvent.total) * 100
+          }
+        }
+        config = checkAuth(config, authenticated)
+        return Vue.axios(config)
       },
       async getByPage (url, limit, page, authenticated=false) {
         let offset = limit * (page - 1)
