@@ -14,9 +14,7 @@ RUN export SECRET_KEY=secret && \
     export ALLOWED_HOSTS=['127.0.0.1'] && \
     export CORS_ORIGIN_WHITELIST="example.com" \
     export STATIC_ROOT=$(DJANGO_SETTINGS_MODULE=bokstaever.conf.settings.base python -c "from django.conf import settings; print(settings.STATIC_ROOT)") && \
-    python manage.py collectstatic --noinput && \
-    if [ "$STATIC_ROOT" != "$(readlink -f /static-root)" ]; then mv "$STATIC_ROOT" /static-root; fi
-
+    python manage.py collectstatic --noinput
 
 FROM node:10.7.0-alpine as node_builder
 
@@ -29,6 +27,6 @@ RUN yarn && yarn build
 
 FROM abiosoft/caddy:0.10.6
 
-COPY --from=django_builder /static-root /srv/backend
+COPY --from=django_builder /src/static /srv/backend
 COPY --from=node_builder /src/dist /srv/frontend
 COPY Caddyfile /etc/Caddyfile
