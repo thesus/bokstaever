@@ -4,7 +4,13 @@ Provides some basic styling for input Elements.
 
 @import '@/modules/variables.scss';
 
-textarea, input {
+input[type=file] {
+  display: none;
+  overflow: hidden;
+  position: relative;
+}
+
+textarea, input[type=text]{
   font-family: $font-family;
   width: 100%;
   box-sizing: border-box;

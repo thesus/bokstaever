@@ -18,6 +18,8 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
+@import "@/modules/buttons.scss";
+
 .modal-mask {
     position: fixed;
     z-index: 10000;

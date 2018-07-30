@@ -1,29 +1,26 @@
 <template>
+
   <form enctype="multipart/form-data" v-on:submit.prevent="submitImages">
-    <table class="table">
-      <tr>
-        <td>Images</td>
-        <td>
-          <input
-            type="file"
-            multiple
-            ref="upload"
-            accept="image/*"
-            @change="imageSelect">
-        </td>
-      </tr>
-    </table>
-    <div class="preview-container">
-      <div class="preview" v-for="image in images" v-if="images">
-        <div class="image-preview">
+    <div class="image-upload">
+      <label class="file-input">
+        <span class="btn btn-default">Upload Images</span>
+        <input
+          type="file"
+          multiple
+          ref="upload"
+          accept="image/*"
+          @change="imageSelect">
+      </label>
+      <div class="image-list">
+        <div class="thumbnail" v-for="image in images" v-if="images">
           <img :src="image.url" :class="{uploading: showProgress(image)}">
           <div
             class="progress"
             v-show="showProgress(image)"
             v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
           </div>
+          <input type="text" v-model="image.title" :disabled="showProgress(image)">
         </div>
-        <input type="text" v-model="image.title" :disabled="showProgress(image)">
       </div>
     </div>
     <button class="btn btn-default btn-right" type="submit">Submit</button>
@@ -77,47 +74,25 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/modules/buttons.scss';
+@import '@/modules/thumbnails.scss';
+@import '@/modules/inputs.scss';
 
-$preview-size: 200px;
-
-input[type=text], input[type=email] {
-    border-radius: 0;
-    border: 1px solid #ccc;
-    width: calc(100% - 5px);
+.uploading {
+  filter: brightness(0.6) blur(0.8px);
 }
 
-.preview-container {
-    display: flex;
-    width: calc(100vw - 16px);
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-content: space-between;
-    .preview {
-        width: $preview-size;
-        margin: 5px;
-        .image-preview {
-            width: $preview-size;
-            height: $preview-size;
-            margin-bottom: 2px;
-            position: relative;
-            img {
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                &.uploading {
-                    filter: brightness(0.6) blur(0.8px);
-                }
-            }
-            .progress {
-                position: absolute;
-                width: 2px;
-                height: 0%;
-                background-color: #ccc;
-                bottom: 5px;
-                right: 5px;
-                border-radius: 2px;
-            }
-        }
-    }
+.thumbnail {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.progress {
+  position: absolute;
+  width: 3px;
+  height: 0%;
+  background-color: #ccc;
+  bottom: 5px;
+  right: 5px;
+  border-radius: 2px;
 }
 </style>

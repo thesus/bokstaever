@@ -86,26 +86,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/modules/pagination.scss';
 @import '@/modules/buttons.scss';
-
-$preview-size: 200px;
-
-.image-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
-    grid-gap: 10px;
-    justify-content: space-between;
-    width: 100%;
-    .thumbnail {
-        width: $preview-size;
-        height: $preview-size;
-    }
-}
-
-img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
+@import '@/modules/thumbnails.scss';
+@import '@/modules/inputs.scss';
 
 .selected {
     outline: 3px solid rgb(44, 70, 127);

@@ -1,0 +1,19 @@
+@import '@/modules/variables.scss';
+
+.image-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-gap: 10px;
+    justify-content: space-between;
+    width: 100%;
+    .thumbnail {
+        width: $thumbnail-size;
+        height: $thumbnail-size;
+    }
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
