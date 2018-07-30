@@ -10,7 +10,7 @@ input[type=file] {
   position: relative;
 }
 
-textarea, input[type=text]{
+textarea, input[type=text], input[type=email]{
   font-family: $font-family;
   width: 100%;
   box-sizing: border-box;
@@ -25,7 +25,7 @@ textarea {
   padding: 10px 15px;
 }
 
-input[type=text] {
+input[type=text], input[type=email] {
   height: 12px;
   width: 100%;
   padding: 14px;

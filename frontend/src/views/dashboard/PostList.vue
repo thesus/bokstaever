@@ -22,7 +22,7 @@
         </tbody>
     </table>
     <pagination-component :count="posts.pages" />
-    <router-link class="btn btn-default" :to="{name: 'post-create'}">New Post</router-link>
+    <router-link class="btn btn-default btn-right" :to="{name: 'post-create'}">New Post</router-link>
   </div>
 </template>
 

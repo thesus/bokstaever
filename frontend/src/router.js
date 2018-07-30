@@ -9,6 +9,8 @@ import PostEdit from './views/dashboard/PostEdit'
 import ImageList from './views/dashboard/ImageList'
 import ImageUpload from './views/dashboard/ImageUpload'
 
+import SettingsEdit from './views/dashboard/SettingsEdit'
+
 import Public from './views/public/Public'
 import PublicHome from './views/public/Home'
 import PublicPost from './views/public/Post'
@@ -79,6 +81,12 @@ const router = new VueRouter({
           path: 'image/upload',
           name: 'image-upload',
           component: ImageUpload,
+          beforeEnter: loginRequired
+        },
+        {
+          path: 'settings/',
+          name: 'settings-edit',
+          component: SettingsEdit,
           beforeEnter: loginRequired
         }
       ],
