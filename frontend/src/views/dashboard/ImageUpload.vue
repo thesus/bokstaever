@@ -1,32 +1,32 @@
 <template>
   <form enctype="multipart/form-data" v-on:submit.prevent="submitImages">
-      <table class="table">
-          <tr>
-              <td>Images</td>
-              <td>
-                  <input
-                      type="file"
-                      multiple
-                      ref="upload"
-                      accept="image/*"
-                      @change="imageSelect">
-              </td>
-          </tr>
-      </table>
-      <div class="preview-container">
-          <div class="preview" v-for="image in images" v-if="images">
-              <div class="image-preview">
-                  <img :src="image.url" :class="{uploading: showProgress(image)}">
-                  <div
-                      class="progress"
-                      v-show="showProgress(image)"
-                      v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
-                  </div>
-              </div>
-              <input type="text" v-model="image.title" :disabled="showProgress(image)">
+    <table class="table">
+      <tr>
+        <td>Images</td>
+        <td>
+          <input
+            type="file"
+            multiple
+            ref="upload"
+            accept="image/*"
+            @change="imageSelect">
+        </td>
+      </tr>
+    </table>
+    <div class="preview-container">
+      <div class="preview" v-for="image in images" v-if="images">
+        <div class="image-preview">
+          <img :src="image.url" :class="{uploading: showProgress(image)}">
+          <div
+            class="progress"
+            v-show="showProgress(image)"
+            v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
           </div>
+        </div>
+        <input type="text" v-model="image.title" :disabled="showProgress(image)">
       </div>
-      <button class="btn btn-default btn-right" type="submit">Submit</button>
+    </div>
+    <button class="btn btn-default btn-right" type="submit">Submit</button>
   </form>
 
 </template>
@@ -76,6 +76,8 @@ export default {
 
 
 <style lang="scss" scoped>
+@import '@/modules/buttons.scss';
+
 $preview-size: 200px;
 
 input[type=text], input[type=email] {

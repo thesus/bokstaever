@@ -22,7 +22,7 @@
         </tbody>
     </table>
     <pagination-component :count="posts.pages" />
-    <router-link class="btn btn-default btn-right" :to="{name: 'post-create'}">New Post</router-link>
+    <router-link class="btn btn-default" :to="{name: 'post-create'}">New Post</router-link>
   </div>
 </template>
 
@@ -64,30 +64,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-    &.table {
-        width: 100%;
-        border-collapse: collapse;
+@import '@/modules/tables.scss';
+@import '@/modules/buttons.scss';
 
-        th, td {
-            text-align: left;
-            padding: 10px;
-            border-left: 0;
-            border-right: 0;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .posts {
-            cursor: pointer;
-        }
-
-        &.table-list {
-            tbody tr {
-                &:hover {
-                    background-color: #f5f5f5
-                }
-            }
-        }
-    }
+.posts {
+  cursor: pointer;
 }
 </style>

@@ -18,8 +18,8 @@
       {{ selected.length }} {{ selected.length | pluralize('Image') }} selected.
     </span>
     <div v-if="multiple" class="btn-group">
-      <button :disabled="selected.length < 1" @click="selected = []">Clear</button>
-      <button :disabled="selected.length < 1" @click="$emit('selected', selected)">Select</button>
+      <button class="btn btn-default" :disabled="selected.length < 1" @click="selected = []">Clear</button>
+      <button class="btn btn-default" :disabled="selected.length < 1" @click="$emit('selected', selected)">Select</button>
   </div>
 </div>
 </template>
@@ -84,6 +84,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/modules/pagination.scss';
+@import '@/modules/buttons.scss';
+
 $preview-size: 200px;
 
 .image-list {
@@ -106,31 +109,6 @@ img {
 
 .selected {
     outline: 3px solid rgb(44, 70, 127);
-}
-
-.pagination {
-    margin: 20px auto auto auto;
-    width: 48px;
-    button {
-        margin: 1px;
-        padding: 0;
-        outline: none;
-        border-style: none;
-        cursor: pointer;
-        opacity: 0.7;
-        &:focus, &:active, &:hover, &:visited {
-            border-style: none !important;
-            border: 0 !important;
-            outline: none !important;
-        }
-        &:hover {
-            opacity: 0.9;
-        }
-        &:disabled {
-            cursor: default;
-            opacity: 0.4;
-        }
-    }
 }
 
 .btn-group {

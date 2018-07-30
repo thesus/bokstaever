@@ -1,0 +1,29 @@
+.pagination {
+  margin: 8px auto auto auto;
+  width: 48px;
+  button {
+    padding: 0;
+    outline: none;
+    border-style: none;
+    cursor: pointer;
+    opacity: 0.7;
+    &:focus, &:active, &:hover, &:visited {
+      border-style: none !important;
+      border: 0 !important;
+      outline: none !important;
+    }
+    &:hover {
+      opacity: 0.9;
+    }
+    &:disabled {
+      cursor: default;
+      opacity: 0.4;
+    }
+    &:first-child {
+      margin-right: 2px;
+    }
+    &:last-child {
+      margin-left: 2px;
+    }
+  }
+}

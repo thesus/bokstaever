@@ -1,20 +1,31 @@
 <template>
   <div>
     <form v-on:submit.prevent="submitPost">
-        <table class="table">
-            <tr>
-                <td>Title</td>
-                <td><input type="text" v-model="post.headline"></td>
-           </tr>
-           <tr>
-               <td>Content</td>
-               <td><textarea v-model="post.text"></textarea></td>
-           </tr>
-        </table>
-        <button class="btn btn-default btn-right" type="submit">Submit</button>
+      <table class="table">
+        <tr>
+          <td>Title</td>
+          <td><input type="text" v-model="post.headline"></td>
+        </tr>
+        <tr>
+          <td>Content</td>
+          <td><textarea v-model="post.text"></textarea></td>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td>
+            <div class="image-select">
+              <div class="current-image" v-if="post.thumbnail_url">
+                <img :src="$mediaRoot + post.thumbnail_url">
+              </div>
+              <button class="btn btn-default" @click="showModal = true">
+                Select Image
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <button class="btn btn-default btn-right" type="submit">Submit</button>
     </form>
-    <img :src="$mediaRoot + post.thumbnail_url" v-if="post.thumbnail_url">
-    <button type="iuae" @click="showModal = true">Select Image</button>
     <modal-component v-if="showModal" @close="showModal = false">
       <image-component @selected="selectImage"/>
     </modal-component>
@@ -97,3 +108,28 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/modules/tables.scss';
+@import '@/modules/buttons.scss';
+@import '@/modules/inputs.scss';
+
+.image-select {
+    display: flex;
+
+    .btn {
+      margin: auto 0 auto 0;
+    }
+}
+
+.current-image {
+  height: 150px;
+  width: 150px;
+  margin-right: 8px;
+  img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+  }
+}
+</style>

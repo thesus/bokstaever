@@ -1,0 +1,26 @@
+/*
+Provides some basic styling for input Elements.
+*/
+
+@import '@/modules/variables.scss';
+
+textarea, input {
+  font-family: $font-family;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  font-size: 16px;
+}
+
+textarea {
+  height: 250px;
+  resize: none;
+  padding: 10px 15px;
+}
+
+input[type=text] {
+  height: 12px;
+  width: 100%;
+  padding: 14px;
+}

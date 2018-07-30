@@ -1,0 +1,42 @@
+/*
+Style <button> or <a> with default button class "btn" and an additional
+btn-type, e.g. "btn-default"
+
+ Available types:
+ - btn-default
+ - btn-danger
+
+ To float the button right, add btn-right
+*/
+
+.btn {
+  border: none;
+  height: 35px;
+  cursor: pointer;
+  margin: 8px;
+  &.btn-default {
+    background-color: rgb(44, 70, 127);
+    color: white;
+    &:hover {
+      background-color: rgb(36, 57, 105);
+    }
+  }
+  &.btn-danger {
+    background-color: rgb(178, 18, 49);
+    color: white;
+    &:hover {
+      background-color: rgb(148, 15, 40);
+    }
+  }
+
+  &.btn-right {
+    float: right;
+  }
+}
+
+a.btn {
+  line-height: 35px;
+  display: inline-block;
+  padding: 0px 8px 0px 8px;
+  text-decoration: none;
+}
