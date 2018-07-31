@@ -85,10 +85,10 @@ class PageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
         fields = (
-            'image',
             'name',
             'slug',
             'text',
+            'image',
             'image_url'
         )
         lookup_field = 'slug'
@@ -97,7 +97,10 @@ class PageSerializer(serializers.ModelSerializer):
         }
 
     def get_image_url(self, instance):
-        return instance.image.image.url
+        try:
+            return instance.image.image.url
+        except AttributeError:
+            return None
 
 
 class PageListSerializer(serializers.ModelSerializer):
