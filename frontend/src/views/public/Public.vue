@@ -80,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background: #fff;
