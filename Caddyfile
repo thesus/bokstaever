@@ -1,0 +1,28 @@
+:80 {
+    proxy / http://web/ {
+        except /static /media
+        transparent
+        websocket
+    }
+
+    gzip
+    log stdout
+}
+
+:80/static/ {
+    root /srv/backend
+
+    gzip
+    log stdout
+}
+
+:80/media/ {
+    root /srv/media/
+
+    gzip
+    log stdout
+}
+
+:8080 {
+  root /srv/frontend
+}
