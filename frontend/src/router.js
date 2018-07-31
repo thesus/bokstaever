@@ -9,9 +9,12 @@ import PostEdit from './views/dashboard/PostEdit'
 import ImageList from './views/dashboard/ImageList'
 import ImageUpload from './views/dashboard/ImageUpload'
 
+import SettingsEdit from './views/dashboard/SettingsEdit'
+
 import Public from './views/public/Public'
 import PublicHome from './views/public/Home'
 import PublicPost from './views/public/Post'
+import PublicPage from './views/public/Page'
 
 import Login from './views/auth/Login'
 import Logout from './views/auth/Logout'
@@ -80,7 +83,13 @@ const router = new VueRouter({
           name: 'image-upload',
           component: ImageUpload,
           beforeEnter: loginRequired
-        }
+        },
+        {
+          path: 'settings/',
+          name: 'settings-edit',
+          component: SettingsEdit,
+          beforeEnter: loginRequired
+        },
       ],
     },
     {
@@ -110,6 +119,11 @@ const router = new VueRouter({
           name: 'detail',
           path: '/post/:id/:slug',
           component: PublicPost,
+        },
+        {
+          name: 'page',
+          path: ':slug',
+          component: PublicPage
         }
       ]
     }

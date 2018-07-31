@@ -1,7 +1,7 @@
 <template>
   <div>
     <image-component :limit="30" @selected="console.log('fixme')"></image-component>
-    <router-link :to="{ name: 'image-upload' }">Upload</router-link>
+    <router-link class="btn btn-default btn-right" :to="{ name: 'image-upload' }">Upload</router-link>
   </div>
 </template>
 
@@ -14,3 +14,7 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/modules/buttons.scss';
+</style>

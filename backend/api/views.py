@@ -1,6 +1,7 @@
 from bokstaever.models import (
     Post,
     Image,
+    Page,
 
     Settings
 )
@@ -12,7 +13,10 @@ from api.serializers import (
     ImageSerializer,
     ImageListSerializer,
 
-    SettingsSerializer
+    SettingsSerializer,
+
+    PageSerializer,
+    PageListSerializer
 )
 
 from api.viewsets import (
@@ -67,3 +71,15 @@ class SettingsUpdateView(RetrieveAPIView,
     permission_classes = (IsAuthenticatedOrReadOnly,)
     def get_object(self):
         return Settings.load()
+
+class PageViewSet(ConditionalAuthenticationMixin,
+                  MultiSerializerViewSet):
+    queryset = Page.objects.all()
+    serializer_class = PageSerializer
+    serializer_action_classes = {
+        'list': PageListSerializer
+    }
+    unauthenticated_actions = [
+        'list', 'retrieve'
+    ]
+    lookup_field = 'slug'

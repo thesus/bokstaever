@@ -2,12 +2,11 @@
   <div class="detail-container">
     <div class="image-container">
       <div class="post-image">
-          <img :src="$mediaRoot + post.image_url">
+          <img :src="$mediaRoot + page.image_url">
       </div>
-      <span class="image-title">{{ post.image_title }}</span>
     </div>
       <div class="post-content">
-          <h1>{{ post.headline }}</h1>
+          <h1>{{ page.name }}</h1>
           <div class="text" lang="en">
             <p v-for="chunk in getTextChunks">
               {{ chunk }}
@@ -23,12 +22,12 @@ import { chunkify } from '@/filters/Text'
 export default {
   data () {
     return {
-      post: {}
+      page: {}
     }
   },
   computed: {
     getTextChunks () {
-      return chunkify(this.post.text || '')
+      return chunkify(this.page.text || '')
     }
   },
   mounted () {
@@ -38,8 +37,8 @@ export default {
     async getPost () {
       this.$set(
         this,
-        'post',
-        await this.$api.get(`/posts/${this.$route.params.id}`)
+        'page',
+        await this.$api.get(`/pages/${this.$route.params.slug}`)
       )
     }
   }
