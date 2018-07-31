@@ -5,7 +5,7 @@
         <span class="image" :style="{ 'background-image': 'url(' + $mediaRoot + post.image + ')' }"> </span>
         <div class="post-content" lang="en">
             <div class="post-text">
-              <h2>{{ posts.headline }}</h2>
+              <h2>{{ post.headline }}</h2>
               <p>{{ post.text | truncatechars(400) }}</p>
               <div class="post-footer">
                   {{ post.published }} →

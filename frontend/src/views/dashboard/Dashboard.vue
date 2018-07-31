@@ -3,15 +3,17 @@
     <nav class="navbar">
       <div class="container">
         <ul>
-            <li><router-link :to="{ name: 'home' }">Home</router-link></li>
-            <li><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
-            <li><router-link :to="{ name: 'post-list' }">Posts</router-link></li>
-            <li><router-link :to="{ name: 'image-list' }">Images</router-link></li>
-            <li><router-link :to="{ name: 'settings-edit' }">Settings</router-link></li>
+          <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+          <li><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
+          <li><router-link :to="{ name: 'post-list' }">Posts</router-link></li>
+          <li><router-link :to="{ name: 'image-list' }">Images</router-link></li>
+          <li><router-link :to="{ name: 'settings-edit' }">Settings</router-link></li>
         </ul>
       </div>
     </nav>
-    <router-view/>
+    <div class="content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -26,7 +28,7 @@
     background: #fff;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
-    margin: 8px 8px 10px 8px;
+    margin: 8px 0px 10px 0px;
 
     .container {
         width: 100%;
@@ -75,5 +77,9 @@
             }
         }
     }
+}
+
+.content {
+  padding: 8px;
 }
 </style>
