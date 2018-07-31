@@ -1,6 +1,6 @@
 <template>
   <div class="detail-container">
-    <div class="image-container">
+    <div class="image-container" v-if="page.image">
       <div class="post-image">
           <img :src="$mediaRoot + page.image_url">
       </div>
@@ -8,9 +8,7 @@
       <div class="post-content">
           <h1>{{ page.name }}</h1>
           <div class="text" lang="en">
-            <p v-for="chunk in getTextChunks">
-              {{ chunk }}
-            </p>
+            <p v-for="chunk in getTextChunks" v-html="chunk" />
           </div>
       </div>
   </div>
@@ -38,7 +36,7 @@ export default {
       this.$set(
         this,
         'page',
-        await this.$api.get(`/pages/${this.$route.params.slug}`)
+        await this.$api.get(`/pages/${this.$route.params.slug}/`)
       )
     }
   }
