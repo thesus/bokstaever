@@ -6,27 +6,30 @@
       <div class="container">
         <ul>
           <li><router-link :to="{ name: 'home' }">Home</router-link></li>
-          <li>
-            <router-link v-if="isLoggedIn" :to="{ name: 'dashboard'}">
+          <li v-if="isLoggedIn">
+            <router-link :to="{ name: 'dashboard'}">
               Dashboard
             </router-link>
           </li>
           <li v-for="page in pages.results">
-            <router-link :to="{ name: 'page', params: { slug: page.slug } }">{{ page.slug }}</router-link>
-          <li>
-            <router-link v-if="isLoggedIn" :to="{ name: 'logout'}">
+            <router-link :to="{ name: 'page', params: { slug: page.slug } }" replace>
+              {{ page.slug }}
+            </router-link>
+          </li>
+          <li v-if="isLoggedIn">
+            <router-link :to="{ name: 'logout'}">
               Logout
             </router-link>
           </li>
-          <li>
-            <router-link v-if="!isLoggedIn" :to="{ name: 'login'}">
+          <li v-if="!isLoggedIn">
+            <router-link :to="{ name: 'login'}">
               Login
             </router-link>
           </li>
         </ul>
       </div>
     </nav>
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
     <footer class="footer">
         <div class="container">
             <h3 class="title">{{ info.name }}</h3>

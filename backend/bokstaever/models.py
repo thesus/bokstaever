@@ -65,9 +65,6 @@ class Post(models.Model):
             self.slug = slugify(self.headline)
         super().save(*args, **kwargs)
 
-    def get_absolute_url(self):
-        return reverse('dashboard:post-edit', kwargs={'pk': self.pk})
-
     class Meta:
         ordering = ['-published', '-pk']
 
