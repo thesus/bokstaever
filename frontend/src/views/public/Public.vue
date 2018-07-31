@@ -11,7 +11,8 @@
               Dashboard
             </router-link>
           </li>
-          <li><a href="/impressum">Impressum</a></li>
+          <li v-for="page in pages.results">
+            <router-link :to="{ name: 'page', params: { slug: page.slug } }">{{ page.slug }}</router-link>
           <li>
             <router-link v-if="isLoggedIn" :to="{ name: 'logout'}">
               Logout
@@ -45,11 +46,13 @@
 export default {
   data () {
     return {
-      info: {}
+      info: {},
+      pages: {}
     }
   },
   mounted() {
     this.getInfo()
+    this.getPages()
   },
   computed: {
     isLoggedIn () {
@@ -62,6 +65,13 @@ export default {
         this,
         'info',
         await this.$api.get('/settings/')
+      )
+    },
+    async getPages() {
+      this.$set(
+        this,
+        'pages',
+        await this.$api.get('/pages/')
       )
     }
   }

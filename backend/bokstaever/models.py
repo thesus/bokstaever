@@ -38,6 +38,8 @@ class Image(models.Model):
     def __str__(self):
         return '{0.title}'.format(self)
 
+    class Meta:
+        ordering = ['-pk', ]
 
 class Post(models.Model):
     headline = models.CharField(max_length=200)
@@ -68,6 +70,27 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-published', '-pk']
+
+
+class Page(models.Model):
+    image = models.ForeignKey(
+        Image,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+    name = models.CharField(max_length=200)
+
+    text = models.TextField()
+
+    slug = models.SlugField(max_length=200, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['-pk']
 
 
 class SingletonModel(models.Model):

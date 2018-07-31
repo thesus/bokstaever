@@ -3,7 +3,8 @@ from rest_framework import serializers
 from bokstaever.models import (
     Post,
     Image,
-    Settings
+    Settings,
+    Page
 )
 
 class PostSerializer(serializers.ModelSerializer):
@@ -76,3 +77,30 @@ class SettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Settings
         fields = ('name', 'email', 'info')
+
+
+class PageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Page
+        fields = (
+            'image',
+            'name',
+            'slug',
+            'text',
+            'image_url'
+        )
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
+
+    def get_image_url(self, instance):
+        return instance.image.image.url
+
+
+class PageListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Page
+        fields = ('name', 'slug')
