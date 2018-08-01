@@ -3,7 +3,7 @@
     <div class="image-list">
       <div v-if="images" v-for="image in images.results" class="thumbnail">
         <img
-         :src="$mediaRoot + image.thumbnail"
+         :src="image.thumbnail"
          :class="{ 'selected': isSelected(image.id) }"
          @click="selectImage(image)"
         >
@@ -71,7 +71,7 @@ export default {
           this.selected.push(id)
         }
       } else {
-        this.$emit('selected', image)
+        this.$emit('selected', id)
       }
     }
   },

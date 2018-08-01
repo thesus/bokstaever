@@ -20,6 +20,9 @@
               <button class="btn btn-default" @click="showModal = true">
                 Select Image
               </button>
+              <modal-component v-if="showModal" @close="showModal = false">
+                <image-component @selected="selectImage"/>
+              </modal-component>
             </div>
           </td>
         </tr>
@@ -112,24 +115,4 @@ export default {
 <style lang="scss" scoped>
 @import '@/modules/tables.scss';
 @import '@/modules/buttons.scss';
-@import '@/modules/inputs.scss';
-
-.image-select {
-    display: flex;
-
-    .btn {
-      margin: auto 0 auto 0;
-    }
-}
-
-.current-image {
-  height: 150px;
-  width: 150px;
-  margin-right: 8px;
-  img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-  }
-}
 </style>

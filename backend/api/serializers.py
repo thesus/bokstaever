@@ -7,6 +7,14 @@ from bokstaever.models import (
     Page
 )
 
+class ImageField(serializers.ReadOnlyField):
+
+    def to_representation(self, obj):
+        try:
+            return obj.url
+        except AttributeError:
+            return ''
+
 class PostSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     image_title = serializers.SerializerMethodField()
@@ -57,20 +65,11 @@ class PostListSerializer(serializers.ModelSerializer):
         return instance.image.image.url
 
 class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = ('id', 'title', 'image')
-
-
-class ImageListSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.SerializerMethodField()
+    thumbnail = serializers.ImageField(use_url=True, read_only=True)
 
     class Meta:
         model = Image
-        fields = ('id', 'title', 'thumbnail')
-
-    def get_thumbnail(self, instance):
-        return instance.thumbnail.url
+        fields = ('id', 'title', 'image', 'thumbnail')
 
 
 class SettingsSerializer(serializers.ModelSerializer):
@@ -81,6 +80,7 @@ class SettingsSerializer(serializers.ModelSerializer):
 
 class PageSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
+    slug = serializers.ReadOnlyField()
 
     class Meta:
         model = Page

@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '@/modules/buttons.scss';
 @import '@/modules/tables.scss';
 
