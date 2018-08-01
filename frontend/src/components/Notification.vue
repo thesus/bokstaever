@@ -16,7 +16,7 @@ export default {
       messages: []
     }
   },
-  created () {
+  beforeMount () {
     events.$on('add', this.addMessage)
   },
   beforeDestroy () {
