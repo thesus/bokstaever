@@ -85,7 +85,7 @@ class PageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
         fields = (
-            'name',
+            'headline',
             'slug',
             'text',
             'image',
@@ -106,4 +106,4 @@ class PageSerializer(serializers.ModelSerializer):
 class PageListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
-        fields = ('name', 'slug')
+        fields = ('headline', 'slug')

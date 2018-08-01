@@ -28,7 +28,7 @@ export default {
           },
           {
             name: 'Headline',
-            identifier: 'name'
+            identifier: 'headline'
           }
       ]
     }

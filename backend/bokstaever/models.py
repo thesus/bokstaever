@@ -76,7 +76,7 @@ class Page(models.Model):
         blank=True,
         null=True
     )
-    name = models.CharField(max_length=200)
+    headline = models.CharField(max_length=200)
 
     text = models.TextField()
 
