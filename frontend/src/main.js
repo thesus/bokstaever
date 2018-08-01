@@ -5,9 +5,10 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-import ApiPlugin from '@/utils/Api.js'
+import ApiPlugin from '@/plugins/Api.js'
+import NotifyPlugin from '@/plugins/Notify.js'
 
-
+Vue.use(NotifyPlugin)
 Vue.use(ApiPlugin)
 Vue.use(VueAxios, axios)
 
