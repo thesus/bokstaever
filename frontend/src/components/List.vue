@@ -9,7 +9,7 @@
       <tbody>
         <tr
           v-for="instance in instances.results"
-          @click="$router.push({ name: info.router.edit, params: { id: instance.id }})">
+          @click="goToEdit(instance)">
           <td v-for="field in fields" v-html="instance[field.identifier]" />
         </tr>
       </tbody>
@@ -65,6 +65,11 @@ export default {
           true
         )
       )
+    },
+    goToEdit (instance){
+      let params = {}
+      params[this.info.router.field] = instance[this.info.router.field]
+      this.$router.push({ name: this.info.router.edit, params: params })
     }
   },
   watch: {

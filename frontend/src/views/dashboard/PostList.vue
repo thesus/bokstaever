@@ -16,6 +16,7 @@ export default {
         limit: 8,
         path: '/posts/',
         router: {
+          field: 'id',
           edit: 'post-edit',
           create: 'post-create',
           createText: 'Create Post'

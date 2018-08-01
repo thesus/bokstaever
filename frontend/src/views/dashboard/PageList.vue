@@ -16,6 +16,7 @@ export default {
         limit: 8,
         path: '/pages/',
         router: {
+          field: 'slug',
           edit: 'page-edit',
           create: 'page-create',
           createText: 'Create Page'
