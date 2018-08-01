@@ -14,25 +14,21 @@ export default {
       posts: {},
       info: {
         limit: 8,
-        path: '/posts/',
+        path: '/pages/',
         router: {
-          edit: 'post-edit',
-          create: 'post-create',
-          createText: 'Create Post'
+          edit: 'page-edit',
+          create: 'page-create',
+          createText: 'Create Page'
         }
       },
       fields: [
           {
-            name: 'ID',
-            identifier: 'id'
+            name: 'Slug',
+            identifier: 'slug'
           },
           {
             name: 'Headline',
-            identifier: 'headline'
-          },
-          {
-            name: 'Date',
-            identifier: 'published'
+            identifier: 'name'
           }
       ]
     }

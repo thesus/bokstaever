@@ -5,6 +5,7 @@ import Dashboard from './views/dashboard/Dashboard'
 import DashboardHome from './views/dashboard/Home'
 import PostList from './views/dashboard/PostList'
 import PostEdit from './views/dashboard/PostEdit'
+import PageList from './views/dashboard/PageList'
 
 import ImageList from './views/dashboard/ImageList'
 import ImageUpload from './views/dashboard/ImageUpload'
@@ -70,6 +71,12 @@ const router = new VueRouter({
           path: 'posts/edit/:id',
           name: 'post-edit',
           component: PostEdit,
+          beforeEnter: loginRequired
+        },
+        {
+          path: 'pages/list',
+          name: 'page-list',
+          component: PageList,
           beforeEnter: loginRequired
         },
         {
