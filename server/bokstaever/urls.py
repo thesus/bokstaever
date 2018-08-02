@@ -10,5 +10,6 @@ template = 'registration/form.html'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls'), name='api'),
+    path('', include('frontend.urls'), name='frontend'),
     path('api/auth/', include('djoser.urls.jwt')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

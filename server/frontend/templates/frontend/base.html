@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block ui %}
+    <input type="checkbox" id="menu" name="menu" class="menu-checkbox">
+    <div class="menu">
+        <label class="menu-toggle" for="menu"><span>Toggle</span></label>
+        <ul>
+            <li>
+                <a>Startseite</a>
+            </li>
+            <li>
+                <a>Neuigkeiten</a>
+            </li>
+            {% for entry in sites %}
+                <li>
+                    <a>{{ entry.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if image %}
+        <div class="header">
+            <img class="header-img" style="height: 60%;" src="{% url 'download' pk=image.pk %}">
+        </div>
+    {% endif %}
+
+    <div class="content">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+{% endblock ui %}

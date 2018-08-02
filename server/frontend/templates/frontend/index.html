@@ -1,0 +1,28 @@
+{% extends 'frontend/base.html' %}
+{% load bokstaever %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+{{ info | markdownify }}
+
+<div class="row posts">
+  {% for post in posts %}
+    {{ post }}
+    <div class="col-md-4 card-group">
+      <div class="card mb-3">
+          <img class="card-img-top" src="{{ post.image.url }}">
+        <div class="card-body">
+          <h4 class="card-title">{{ post.title }}</h4>
+          <p class="card-text">{{ post.text | markdownify | truncatechars_html:250 }}</p>
+          <small class="post-footer">
+            {{ post.published_date | date:"c"}}
+            <a>Weiterlesen...</a>
+          </small>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'bokstaever/base.html' %}
+{% load bokstaever %}
+
+{% block content %}
+
+<h1>{{ post.title }}</h1>
+{{ post.markdown | markdownify }}
+<small>{{ post.published_date | date:"c" }}, {{ post.author.first_name }}</small>
+{% endblock content %}
