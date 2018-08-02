@@ -7,7 +7,8 @@
         v-for="message in messages"
         :key="message.ID"
         @click="destroy(message.ID)">
-        <div class="header">{{ message.title }} {{ message.ID }}</div>
+        <div class="id">{{ message.ID }}</div>
+        <div class="header">{{ message.title }}</div>
         <div class="content">{{ message.text }}</div>
       </div>
     </transition-group>
@@ -25,7 +26,7 @@ export default {
       messages: []
     }
   },
-  beforeMount () {
+  mounted () {
     events.$on('add', this.addMessage)
   },
   beforeDestroy () {
@@ -80,8 +81,17 @@ export default {
 }
 
 .card {
+  position: relative;
   margin-bottom: 8px;
   cursor: pointer;
+
+  .id {
+    position: absolute;
+    top: 3px;
+    right: 6px;
+    font-size: 14px;
+  }
+
   .header {
     height: 20px;
     padding: 2px 0 2px 5px;

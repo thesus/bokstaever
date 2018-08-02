@@ -27,7 +27,7 @@ Vue.axios.interceptors.response.use (
     if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
       router.push('/logout')
     } else {
-      return response
+      return Promise.reject(error)
     }
   }
 )

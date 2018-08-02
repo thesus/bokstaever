@@ -1,5 +1,8 @@
 <template>
-  <edit-component :instance="instance" :fields="fields" @update="submitObject" />
+  <div>
+    <notifications />
+    <edit-component :instance="instance" :fields="fields" @update="submitObject" />
+  </div>
 </template>
 
 <script>
@@ -57,13 +60,26 @@ export default {
           data[i.identifier] = this.instance[i.identifier]
         }
       }
-      let response = await this.$api.send(
-        this.getURL,
-        data,
-        this.getMethod,
-        true
-      )
-      // TODO: Catch if error
+
+      try {
+        var response = await this.$api.send(
+          this.getURL,
+          data,
+          this.getMethod,
+          true
+        )
+      } catch(error) {
+          // If request was unsuccessfull, return here,
+          // Notification already created in ApiPlugin
+          return
+      }
+
+      this.$notify({
+        'type': 'success',
+        'title': 'Successfull',
+        'text': 'Saving of instance was successfull!',
+        'timeout': 4000
+      })
       if (this.isNew) {
         let params = {}
         params[this.router.field] = response[this.router.field]
