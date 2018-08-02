@@ -11,8 +11,8 @@
     </div>
 
     <div class="pagination">
-      <button :disabled="!(page > 1)" @click="page -= 1" class="icon left" />
-      <button :disabled="!(page < images.pages)" @click="page += 1" class="icon right" />
+      <button type="button" :disabled="!(page > 1)" @click="page -= 1" class="icon left" />
+      <button type="button" :disabled="!(page < images.pages)" @click="page += 1" class="icon right" />
     </div>
     <span v-if="multiple && selected.length >= 1">
       {{ selected.length }} {{ selected.length | pluralize('Image') }} selected.
@@ -91,6 +91,10 @@ export default {
 
 .selected {
     outline: 3px solid rgb(44, 70, 127);
+}
+
+.thumbnail {
+  cursor: pointer;
 }
 
 .btn-group {

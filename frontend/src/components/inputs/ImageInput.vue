@@ -3,7 +3,7 @@
     <div class="current-image" v-if="image">
       <img :src="image.thumbnail">
     </div>
-    <button class="btn btn-default" @click="showModal = true">
+    <button type="button" class="btn btn-default" @click="showModal = true">
       Select Image
     </button>
     <modal-component v-if="showModal" @close="showModal = false">

@@ -83,7 +83,8 @@ class Page(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.headline)
+        if not self.slug:
+            self.slug = slugify(self.headline)
         super().save(*args, **kwargs)
 
     class Meta:
