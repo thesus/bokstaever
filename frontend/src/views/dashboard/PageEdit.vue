@@ -30,11 +30,11 @@ export default {
             }
         ],
         router: {
-          'field': 'id',
-          'create': 'post-create',
-          'edit': 'post-edit'
+          'field': 'slug',
+          'create': 'page-create',
+          'edit': 'page-edit'
         },
-        url: '/posts/'
+        url: '/pages/'
       }
     }
   }

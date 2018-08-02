@@ -6,6 +6,7 @@
           <li><router-link :to="{ name: 'home' }">Home</router-link></li>
           <li><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
           <li><router-link :to="{ name: 'post-list' }">Posts</router-link></li>
+          <li><router-link :to="{ name: 'page-list' }">Pages</router-link></li>
           <li><router-link :to="{ name: 'image-list' }">Images</router-link></li>
           <li><router-link :to="{ name: 'settings-edit' }">Settings</router-link></li>
         </ul>

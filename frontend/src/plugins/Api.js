@@ -36,6 +36,21 @@ const ApiPlugin = {
 
         return Vue.axios(config).then((response) => {
           return response.data
+        }).catch(error => {
+          if (error.response && error.response.data) {
+            let data = error.response.data
+            if (typeof data === 'object') {
+              for (let key in data) {
+                Vue.notify({
+                  type: 'danger',
+                  title: `Error on Field: ${key}`,
+                  text: `${data[key]}`,
+                  timeout: 5000
+                })
+              }
+            }
+          }
+          throw new Error(error)
         })
       },
       sendFile: (url, data, method='post', authenticated=false, instance) => {

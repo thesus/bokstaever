@@ -3,7 +3,7 @@
     <div class="image-list">
       <div v-if="images" v-for="image in images.results" class="thumbnail">
         <img
-         :src="$mediaRoot + image.thumbnail"
+         :src="image.thumbnail"
          :class="{ 'selected': isSelected(image.id) }"
          @click="selectImage(image)"
         >
@@ -11,8 +11,8 @@
     </div>
 
     <div class="pagination">
-      <button :disabled="!(page > 1)" @click="page -= 1" class="icon left" />
-      <button :disabled="!(page < images.pages)" @click="page += 1" class="icon right" />
+      <button type="button" :disabled="!(page > 1)" @click="page -= 1" class="icon left" />
+      <button type="button" :disabled="!(page < images.pages)" @click="page += 1" class="icon right" />
     </div>
     <span v-if="multiple && selected.length >= 1">
       {{ selected.length }} {{ selected.length | pluralize('Image') }} selected.
@@ -71,7 +71,7 @@ export default {
           this.selected.push(id)
         }
       } else {
-        this.$emit('selected', image)
+        this.$emit('selected', id)
       }
     }
   },
@@ -91,6 +91,10 @@ export default {
 
 .selected {
     outline: 3px solid rgb(44, 70, 127);
+}
+
+.thumbnail {
+  cursor: pointer;
 }
 
 .btn-group {

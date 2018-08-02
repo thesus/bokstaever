@@ -11,7 +11,6 @@ from api.serializers import (
     PostListSerializer,
 
     ImageSerializer,
-    ImageListSerializer,
 
     SettingsSerializer,
 
@@ -35,6 +34,10 @@ from rest_framework.generics import (
     UpdateAPIView
 )
 
+from rest_framework.viewsets import (
+    ModelViewSet
+)
+
 class PostViewSet(ConditionalAuthenticationMixin,
                   MultiSerializerViewSet):
     queryset = Post.objects.all()
@@ -56,12 +59,9 @@ class PostViewSet(ConditionalAuthenticationMixin,
             editors=[self.request.user.pk]
         )
 
-class ImageViewSet(MultiSerializerViewSet):
+class ImageViewSet(ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-    serializer_action_classes = {
-        'list': ImageListSerializer
-    }
     permission_classes = (IsAuthenticated,)
 
 

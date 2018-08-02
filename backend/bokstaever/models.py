@@ -76,14 +76,15 @@ class Page(models.Model):
         blank=True,
         null=True
     )
-    name = models.CharField(max_length=200)
+    headline = models.CharField(max_length=200)
 
     text = models.TextField()
 
     slug = models.SlugField(max_length=200, unique=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            self.slug = slugify(self.headline)
         super().save(*args, **kwargs)
 
     class Meta:
