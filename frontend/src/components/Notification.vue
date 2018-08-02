@@ -1,14 +1,23 @@
 <template>
   <div class="notifications">
-    <div class="card" v-for="message in messages" :class="message.type">
-      <div class="header">{{ message.title }}</div>
-      <div class="content">{{ message.text }}</div>
-    </div>
+    <transition-group name="message" tag="div">
+      <div
+        class="card"
+        :class="message.type"
+        v-for="message in messages"
+        :key="message.ID"
+        @click="destroy(message.ID)">
+        <div class="header">{{ message.title }} {{ message.ID }}</div>
+        <div class="content">{{ message.text }}</div>
+      </div>
+    </transition-group>
   </div>
 </template>
 
 <script>
 import { events } from '@/utils/event'
+
+const ID = (i => () => i++)(0)
 
 export default {
   data () {
@@ -24,47 +33,82 @@ export default {
   },
   methods: {
     addMessage (message) {
-      this.messages.push(message)
+      let data = {
+        ID: ID(),
+        title: message.title || '',
+        text: message.text || '',
+        type: message.type || 'default'
+      }
+
+      this.messages.unshift(data)
+
+      let timeout = message.timeout ? message.timeout : 0
+      if (timeout > 0) {
+        window.setTimeout(this.destroy, timeout, data.ID)
+      }
+    },
+    destroy (id) {
+      this.messages = this.messages.filter(message => message.ID != id);
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.message-enter-active, .message-leave-active {
+  transition: all .3s;
+}
+.message-enter {
+  margin-top: -60px;
+}
+.message-enter-to, .messeage-leave {
+  margin-top: 0px;
+  opacity: 1;
+}
+
+.message-leave-to {
+  opacity: 0;
+}
+
 .notifications {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 10px;
+  top: 8px;
   width: 400px;
 
   display: block;
+}
 
-  .card {
-    margin: 8px 0 8px 0;
-    background-color: pink;
+.card {
+  margin-bottom: 8px;
+  cursor: pointer;
+  .header {
+    height: 20px;
+    padding: 2px 0 2px 5px;
+    border-bottom: 1px solid;
+  }
+  .content {
+    padding: 5px;
+  }
+  &.default {
+    background-color: rgba(44, 70, 127, 0.9);
+    color: white;
     .header {
-      height: 20px;
-      padding: 2px 0 2px 5px;
-      border-bottom: 1px solid;
+      background-color: rgba(36, 57, 105, 0.9);
     }
-    .content {
-      padding: 5px;
+  }
+  &.danger {
+    background-color: rgba(178, 18, 49, 0.9);
+    color: white;
+    .header {
+       background-color: rgba(148, 15, 40, 0.9);
     }
-    &.danger {
-        background-color: rgb(178, 18, 49);
-        color: white;
-        opacity: 0.9;
-      .header {
-         background-color: rgb(148, 15, 40);
-      }
-    }
-    &.success {
-      background-color: rgb(8, 133, 39);
-      color: white;
-      opacity: 0.9;
-      .header {
-        background-color: rgb(7, 112, 33);
-      }
+  }
+  &.success {
+    background-color: rgba(8, 133, 39, 0.9);
+    color: white;
+    .header {
+      background-color: rgba(7, 112, 33, 0.9);
     }
   }
 }
