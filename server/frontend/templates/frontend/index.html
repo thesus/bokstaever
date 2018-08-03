@@ -4,32 +4,35 @@
 {% block content %}
 {% if settings.image %}
     <div class="header">
-        <img class="header-img" style="height: 60%;" src="{{ settings.image.image.url }}">
+        <img class="header-img" src="{{ settings.image.image.url }}">
     </div>
 {% endif %}
 
 <h1>{{ title }}</h1>
 
-{{ info | markdownify }}
+<div class="content">
+  {{ settings.info | markdownify }}
 
-<div class="posts">
-  {% for post in posts %}
-    <div class="card">
-      <div class="card-header">
-        <img class="card-img-top" src="{{ post.image.image.url }}">
-      </div>
-      <div class="card-body">
-        <h4 class="card-title">{{ post.headline }}</h4>
-        <div class="card-text">
-          {{ post.text | markdownify | truncatechars_html:250 }}
+  <div class="posts">
+    {% for post in posts %}
+      <a href="/">
+        <div class="card">
+          <div class="card-header">
+            <img class="card-img-top" src="{{ post.image.image.url }}">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ post.headline }}</h4>
+            <div class="card-text">
+              {{ post.text | markdownify | truncatechars_html:250 }}
+            </div>
+            <small class="card-footer">
+              {{ post.published }}, {{ post.text | readtime }}min read
+              <span class="arrow">→</span>
+            </small>
+          </div>
         </div>
-        <small class="card-footer">
-          {{ post.published }}, {{ post.text | readtime }}min read
-          <span class="arrow">→</span>
-        </small>
-      </div>
-    </div>
-  {% endfor %}
+      </a>
+    {% endfor %}
+  </div>
 </div>
-
 {% endblock %}
