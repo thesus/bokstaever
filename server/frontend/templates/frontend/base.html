@@ -2,7 +2,7 @@
 
 {% block ui %}
     <input type="checkbox" id="menu" name="menu" class="menu-checkbox">
-    <div class="menu">
+    <div class="navbar">
         <label class="menu-toggle" for="menu"><span>Toggle</span></label>
         <ul>
             <li>
@@ -18,12 +18,6 @@
             {% endfor %}
         </ul>
     </div>
-    {% if image %}
-        <div class="header">
-            <img class="header-img" style="height: 60%;" src="{% url 'download' pk=image.pk %}">
-        </div>
-    {% endif %}
-
     <div class="content">
         {% block content %}
 

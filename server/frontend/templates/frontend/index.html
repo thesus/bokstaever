@@ -2,26 +2,33 @@
 {% load bokstaever %}
 
 {% block content %}
+{% if settings.image %}
+    <div class="header">
+        <img class="header-img" style="height: 60%;" src="{{ settings.image.image.url }}">
+    </div>
+{% endif %}
+
 <h1>{{ title }}</h1>
 
 {{ info | markdownify }}
 
-<div class="row posts">
+<div class="posts">
   {% for post in posts %}
-    {{ post }}
-    <div class="col-md-4 card-group">
-      <div class="card mb-3">
-          <img class="card-img-top" src="{{ post.image.url }}">
-        <div class="card-body">
-          <h4 class="card-title">{{ post.title }}</h4>
-          <p class="card-text">{{ post.text | markdownify | truncatechars_html:250 }}</p>
-          <small class="post-footer">
-            {{ post.published_date | date:"c"}}
-            <a>Weiterlesen...</a>
-          </small>
+    <div class="card">
+      <div class="card-header">
+        <img class="card-img-top" src="{{ post.image.image.url }}">
+      </div>
+      <div class="card-body">
+        <h4 class="card-title">{{ post.headline }}</h4>
+        <div class="card-text">
+          {{ post.text | markdownify | truncatechars_html:250 }}
+        </div>
+        <small class="card-footer">
+          {{ post.published }}, {{ post.text | readtime }}min read
+          <span class="arrow">→</span>
+        </small>
       </div>
     </div>
-  </div>
   {% endfor %}
 </div>
 

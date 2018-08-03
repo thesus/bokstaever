@@ -108,3 +108,9 @@ class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')
     email = models.EmailField(blank=True)
     info = models.TextField(blank=True)
+    image = models.ForeignKey(
+        Image,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )

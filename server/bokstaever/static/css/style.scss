@@ -1,3 +1,30 @@
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+
+body {
+  margin: 0;
+  font-family: $font-family;
+}
+
+.icon {
+    outline: none;
+    border: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+
+    &.left {
+        background: transparent url(/static/svg/arrow-left.svg) 0px 0px no-repeat;
+        background-size: contain;
+    }
+
+    &.right {
+        background: transparent url(/static/svg/arrow-right.svg) 0px 0px no-repeat;
+        background-size: contain;
+    }
+}
+
+
 .navbar {
     position: fixed;
     top: 0;
@@ -39,7 +66,7 @@ label.menu-toggle {
     line-height: 0;
     display: block;
     text-indent: -9999px;
-    background: #fff url(/assets/svg/menu.svg) 50% 50% / 25px 25px no-repeat;
+    background: #fff url(/static/svg/menu.svg) 50% 50% / 25px 25px no-repeat;
     cursor: pointer;
 }
 
@@ -49,4 +76,47 @@ label.menu-toggle {
 
 .menu-checkbox:checked + .navbar {
     transform: translate3d(0, 0, 0);
+}
+
+.posts {
+  width: 50%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-gap: 10px;
+
+  .card {
+    display: flex;
+    height: 200px;
+
+    .card-header {
+      flex: 0 0 200px;
+      img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+      }
+      width: 200px;
+    }
+    .card-body {
+      float: right;
+      flex: 1;
+      padding: 8px 5px 5px 8px;
+      border: 1px solid #eee;
+      border-radius: 0 3px 3px 0;
+
+      .card-text {
+        height: 130px;
+      }
+      .card-title {
+        margin: 3px 0 2px 0;
+      }
+      .card-footer {
+        span.arrow {
+          float: right;
+          font-size: 16px;
+        }
+      }
+    }
+  }
 }
