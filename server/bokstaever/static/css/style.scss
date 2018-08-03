@@ -1,6 +1,5 @@
 $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
-
 body {
   margin: 0;
   font-family: $font-family;
@@ -85,12 +84,24 @@ label.menu-toggle {
 }
 
 .content {
-  width: 60%;
+  width: 95%;
+  @media screen and (min-width: 700px) and (max-width: 900px) {
+    width: 70%;
+  }
+  @media screen and (min-width: 600px) and (max-width: 700px) {
+    width: 80%;
+  }
+  @media screen and (min-width: 1500px) {
+    width: 60%;
+  }
   margin: auto;
 }
 
 .posts {
   display: grid;
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
   grid-template-columns: repeat(2, 50%);
   grid-gap: 10px;
 
@@ -101,21 +112,69 @@ label.menu-toggle {
 
   .card {
     display: flex;
+
     height: 200px;
 
+    @media screen and (max-width: 500px) {
+      height: auto;
+      display: block;
+    }
+
+    @media screen and (min-width: 950px) {
+      height: 210px;
+    }
+    @media screen and (min-width: 1000px) {
+      height: 190px;
+    }
+    @media screen and (min-width: 1100px) {
+      height: 180px;
+    }
+    @media screen and (min-width: 1100px) {
+      height: 160px;
+    }
+    @media screen and (min-width: 1300px) {
+      height: 140px;
+    }
+    @media screen and (min-width: 1500px) {
+      height: 210px;
+    }
+    @media screen and (min-width: 1600px) {
+      height: 190px;
+    }
+    @media screen and (min-width: 1700px) {
+      height: 160px;
+    }
+
     .card-header {
-      flex: 0 0 200px;
-      width: 200px;
+      @media screen and (min-width: 501px) {
+        flex: 0 0 200px;
+        height: 100%;
+      }
+        width: 100%;
+        height: 200px;
     }
     .card-body {
       float: right;
       flex: 1;
       padding: 8px 5px 5px 8px;
       border: 1px solid #eee;
-      border-radius: 0 3px 3px 0;
-
+      @media screen and (min-width: 501px) {
+        border-radius: 0 4px 4px 0;
+      }
+      @media screen and (max-width: 500px) {
+        border-radius: 0 0 4px 4px;
+      }
       .card-text {
-        height: 130px;
+        height: calc(100% - 45px);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 15px;
+        p {
+          margin: 0;
+        }
+        @media screen and (max-width: 500px) {
+          margin-bottom: 4px;
+        }
       }
       .card-title {
         margin: 3px 0 2px 0;
@@ -135,6 +194,12 @@ label.menu-toggle {
     width: 100vw;
     .header-img {
       width: 100vw;
-      height: 600px;
+      height: 400px;
+      @media screen and (min-width: 700px) {
+        height: 500px;
+      }
+      @media screen and (min-width: 1200px) {
+        height: 600px;
+      }
     }
 }
