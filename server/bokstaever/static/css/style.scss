@@ -84,6 +84,7 @@ img {
   }
 }
 
+/*
 .content {
   width: 95%;
   @media screen and (min-width: 700px) and (max-width: 900px) {
@@ -97,6 +98,7 @@ img {
   }
   margin: auto;
 }
+*/
 
 .posts {
   display: grid;
@@ -204,7 +206,8 @@ img {
     }
 }
 
-.post {
+
+.post, .page {
   .header {
     .image {
       width: 100%;
@@ -240,42 +243,56 @@ img {
       color: #828282;
     }
   }
+  h1 {
+    //font-family: Georgia;
+    font-size: 40px;
+    font-weight: 400;
+  }
+}
 
-  .content {
-      margin: auto;
-
-      @media screen and (min-width: 1300px) {
-          width: 45%;
-      }
-      @media screen and (min-width: 700px) and (max-width: 1300px) {
-          width: 60%;
-      }
-      @media screen and (min-width: 500px) and (max-width: 700px) {
-          width: 80%;
-      }
-      @media screen and (max-width: 500px) {
-          width: 95%;
-      }
-
-      h1 {
-        //font-family: Georgia;
-        font-size: 40px;
-        font-weight: 400;
-      }
-
-    .text {
-        text-align: justify;
-        word-break: break-word;
-        hyphens: auto;
-        font-size: 18px;
-        p:first-child:first-letter {
-          // color: #903;
-          float: left;
-          font-family: Georgia;
-          font-size: 55px;
-          line-height: 41px;
-          padding: 3px 4px 0 0;
-        }
+.post, .page {
+  width: 100%;
+  .text {
+    text-align: justify;
+    word-break: break-word;
+    hyphens: auto;
+    font-size: 18px;
+    p:first-child:first-letter {
+      color: #903;
+      float: left;
+      font-family: Georgia;
+      font-size: 55px;
+      line-height: 41px;
+      padding: 3px 4px 0 0;
     }
+  }
+  p, h1, table {
+    margin: auto;
+    @media screen and (min-width: 1300px) {
+        width: 60%;
+    }
+    @media screen and (min-width: 1001px) and (max-width: 1300px) {
+      width: 70%
+    }
+    @media screen and (min-width: 700px) and (max-width: 1000px) {
+        width: 60%;
+    }
+    @media screen and (min-width: 500px) and (max-width: 700px) {
+        width: 80%;
+    }
+    @media screen and (max-width: 500px) {
+        width: 95%;
+    }
+  }
+  figure {
+    width: 100%;
+    margin: 10px 0px 10px 0px;
+  }
+}
+
+
+.page {
+  .content {
+    margin: auto;
   }
 }
