@@ -2,11 +2,11 @@
 {% load bokstaever %}
 
 {% block content %}
-<div class="post">
-  {% if post.image %}
+<div class="page">
+  {% if page.image %}
   <div class="header">
     <div class="image">
-      <img src="{{ post.image.image.url }}">
+      <img src="{{ page.image.image.url }}">
       <span class="caption">
         {{ post.image.title }}
       </span>
@@ -14,9 +14,9 @@
   </div>
   {% endif %}
   <div class="content">
-    <h1>{{ post.headline }}</h1>
+    <h1>{{ page.headline }}</h1>
     <div class="text" lang="de">
-      {{ post.text | markdownify }}
+      {{ page.text | markdownify }}
     </div>
   </div>
 </div>

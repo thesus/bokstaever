@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
 
 {% block ui %}
+  <div class="navigation">
     <input type="checkbox" id="menu" name="menu" class="menu-checkbox">
-    <div class="navbar">
-        <label class="menu-toggle" for="menu"><span>Toggle</span></label>
-        <ul>
-            <li>
-                <a>Startseite</a>
-            </li>
-            <li>
-                <a>Neuigkeiten</a>
-            </li>
-            {% for entry in sites %}
-                <li>
-                    <a>{{ entry.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="page">
-        {% block content %}
+    <nav class="navbar">
+      <label class="menu-toggle" for="menu"><span>Toggle</span></label>
+      <ul>
+        <li>
+          <a href="{% url 'index' %}">Home</a>
+        </li>
+        <li>
+          <a>Posts</a>
+        </li>
+        {% for entry in sitemap %}
+          <li>
+            <a href="{% url 'page-detail' entry.1 %}">{{ entry.0 }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
 
-        {% endblock content %}
-    </div>
+  <div>
+    {% block content %}
+    {% endblock content %}
+  </div>
 {% endblock ui %}
