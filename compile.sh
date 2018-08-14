@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # This script is for compiling the dashboard in the caddy container with the correct urls
 
