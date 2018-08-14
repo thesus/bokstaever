@@ -27,6 +27,7 @@ class PostSerializer(serializers.ModelSerializer):
             'headline',
             'text',
             'published',
+            'type',
             'draft',
             'editors',
             'image',
@@ -88,6 +89,7 @@ class PageSerializer(serializers.ModelSerializer):
             'headline',
             'slug',
             'text',
+            'type',
             'image',
             'image_url'
         )
