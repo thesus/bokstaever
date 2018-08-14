@@ -9,14 +9,22 @@
       <img src="{{ page.image.image.url }}">
     </div>
     <span class="caption">
-      {{ post.image.title }}
+      {{ page.image.title }}
     </span>
   </div>
   {% endif %}
   <div class="content">
     <h1>{{ page.headline }}</h1>
     <div class="text" lang="de">
-      {{ page.text | markdownify }}
+      {% if page.type == 'md' %}
+        {{ page.text|markdownify:True }}
+      {% elif page.type == 'mdhtml' %}
+        {{ page.text|markdownify:False }}
+      {% elif page.type == 'html' %}
+        {{ page.text|safe }}
+      {% elif page.type == 'raw' %}
+        {{ page.text|linebreaks }}
+      {% endif %}
     </div>
   </div>
 </div>

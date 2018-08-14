@@ -59,7 +59,8 @@ class Image(models.Model):
 TEXT_CHOICES = (
     ('md', 'Markdown'),
     ('mdhtml', 'Markdown with inline HTML'),
-    ('html', 'HTML')
+    ('html', 'HTML'),
+    ('raw', 'Raw, linebreaks are rendered')
 )
 class SiteModel(models.Model):
     headline = models.CharField(max_length=200)
