@@ -1,0 +1,23 @@
+{% extends 'frontend/base.html' %}
+{% load bokstaever %}
+
+{% block content %}
+<div class="page">
+  {% if page.image %}
+  <div class="header">
+    <div class="image">
+      <img src="{{ page.image.image.url }}">
+    </div>
+    <span class="caption">
+      {{ post.image.title }}
+    </span>
+  </div>
+  {% endif %}
+  <div class="content">
+    <h1>{{ page.headline }}</h1>
+    <div class="text" lang="de">
+      {{ page.text | markdownify }}
+    </div>
+  </div>
+</div>
+{% endblock content %}

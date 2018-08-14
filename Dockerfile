@@ -5,7 +5,7 @@ COPY requirements/ /requirements
 RUN pip install greenlet gevent gunicorn psycopg2
 RUN pip install -r requirements/base.txt
 
-COPY backend/ /src
+COPY server/ /src
 
 WORKDIR /src
 ENV DJANGO_SETTINGS_MODULE=bokstaever.conf.settings.base
