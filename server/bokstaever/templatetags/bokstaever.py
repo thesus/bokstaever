@@ -26,3 +26,7 @@ def readtime(text):
     words = len(text.split())
     seconds = math.ceil(words / 265)
     return seconds if seconds > 1 else 1
+
+@register.filter()
+def get_range(value):
+    return range(value)

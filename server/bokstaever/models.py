@@ -107,6 +107,16 @@ class Page(SiteModel):
         ordering = ['-pk']
 
 
+THEME_CHOICES = (
+    ('classic', 'Classic'),
+    ('tiled', 'Tiled')
+)
+
+BEHAVIOR_CHOICES = (
+    ('blog', 'Blog'),
+    ('site', 'Site')
+)
+
 class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')
     email = models.EmailField(blank=True)
@@ -116,4 +126,11 @@ class Settings(SingletonModel):
         on_delete=models.CASCADE,
         blank=True,
         null=True
+    )
+
+    # theme = models.CharField(max_length=50, choices=THEME_CHOICES)
+    behavior = models.CharField(
+        max_length=20,
+        choices=BEHAVIOR_CHOICES,
+        default='site'
     )
