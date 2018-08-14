@@ -17,10 +17,10 @@ RUN export SECRET_KEY=secret && \
     python manage.py collectstatic --noinput
 
 
-FROM abiosoft/caddy:0.10.6
+FROM abiosoft/caddy:no-stats
 
 # Install yarn to compile dashboard later with correct environment
-RUN apk add yarn
+RUN apk update && apk add --no-cache yarn
 
 COPY --from=django_builder /src/static /srv/server
 
