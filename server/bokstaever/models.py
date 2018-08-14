@@ -108,8 +108,8 @@ class Page(SiteModel):
 
 
 THEME_CHOICES = (
-    ('classic', 'Classic'),
-    ('tiled', 'Tiled')
+    ('css/brevlada.css', 'brevlåda'),
+    ('css/frimarke.css', 'frimärke')
 )
 
 BEHAVIOR_CHOICES = (
@@ -128,7 +128,12 @@ class Settings(SingletonModel):
         null=True
     )
 
-    # theme = models.CharField(max_length=50, choices=THEME_CHOICES)
+    theme = models.CharField(
+        max_length=50,
+        choices=THEME_CHOICES,
+        default='css/brevlada.css'
+    )
+
     behavior = models.CharField(
         max_length=20,
         choices=BEHAVIOR_CHOICES,
