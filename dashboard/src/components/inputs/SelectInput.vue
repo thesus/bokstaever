@@ -23,7 +23,7 @@ export default {
     props: ['value', 'extra'],
     data () {
       return {
-        choice: {}
+        choice: getChoice(this.value, this.extra)
       }
     },
     computed: {

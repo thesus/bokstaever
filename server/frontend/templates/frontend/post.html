@@ -1,6 +1,8 @@
 {% extends 'frontend/base.html' %}
 {% load bokstaever %}
 
+{% block title %} {{ post.headline }} -{% endblock title %}
+
 {% block content %}
 <div class="post">
   {% if post.image %}
