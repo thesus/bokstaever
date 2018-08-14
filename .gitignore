@@ -15,7 +15,7 @@ __pycache__
 
 # Frontend related stuff
 node_modules
-/frontend/dist
+/dashboard/dist
 
 # Log files
 *.log
