@@ -27,6 +27,6 @@ COPY --from=django_builder /src/static /srv/server
 COPY compile.sh /etc/compile.sh
 RUN chmod u+x /etc/compile.sh
 
-COPY dashboard /srv/src
+COPY dashboard/ /srv/src
 
 COPY Caddyfile /etc/Caddyfile
