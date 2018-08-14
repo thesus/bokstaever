@@ -5,7 +5,7 @@ COPY requirements/ /requirements
 RUN pip install -r /requirements/base.txt
 
 # Copy source code.
-COPY backend/ /src
+COPY server/ /src
 
 WORKDIR /src
 
@@ -16,17 +16,17 @@ RUN export SECRET_KEY=secret && \
     export STATIC_ROOT=$(DJANGO_SETTINGS_MODULE=bokstaever.conf.settings.base python -c "from django.conf import settings; print(settings.STATIC_ROOT)") && \
     python manage.py collectstatic --noinput
 
-FROM node:10.7.0-alpine as node_builder
-
-COPY frontend /src
-
-WORKDIR /src
-
-RUN yarn && yarn build
-
 
 FROM abiosoft/caddy:0.10.6
 
-COPY --from=django_builder /src/static /srv/backend
-COPY --from=node_builder /src/dist /srv/frontend
+# Install yarn to compile dashboard later with correct environment
+RUN apk add yarn
+
+COPY --from=django_builder /src/static /srv/server
+
+COPY compile.sh /etc/compile.sh
+RUN chmod u+x /etc/compile.sh
+
+COPY dashboard /srv/src
+
 COPY Caddyfile /etc/Caddyfile

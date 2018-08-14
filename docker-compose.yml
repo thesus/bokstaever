@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   web:
-    image: dev.cryptec.at:5000/root/bokstaever:feature-deployment
+    image: dev.cryptec.at:5000/root/bokstaever:latest
     volumes:
       - "media:/src/bokstaever/media"
     environment:
@@ -13,12 +13,15 @@ services:
       SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
 
   caddy:
-    image: dev.cryptec.at:5000/root/bokstaever/caddy:feature-deployment
+    image: dev.cryptec.at:5000/root/bokstaever/caddy:latest
     volumes:
       - "media:/srv/media"
     ports:
       - "80:80"
       - "8080:8080"
+    environment:
+      VUE_APP_API_ROOT: "https://example.com/api"
+      VUE_APP_MEDIA_ROOT: "https://example.com"
   db:
     image: postgres:latest
     volumes:

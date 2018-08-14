@@ -21,7 +21,6 @@ export default {
   methods: {
     async submit () {
       if (await this.$api.authenticate(this.username, this.password)) {
-        // console.log(this.$route.query.next)
         this.$router.push({ path: this.$route.query.next || '/' })
       }
     }

@@ -13,11 +13,6 @@ import ImageUpload from './views/dashboard/ImageUpload'
 
 import SettingsEdit from './views/dashboard/SettingsEdit'
 
-import Public from './views/public/Public'
-import PublicHome from './views/public/Home'
-import PublicPost from './views/public/Post'
-import PublicPage from './views/public/Page'
-
 import Login from './views/auth/Login'
 import Logout from './views/auth/Logout'
 
@@ -47,7 +42,7 @@ let loggedIn = (to, from, next) => {
 const router = new VueRouter({
   routes: [
     {
-      path: '/dashboard',
+      path: '',
       component: Dashboard,
       children: [
         {
@@ -123,30 +118,6 @@ const router = new VueRouter({
       name: 'logout',
       component: Logout,
     },
-    {
-      path: '',
-      component: Public,
-      children: [
-        {
-          path: '',
-          name: 'home',
-          component: PublicHome,
-          props: (route) => {
-            ({ page: route.query.page ? route.query.page : 1 })
-          }
-        },
-        {
-          name: 'detail',
-          path: '/post/:id/:slug',
-          component: PublicPost,
-        },
-        {
-          name: 'page',
-          path: ':slug',
-          component: PublicPage
-        }
-      ]
-    }
   ],
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0}
