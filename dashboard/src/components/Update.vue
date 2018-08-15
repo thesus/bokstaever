@@ -11,8 +11,24 @@ import Edit from '@/components/Edit'
 export default {
   props: {
     fields: {},
-    router: {},
-    url: {}
+    router: {
+      type: Object,
+      default: () => {
+        return {
+          'field': null,
+          'create': null,
+          'edit': null
+        }
+      }
+    },
+    url: {
+      type: String,
+      required: true
+    },
+    singleton: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     'edit-component': Edit,
@@ -33,7 +49,11 @@ export default {
       return this.$route.name === this.router.create
     },
     getURL () {
-      return this.isNew ? this.url : this.url + this.$route.params[this.router.field] + '/'
+      if (!this.singleton) {
+        return this.isNew ? this.url : this.url + this.$route.params[this.router.field] + '/'
+      } else {
+        return this.url
+      }
     },
     getMethod () {
       return this.isNew ? 'post' : 'put'
@@ -80,7 +100,8 @@ export default {
         'text': 'Saving of instance was successfull!',
         'timeout': 4000
       })
-      if (this.isNew) {
+
+      if (this.isNew && !this.singleton) {
         let params = {}
         params[this.router.field] = response[this.router.field]
 

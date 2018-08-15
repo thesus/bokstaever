@@ -9,6 +9,20 @@ from django.urls import reverse
 from bokstaever.images import resize
 
 
+class SingletonModel(models.Model):
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super(SingletonModel, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+
 class Image(models.Model):
     title = models.CharField(
         max_length=200,
@@ -41,68 +55,67 @@ class Image(models.Model):
     class Meta:
         ordering = ['-pk', ]
 
-class Post(models.Model):
-    headline = models.CharField(max_length=200)
 
+TEXT_CHOICES = (
+    ('md', 'Markdown'),
+    ('mdhtml', 'Markdown with inline HTML'),
+    ('html', 'HTML'),
+    ('raw', 'Raw, linebreaks are rendered')
+)
+class SiteModel(models.Model):
+    headline = models.CharField(max_length=200)
     image = models.ForeignKey(
         Image,
         on_delete=models.CASCADE,
         blank=True,
         null=True
     )
-
     text = models.TextField()
-
-    published = models.DateField(auto_now_add=True)
+    type = models.CharField(
+        max_length=6,
+        choices=TEXT_CHOICES,
+        default='md'
+    )
     draft = models.BooleanField(default=False)
 
-    editors = models.ManyToManyField(User)
-
     slug = models.SlugField(max_length=200)
+
+    def __str__(self):
+        return '{0.headline}'.format(self)
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.headline)
         super().save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+
+
+class Post(SiteModel):
+    published = models.DateField(auto_now_add=True)
+    editors = models.ManyToManyField(User)
 
     class Meta:
         ordering = ['-published', '-pk']
 
 
-class Page(models.Model):
-    image = models.ForeignKey(
-        Image,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True
-    )
-    headline = models.CharField(max_length=200)
-
-    text = models.TextField()
-
+class Page(SiteModel):
     slug = models.SlugField(max_length=200, unique=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.headline)
-        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-pk']
 
 
-class SingletonModel(models.Model):
-    class Meta:
-        abstract = True
+THEME_CHOICES = (
+    ('css/brevlada.css', 'brevlåda'),
+    ('css/frimarke.css', 'frimärke')
+)
 
-    def save(self, *args, **kwargs):
-        self.pk = 1
-        super(SingletonModel, self).save(*args, **kwargs)
-
-    @classmethod
-    def load(cls):
-        obj, created = cls.objects.get_or_create(pk=1)
-        return obj
+BEHAVIOR_CHOICES = (
+    ('blog', 'Blog'),
+    ('site', 'Site')
+)
 
 class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')
@@ -113,4 +126,16 @@ class Settings(SingletonModel):
         on_delete=models.CASCADE,
         blank=True,
         null=True
+    )
+
+    theme = models.CharField(
+        max_length=50,
+        choices=THEME_CHOICES,
+        default='css/brevlada.css'
+    )
+
+    behavior = models.CharField(
+        max_length=20,
+        choices=BEHAVIOR_CHOICES,
+        default='site'
     )

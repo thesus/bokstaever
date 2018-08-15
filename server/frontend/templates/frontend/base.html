@@ -9,9 +9,11 @@
         <li>
           <a href="{% url 'index' %}">Home</a>
         </li>
-        <li>
-          <a>Posts</a>
-        </li>
+        {% if settings.behavior == 'site' %}
+          <li>
+            <a href="{% url 'blog' %}">Posts</a>
+          </li>
+        {% endif %}
         {% for entry in sitemap %}
           <li>
             <a href="{% url 'page-detail' entry.1 %}">{{ entry.0 }}</a>

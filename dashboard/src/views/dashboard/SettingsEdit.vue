@@ -1,57 +1,61 @@
 <template>
-  <div>
-    <form v-on:submit.prevent="submitSettings">
-      <table class="table">
-        <tr>
-          <td>Title</td>
-          <td><input type="text" v-model="settings.name"></td>
-        </tr>
-        <tr>
-          <td>E-Mail</td>
-          <td><input type="email" v-model="settings.email"></td>
-        </tr>
-        <tr>
-          <td>Info</td>
-          <td><textarea v-model="settings.info"></textarea></td>
-        </tr>
-      </table>
-      <button type="submit" class="btn btn-default btn-right">Submit</button>
-    </form>
-  </div>
+  <update-component v-bind="data" />
 </template>
 
 <script>
+import Update from '@/components/Update'
+
 export default {
+  components: {
+    'update-component': Update
+  },
   data () {
     return {
-      settings: {}
-    }
-  },
-  mounted () {
-    this.getSettings()
-  },
-  methods: {
-    async getSettings () {
-      this.$set(
-        this,
-        'settings',
-        await this.$api.get('/settings/', true)
-      )
-    },
-    submitSettings () {
-      this.$api.send(
-        '/settings/',
-        this.settings,
-        'put',
-        true
-      )
+      data: {
+        fields: [
+            {
+              name: 'Title',
+              identifier: 'name',
+              component: 'string',
+            },
+            {
+              name: 'E-Mail',
+              identifier: 'email',
+              component: 'email'
+            },
+            {
+              name: 'Info',
+              identifier: 'info',
+              component: 'text'
+            },
+            {
+              name: 'Image',
+              identifier: 'image',
+              component: 'image'
+            },
+            {
+              name: 'Behavior',
+              identifier: 'behavior',
+              component: 'select',
+              extra: [
+                ['site', 'Site'],
+                ['blog', 'Blog'],
+              ]
+            },
+            {
+              name: 'Theme',
+              identifier: 'theme',
+              component: 'select',
+              extra: [
+                ['css/brevlada.css', 'brevlåda'],
+                ['css/frimarke.css', 'frimärke']
+              ]
+            }
+        ],
+        url: '/settings/',
+        singleton: true
+      }
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import '@/modules/tables.scss';
-@import '@/modules/inputs.scss';
-@import '@/modules/buttons.scss';
-</style>
