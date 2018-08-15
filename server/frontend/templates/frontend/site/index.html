@@ -2,11 +2,7 @@
 {% load bokstaever %}
 
 {% block content %}
-{% if settings.image %}
-    <div class="header">
-        <img class="header-img" src="{{ settings.image.image.url }}">
-    </div>
-{% endif %}
+{% include 'snippets/image.html' %}
 
 <h1>{{ title }}</h1>
 

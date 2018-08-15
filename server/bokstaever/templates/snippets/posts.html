@@ -1,0 +1,23 @@
+{% load bokstaever %}
+
+<div class="posts">
+  {% for post in posts %}
+    <a href="{% url 'post-detail' post.pk %}">
+      <div class="post">
+        <div class="post-header">
+          <img class="post-image" src="{{ post.image.image.url }}">
+        </div>
+        <div class="post-body">
+          <h4 class="post-title">{{ post.headline }}</h4>
+          <div class="post-text">
+            {{ post.text | markdownify | truncatechars_html:200 }}
+          </div>
+          <small class="post-footer">
+            {{ post.published }}, {{ post.text | readtime }}min read
+            <span class="arrow">→</span>
+          </small>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
