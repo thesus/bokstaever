@@ -41,6 +41,10 @@ h1, h2, h3 {
         background-size: contain;
     }
 
+    &.menu {
+      background: transparent url(/assets/svg/menu.svg) 0px 0px no-repeat;
+      background-size: contain;
+    }
 }
 
 </style>
