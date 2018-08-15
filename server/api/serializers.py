@@ -76,7 +76,14 @@ class ImageSerializer(serializers.ModelSerializer):
 class SettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Settings
-        fields = ('name', 'email', 'info')
+        fields = (
+            'name',
+            'email',
+            'info',
+            'image',
+            'theme',
+            'behavior'
+        )
 
 
 class PageSerializer(serializers.ModelSerializer):
