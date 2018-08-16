@@ -1,23 +1,25 @@
 {% load bokstaever %}
 
-<div class="posts">
+<div class="post-list">
   {% for post in posts %}
-    <a href="{% url 'post-detail' post.pk %}">
       <div class="post">
-        <div class="post-header">
-          <img class="post-image" src="{{ post.image.image.url }}">
-        </div>
-        <div class="post-body">
-          <h4 class="post-title">{{ post.headline }}</h4>
-          <div class="post-text">
-            {{ post.text | markdownify | truncatechars_html:200 }}
+        <a href="{% url 'post-detail' post.pk %}">
+          <div class="post-header">
+            <img class="post-image" src="{{ post.image.image.url }}">
           </div>
-          <small class="post-footer">
-            {{ post.published }}, {{ post.text | readtime }}min read
-            <span class="arrow">→</span>
-          </small>
-        </div>
+          <div class="post-body">
+            <div class="post-content">
+              <h3 class="post-title">{{ post.headline }}</h3>
+              <div class="post-text">
+                {{ post.text | markdownify | truncatechars_html:350 }}
+                <small class="post-footer">
+                  {{ post.published }}, {{ post.text | readtime }}min read
+                  <span class="arrow">→</span>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
       </div>
-    </a>
   {% endfor %}
 </div>

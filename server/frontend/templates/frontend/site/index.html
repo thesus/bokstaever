@@ -9,7 +9,7 @@
 <div class="content">
   {{ settings.info | markdownify }}
 
-  <div class="posts">
+  <div class="post-peak">
     {% for post in posts %}
       <a href="{% url 'post-detail' post.pk %}">
         <div class="card">

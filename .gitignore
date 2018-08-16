@@ -9,9 +9,8 @@ __pycache__
 
 # Backend related stuff
 /server/bokstaever/media
-/server/bokstaever/static/css/style.css*
-/server/bokstaever/static/css/dashboard.css*
-/server/bokstaever/static/css/icons.css*
+*.css
+*.css.map
 
 # Frontend related stuff
 node_modules
