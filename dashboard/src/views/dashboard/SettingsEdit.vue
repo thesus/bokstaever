@@ -19,19 +19,9 @@ export default {
               component: 'string',
             },
             {
-              name: 'E-Mail',
-              identifier: 'email',
-              component: 'email'
-            },
-            {
               name: 'Info',
               identifier: 'info',
               component: 'text'
-            },
-            {
-              name: 'Image',
-              identifier: 'image',
-              component: 'image'
             },
             {
               name: 'Behavior',
@@ -50,6 +40,16 @@ export default {
                 ['css/brevlada.css', 'brevlåda'],
                 ['css/frimarke.css', 'frimärke']
               ]
+            },
+            {
+              name: 'E-Mail',
+              identifier: 'email',
+              component: 'email'
+            },
+            {
+              name: 'Image',
+              identifier: 'image',
+              component: 'image'
             }
         ],
         url: '/settings/',

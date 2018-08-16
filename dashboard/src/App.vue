@@ -18,6 +18,7 @@ body {
     font-family: $font-family-sans-serif;
     background-color: #fdfdfd;
     margin: 0;
+    color: rgb(60, 60, 60);
 }
 
 h1, h2, h3 {

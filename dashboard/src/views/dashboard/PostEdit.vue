@@ -24,11 +24,6 @@ export default {
               component: 'text'
             },
             {
-              name: 'Image',
-              identifier: 'image',
-              component: 'image'
-            },
-            {
               name: 'Type',
               identifier: 'type',
               component: 'select',
@@ -38,6 +33,11 @@ export default {
                 ['mdhtml', 'Markdown with inline HTML'],
                 ['raw', 'Raw with linebreaks']
               ]
+            },
+            {
+              name: 'Image',
+              identifier: 'image',
+              component: 'image'
             }
         ],
         router: {
