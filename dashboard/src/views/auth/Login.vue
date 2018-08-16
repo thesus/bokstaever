@@ -1,11 +1,14 @@
 <template>
-  <div class="login">
-    <form @submit.prevent="submit">
-      <input type="text" v-model="username" placeholder="Username">
-      <input type="password" v-model="password" placeholder="Password">
-      <button type="submit" class="btn btn-default btn-right">Login</button>
-    </form>
-    {{ status }}
+  <div>
+    <notifications/>
+    <div class="login">
+      <form @submit.prevent="submit">
+        <input type="text" v-model="username" placeholder="Username">
+        <input type="password" v-model="password" placeholder="Password">
+        <button type="submit" class="btn btn-default btn-right">Login</button>
+      </form>
+      {{ status }}
+    </div>
   </div>
 </template>
 
@@ -39,6 +42,24 @@ export default {
   top: calc(50% - 200px);
   background-color: rgb(245, 245, 245);
   padding: 30px;
+  @media screen and (max-width: 1600px) {
+    left: 35%;
+    right: 35%;
+  }
+  @media screen and (max-width: 1200px) {
+    left: 30%;
+    right: 30%;
+  }
+  @media screen and (max-width: 1000px) {
+    left: 20%;
+    right: 20%;
+  }
+  @media screen and (max-width: 500px) {
+    left: 0px;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+  }
 }
 
 .btn {
