@@ -48,7 +48,7 @@ export default {}
         box-sizing: border-box;
         padding: 8px;
         width: 100%;
-        height: calc(100% - 65px);
+        height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
     }

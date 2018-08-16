@@ -49,7 +49,10 @@ export default {
             {
               name: 'Image',
               identifier: 'image',
-              component: 'image'
+              component: 'image',
+              extra: {
+                multiple: false
+              }
             }
         ],
         url: '/settings/',

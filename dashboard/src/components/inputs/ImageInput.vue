@@ -3,11 +3,12 @@
     <div class="current-image" v-if="image">
       <img :src="image.thumbnail">
     </div>
+    <span class="multiple" v-if="extra.multiple">{{ imageCount }} {{ imageCount|pluralize('Image') }} selected</span>
     <button type="button" class="btn btn-default" @click="showModal = true">
       Select Image
     </button>
     <modal-component v-if="showModal" @close="showModal = false">
-      <image-component @selected="selectImage"/>
+      <image-component @selected="selectImage" :value="value" :multiple="extra['multiple']"/>
     </modal-component>
   </div>
 </template>
@@ -15,15 +16,29 @@
 <script>
 import ImageSelect from '@/components/ImageSelect'
 import Modal from '@/components/Modal'
+import { pluralize } from '@/filters/Text'
 
 export default {
+  filters: {
+    'pluralize': pluralize
+  },
   components: {
     'modal-component': Modal,
     'image-component': ImageSelect
   },
-  props: [
-      'value'
-  ],
+  props: {
+      'value': {
+        required: false
+      },
+      'extra': {
+        type: Object,
+        default: () => {
+          return {
+            multiple: false
+          }
+        }
+      }
+  },
   data () {
     return {
       image: null,
@@ -33,13 +48,22 @@ export default {
   mounted () {
     this.getImage()
   },
+  computed: {
+    imageCount () {
+      if (Array.isArray(this.value)) {
+        return this.value.length
+      } else if (this.multiple) {
+        return 0
+      }
+    }
+  },
   methods: {
-    async getImage () {
-      if (this.value !== undefined) {
+    async getImage (value=this.value) {
+      if (value !== undefined && !(Array.isArray(value))) {
         this.$set(
           this,
           'image',
-          await this.$api.get(`/images/${this.value}/`, true)
+          await this.$api.get(`/images/${value}/`, true)
         )
       }
     },
@@ -48,6 +72,9 @@ export default {
         'input',
         { target: { value: value } }
       )
+      if (this.value === undefined) {
+        this.getImage(value)
+      }
       this.showModal = false
     }
   },
@@ -68,6 +95,10 @@ export default {
     .btn {
       margin: auto 0 auto 0;
     }
+}
+
+.multiple {
+  margin: 5px 5px 5px 0px;
 }
 
 .current-image {

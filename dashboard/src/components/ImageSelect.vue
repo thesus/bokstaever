@@ -18,8 +18,8 @@
       {{ selected.length }} {{ selected.length | pluralize('Image') }} selected.
     </span>
     <div v-if="multiple" class="btn-group">
-      <button class="btn btn-default" :disabled="selected.length < 1" @click="selected = []">Clear</button>
-      <button class="btn btn-default" :disabled="selected.length < 1" @click="$emit('selected', selected)">Select</button>
+      <button type="button" class="btn btn-default" :disabled="selected.length < 1" @click="selected = []">Clear</button>
+      <button type="button" class="btn btn-default" :disabled="selected.length < 1" @click="$emit('selected', selected)">Select</button>
   </div>
 </div>
 </template>
@@ -36,14 +36,16 @@ export default {
     'limit': {
       type: Number,
       default: 15
+    },
+    'value': {
     }
   },
   data () {
     return {
       images: {},
       page: 1,
-      selected: [],
-    }
+      selected: (Array.isArray(this.value)) ? this.value : []
+      }
   },
   mounted () {
     this.getImages()
@@ -78,6 +80,11 @@ export default {
   watch: {
     page () {
       this.getImages()
+    },
+    value () {
+      if (Array.isArray(this.value)) {
+        this.selected = this.value
+      }
     }
   }
 }
