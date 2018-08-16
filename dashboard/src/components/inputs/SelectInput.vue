@@ -56,6 +56,10 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
+.multiselect__tags, .multiselect__content, .multiselect__content-wrapper {
+  border-radius: 0 !important;
+  border-color: #ccc;
+  color: rgb(60, 60, 60);
+}
 </style>

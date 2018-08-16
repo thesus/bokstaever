@@ -1,16 +1,16 @@
 <template>
   <form @submit.prevent="$emit('update', instance)">
-    <table class="table">
-      <tr v-for="field in fields">
-        <td>{{ field.name }}</td>
-        <td>
+    <div class="edit">
+      <div class="field" v-for="field in fields">
+        <div class="label">{{ field.name }}</div>
+        <div class="input">
           <component
           v-bind="getComponentData(field)"
           @input="instance[field.identifier] = $event.target.value" >
           </component>
-        </td>
-      </tr>
-    </table>
+        </div>
+      </div>
+    </div>
     <button class="btn btn-default btn-right" type="submit">Submit</button>
   </form>
 </template>
@@ -69,6 +69,50 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/modules/inputs.scss';
-@import '@/modules/tables.scss';
 @import '@/modules/buttons.scss';
+
+.edit {
+  .field {
+    border-bottom: 1px solid #eee;
+    display: inline-flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
+
+    .label {
+      margin: auto;
+      width: 10%;
+    }
+    .input {
+      width: 90%;
+    }
+
+    @media screen and (max-width: 1600px){
+      .label {
+        width: 15%;
+      }
+      .input {
+        width: 85%;
+      }
+    }
+    @media screen and (max-width: 1000px) {
+      .label {
+        width: 20%;
+      }
+      .input {
+        width: 80%;
+      }
+    }
+    @media screen and (max-width: 800px) {
+      flex-direction: column;
+      .label {
+        margin: auto auto 5px auto;
+        width: 100%;
+      }
+      .input {
+        width: 100%;
+      }
+    }
+  }
+}
 </style>

@@ -1,32 +1,27 @@
 {% extends 'frontend/base.html' %}
-{% load bokstaever %}
 
 {% block title %} {{ page.headline }} -{% endblock title %}
 
 {% block content %}
-<div class="page">
-  {% if page.image %}
-  <div class="header">
-    <div class="image">
-      <img src="{{ page.image.image.url }}">
+<div class="site">
+  <div class="page">
+    {% if page.image %}
+    <div class="page-header">
+      <div class="page-image">
+        <img src="{{ page.image.image.url }}">
+      </div>
+      <span class="page-image-caption">
+        {{ page.image.title }}
+      </span>
     </div>
-    <span class="caption">
-      {{ page.image.title }}
-    </span>
-  </div>
-  {% endif %}
-  <div class="content">
-    <h1>{{ page.headline }}</h1>
-    <div class="text" lang="de">
-      {% if page.type == 'md' %}
-        {{ page.text|markdownify:True }}
-      {% elif page.type == 'mdhtml' %}
-        {{ page.text|markdownify:False }}
-      {% elif page.type == 'html' %}
-        {{ page.text|safe }}
-      {% elif page.type == 'raw' %}
-        {{ page.text|linebreaks }}
-      {% endif %}
+    {% endif %}
+    <div class="page-content">
+      <h1>{{ page.headline }}</h1>
+      <div class="page-text" lang="de">
+        {% with page as site %}
+          {% include 'snippets/renderer.html' %}
+        {% endwith %}
+      </div>
     </div>
   </div>
 </div>

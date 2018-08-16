@@ -18,6 +18,7 @@ body {
     font-family: $font-family-sans-serif;
     background-color: #fdfdfd;
     margin: 0;
+    color: rgb(60, 60, 60);
 }
 
 h1, h2, h3 {
@@ -41,6 +42,10 @@ h1, h2, h3 {
         background-size: contain;
     }
 
+    &.menu {
+      background: transparent url(/assets/svg/menu.svg) 0px 0px no-repeat;
+      background-size: contain;
+    }
 }
 
 </style>

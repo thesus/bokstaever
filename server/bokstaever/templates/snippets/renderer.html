@@ -1,0 +1,11 @@
+{% load bokstaever %}
+
+{% if site.type == 'md' %}
+  {{ site.text|markdownify:True }}
+{% elif site.type == 'mdhtml' %}
+  {{ site.text|markdownify:False }}
+{% elif site.type == 'html' %}
+  {{ site.text|safe }}
+{% elif site.type == 'raw' %}
+  {{ site.text|linebreaks }}
+{% endif %}

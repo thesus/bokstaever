@@ -96,7 +96,25 @@ const ApiPlugin = {
           let data = response.data
           localStorage.setItem('jwt_token', data.token)
           return true
-        }).catch((response) => {
+        }).catch((error) => {
+          let errors = error.response.data || {}
+          if (errors.non_field_errors && errors.non_field_errors.length > 0) {
+            for (let i of errors.non_field_errors) {
+              Vue.notify({
+                type: 'danger',
+                title: 'Login failed!',
+                text: i,
+                timeout: 5000
+              })
+            }
+          } else {
+            Vue.notify({
+              type: 'danger',
+              title: 'Login failed!',
+              text: 'Unknown error occurred!',
+              timeout: 5000
+            })
+          }
           return false
         })
       }
