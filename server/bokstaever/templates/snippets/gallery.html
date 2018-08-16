@@ -1,0 +1,13 @@
+{% if site.gallery %}
+<figure class="gallery">
+    <div class="thumbnails">
+    {% for image in site.gallery.images.all %}
+    <div class="thumbnail">
+      <a href="{{ image.image.url }}">
+        <img src="{{ image.thumbnail.url }}">
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</figure>
+{% endif %}
