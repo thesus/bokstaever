@@ -157,3 +157,8 @@ JWT_AUTH = {
 
 # CORS
 CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST')
+
+# Caching
+CACHES = {
+    'default': env.cache('CACHE_URL', 'dummycache://'),
+}

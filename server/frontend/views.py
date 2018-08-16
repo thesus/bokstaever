@@ -11,8 +11,10 @@ from bokstaever.models import (
     Page,
     Settings
 )
+from bokstaever.views import DatabaseAwareCacheMixin
 
-class IndexSiteView(TemplateView):
+
+class IndexSiteView(DatabaseAwareCacheMixin, TemplateView):
     template_name = 'frontend/site/index.html'
 
     def get_context_data(self, **kwargs):
@@ -23,7 +25,7 @@ class IndexSiteView(TemplateView):
         return context
 
 
-class BlogView(ListView):
+class BlogView(DatabaseAwareCacheMixin, ListView):
     model = Post
     template_name = 'frontend/site/blog.html'
     context_object_name = 'posts'
@@ -52,13 +54,13 @@ def blog(request):
         return redirect('index')
 
 
-class PostView(DetailView):
+class PostView(DatabaseAwareCacheMixin, DetailView):
     queryset = Post.objects.filter(draft=False)
     template_name = 'frontend/post.html'
     template_name_field = 'post'
 
 
-class PageView(DetailView):
+class PageView(DatabaseAwareCacheMixin, DetailView):
     model = Page
     template_name = 'frontend/page.html'
     template_name_field = 'page'
