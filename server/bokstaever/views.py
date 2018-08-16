@@ -1,6 +1,10 @@
 from django.core.cache import caches
 
 
+MAIN_CACHE_VERSION_KEY = 'version'
+CACHE_NAME = 'default'
+
+
 class DatabaseAwareCacheMixin:
     """
     This is a simple cache mixin for web applications that use very little
@@ -12,8 +16,6 @@ class DatabaseAwareCacheMixin:
     version is less than the global version, the view-logic is rendered again.
     """
 
-    cache_name = 'default'
-    main_cache_version_key = 'version'
 
     def dispatch(self, request, *args, **kwargs):
         if request.method not in ('HEAD', 'GET'):
@@ -29,7 +31,7 @@ class DatabaseAwareCacheMixin:
             except ValueError:
                 self.cache.delete(url_version_key)
                 url_version = -1
-        version = self.cache.get(self.main_cache_version_key, 0)
+        version = self.cache.get(MAIN_CACHE_VERSION_KEY, 0)
         url_cache_key = 'data\0' + url
         response = None
         if version <= url_version:
@@ -45,4 +47,4 @@ class DatabaseAwareCacheMixin:
 
     @property
     def cache(self):
-        return caches[self.cache_name]
+        return caches[CACHE_NAME]
