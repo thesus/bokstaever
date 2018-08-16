@@ -33,7 +33,7 @@ class BlogView(DatabaseAwareCacheMixin, ListView):
     queryset = Post.objects.filter(draft=False)
 
 
-class IndexBlogView(DatabaseAwareCacheMixin, BlogView):
+class IndexBlogView(BlogView):
     template_name = 'frontend/blog/index.html'
 
 

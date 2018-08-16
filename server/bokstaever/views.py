@@ -23,7 +23,7 @@ class DatabaseAwareCacheMixin:
             return super().dispatch(request, *args, **kwargs)
 
         url = request.build_absolute_uri()
-        url_version_key = 'ver\0' + url
+        url_version_key = 'ver/0' + url
         url_version = self.cache.get(url_version_key, -1)
         if url_version is not None:
             try:
@@ -32,14 +32,14 @@ class DatabaseAwareCacheMixin:
                 self.cache.delete(url_version_key)
                 url_version = -1
         version = self.cache.get(MAIN_CACHE_VERSION_KEY, 0)
-        url_cache_key = 'data\0' + url
+        url_cache_key = 'data/0' + url
         response = None
         if version <= url_version:
             response = self.cache.get(url_cache_key)
         if response is None:
             # There is nothing in the cache or it is too old.
             response = super().dispatch(request, *args, **kwargs)
-            self.cache.set(url_cache_key, response)
+            self.cache.set(url_cache_key, response.render())
             self.cache.set(url_version_key, version)
             return response
         else:
