@@ -4,7 +4,8 @@ from bokstaever.models import (
     Post,
     Image,
     Settings,
-    Page
+    Page,
+    Gallery
 )
 
 class ImageField(serializers.ReadOnlyField):
@@ -16,9 +17,6 @@ class ImageField(serializers.ReadOnlyField):
             return ''
 
 class PostSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
-    image_title = serializers.SerializerMethodField()
-    thumbnail_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -26,44 +24,26 @@ class PostSerializer(serializers.ModelSerializer):
             'id',
             'headline',
             'text',
-            'published',
             'type',
             'draft',
-            'editors',
             'image',
-            'image_url',
-            'image_title',
-            'thumbnail_url'
+            'editors',
+            'published',
         )
-        read_only_fields = ('editors', )
-
-    def get_image_url(self, instance):
-        return instance.image.image.url
-
-    def get_image_title(self, instance):
-        return instance.image.title
-
-    def get_thumbnail_url(self, instance):
-        return instance.image.thumbnail.url
+        read_only_fields = ('editors', 'published')
 
 
 class PostListSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField('get_image_url')
 
     class Meta:
         model = Post
         fields = (
             'id',
             'headline',
-            'image',
-            'text',
             'published',
-            'draft',
-            'slug'
+             'slug'
         )
 
-    def get_image_url(self, instance):
-        return instance.image.image.url
 
 class ImageSerializer(serializers.ModelSerializer):
     thumbnail = serializers.ImageField(use_url=True, read_only=True)
@@ -74,6 +54,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class SettingsSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Settings
         fields = (
@@ -87,8 +68,6 @@ class SettingsSerializer(serializers.ModelSerializer):
 
 
 class PageSerializer(serializers.ModelSerializer):
-    image_url = serializers.SerializerMethodField()
-    slug = serializers.ReadOnlyField()
 
     class Meta:
         model = Page
@@ -97,22 +76,31 @@ class PageSerializer(serializers.ModelSerializer):
             'slug',
             'text',
             'type',
-            'image',
-            'image_url'
+            'image'
         )
         lookup_field = 'slug'
+        read_only_fields = ('slug', )
         extra_kwargs = {
             'url': {'lookup_field': 'slug'}
         }
 
-    def get_image_url(self, instance):
-        try:
-            return instance.image.image.url
-        except AttributeError:
-            return None
-
 
 class PageListSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Page
         fields = ('headline', 'slug')
+
+
+class GalleryListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Gallery
+        fields = ('id', 'name')
+
+
+class GallerySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Gallery
+        fields = ('id', 'name', 'images')

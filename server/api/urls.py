@@ -4,15 +4,23 @@ from api.views import (
     PostViewSet,
     ImageViewSet,
     SettingsUpdateView,
-    PageViewSet
+    PageViewSet,
+    GalleryViewSet
 )
 
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('posts', PostViewSet)
-router.register('images', ImageViewSet)
-router.register('pages', PageViewSet)
+
+viewsets = (
+    ('posts', PostViewSet),
+    ('images', ImageViewSet),
+    ('pages', PageViewSet),
+    ('galleries', GalleryViewSet)
+)
+
+for viewset in viewsets:
+    router.register(*viewset)
 
 urlpatterns = [
     path('', include(router.urls)),

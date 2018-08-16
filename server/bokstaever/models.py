@@ -56,6 +56,14 @@ class Image(models.Model):
         ordering = ['-pk', ]
 
 
+class Gallery(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    images = models.ManyToManyField(
+        Image
+    )
+
+
 TEXT_CHOICES = (
     ('md', 'Markdown'),
     ('mdhtml', 'Markdown with inline HTML'),
@@ -79,6 +87,13 @@ class SiteModel(models.Model):
     draft = models.BooleanField(default=False)
 
     slug = models.SlugField(max_length=200)
+
+    gallery = models.ForeignKey(
+        Gallery,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return '{0.headline}'.format(self)

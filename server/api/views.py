@@ -2,6 +2,7 @@ from bokstaever.models import (
     Post,
     Image,
     Page,
+    Gallery,
 
     Settings
 )
@@ -15,7 +16,10 @@ from api.serializers import (
     SettingsSerializer,
 
     PageSerializer,
-    PageListSerializer
+    PageListSerializer,
+
+    GallerySerializer,
+    GalleryListSerializer
 )
 
 from api.viewsets import (
@@ -83,3 +87,12 @@ class PageViewSet(ConditionalAuthenticationMixin,
         'list', 'retrieve'
     ]
     lookup_field = 'slug'
+
+
+class GalleryViewSet(MultiSerializerViewSet):
+    queryset = Gallery.objects.all()
+    serializer_class = GallerySerializer
+    serializer_action_classes = {
+        'list': GalleryListSerializer
+    }
+    permission_class = (IsAuthenticated,)
