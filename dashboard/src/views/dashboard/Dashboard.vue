@@ -6,7 +6,7 @@
     <nav class="navbar">
       <div class="container">
         <transition name="menu">
-          <ul v-if="isCollapsed" :class="{  notransition: shouldCollapse }">
+          <ul v-if="isCollapsed" :class="{  notransition: shouldCollapse }" @click="open = false">
             <li><a href="/">Home</a></li>
             <li><router-link :to="{ name: 'dashboard' }">Dashboard</router-link></li>
             <li><router-link :to="{ name: 'post-list' }">Posts</router-link></li>
@@ -73,13 +73,10 @@ export default {
   transition: none !important;
 }
 
-.dashboard {
-  margin-top: 10px;
-}
-
 .navbar-toggle-container {
   width: 100%;
-  height: 33px;
+  height: 50px;
+  background-color: white;
   @media screen and (min-width: 800px) {
     display: none;
   }
@@ -87,7 +84,7 @@ export default {
 
 .navbar-toggle {
     cursor: pointer;
-    margin: 5px 25px 0px 0px;
+    margin: 15px 25px 15px 0px;
     float: right;
     @media screen and (min-width: 800px) {
       display: none
