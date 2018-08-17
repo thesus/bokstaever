@@ -22,6 +22,7 @@ class GalleryPattern(Pattern):
             gallery = Gallery.objects.get(pk=pk)
         except ObjectDoesNotExist:
             el = etree.Element('span')
+            el.set('class', 'danger')
             el.text = "Gallery {} doesn't exist!".format(pk)
             return el
 

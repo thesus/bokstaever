@@ -413,3 +413,13 @@ Styling for galleries on pages and posts
     }
   }
 }
+
+span.danger {
+  width: 100%;
+  background-color: rgba(178, 18, 49, 0.9);
+  color: white;
+  display: block;
+  text-align: center;
+  margin: 5px 0 5px 0;
+  padding: 5px 0 5px 0;
+}
