@@ -21,7 +21,7 @@ RUN wget https://github.com/sass/dart-sass/releases/download/1.10.1/dart-sass-1.
 RUN tar -xvf dart-sass-1.10.1-linux-x64.tar.gz
 
 WORKDIR /src/static/css
-RUN /dart-sass/sass style.scss:style.css
+RUN /dart-sass/sass style.scss:style.css brevlada.scss:brevlada.css
 RUN rm *.scss
 
 FROM abiosoft/caddy:no-stats
@@ -35,5 +35,9 @@ COPY compile.sh /etc/compile.sh
 RUN chmod u+x /etc/compile.sh
 
 COPY dashboard/ /srv/src
+
+WORKDIR /srv/src
+
+RUN yarn
 
 COPY Caddyfile /etc/Caddyfile
