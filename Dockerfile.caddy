@@ -24,6 +24,7 @@ WORKDIR /src/static/css
 RUN /dart-sass/sass style.scss:style.css brevlada.scss:brevlada.css
 RUN rm *.scss
 
+
 FROM abiosoft/caddy:no-stats
 
 # Install yarn to compile dashboard later with correct environment
