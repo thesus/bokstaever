@@ -5,17 +5,17 @@ import math
 
 from django.utils.safestring import mark_safe
 
+from .extensions import EscapeHTMLExtension, GalleryExtension
+
+
 register = template.Library()
 
-class EscapeHTML(markdown.extensions.Extension):
-    def extendMarkdown(self, md, md_globals):
-        del md.preprocessors['html_block']
-        del md.inlinePatterns['html']
 
 @register.filter()
 def markdownify(text, html_escape=True):
-    extensions = ['markdown.extensions.extra', ]
-    extensions += [EscapeHTML()] if html_escape else []
+    extensions = ['markdown.extensions.extra', GalleryExtension()]
+
+    extensions += [EscapeHTMLExtension(), ] if html_escape else []
 
     html = markdown.markdown(text, extensions=extensions)
     return mark_safe(html)
