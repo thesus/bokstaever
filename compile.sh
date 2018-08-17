@@ -5,6 +5,8 @@
 cd /srv/src
 rm -r dist
 
+yarn
+
 yarn build
 
 rm -r /srv/dashboard
