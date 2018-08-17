@@ -27,6 +27,14 @@ Important parts:
 
 
 /*
+Basic styling for html elements
+*/
+
+h1, h2, h3, h4, h5 {
+  font-weight: 400;
+}
+
+/*
 Styling for Pages and posts, if desired both can be modified separately.
 */
 .site {
@@ -49,7 +57,7 @@ Styling for Pages and posts, if desired both can be modified separately.
             height: 600px;
         }
         @media screen and (min-width: 1300px) {
-            height: 750px;
+            height: 650px;
         }
         img {
             object-fit: cover;
@@ -434,4 +442,56 @@ span.danger {
   text-align: center;
   margin: 5px 0 5px 0;
   padding: 5px 0 5px 0;
+}
+
+
+/*
+Styling for footer, visible on all pages.
+*/
+
+.footer {
+    display: block;
+    background: #fdfdfd;
+    border-top: 1px solid #eee;
+    position: relative;
+    margin-top: 25px;
+    padding-bottom: 10px;
+
+    .container {
+        display: grid;
+        column-gap: 40px;
+        grid-template-areas:
+          'header header header'
+          'left right right';
+        margin: auto;
+        @media screen and (min-width: 1200px) {
+            width: 40%;
+        }
+        @media screen and (min-width: 700px) and (max-width: 1200px){
+            width: 70%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
+
+       .title {
+           grid-area: header;
+           color: #222;
+           text-transform: lowercase;
+       }
+
+       .contact {
+          grid-area: left;
+          display: block;
+          a {
+            text-decoration: none;
+            color: #0088cc;
+          }
+       }
+
+       .info {
+         grid-area: right;
+         color: #828282;
+       }
+    }
 }
