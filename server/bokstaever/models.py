@@ -88,13 +88,6 @@ class SiteModel(models.Model):
 
     slug = models.SlugField(max_length=200)
 
-    gallery = models.ForeignKey(
-        Gallery,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True
-    )
-
     def __str__(self):
         return '{0.headline}'.format(self)
 
