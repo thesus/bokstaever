@@ -42,7 +42,8 @@ export default {
   data () {
     return {
       image: null,
-      showModal: false
+      showModal: false,
+      count: 0
     }
   },
   mounted () {
@@ -52,8 +53,8 @@ export default {
     imageCount () {
       if (Array.isArray(this.value)) {
         return this.value.length
-      } else if (this.multiple) {
-        return 0
+      } else if (this.extra.multiple) {
+        return this.count
       }
     }
   },
@@ -74,6 +75,7 @@ export default {
       )
       if (this.value === undefined) {
         this.getImage(value)
+        this.count = Array.isArray(value) ? value.length : undefined
       }
       this.showModal = false
     }
