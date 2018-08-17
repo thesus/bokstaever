@@ -1,0 +1,21 @@
+{% load static %}
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static settings.theme %}">
+
+    <title>{% block title %} {% endblock title %} {{ settings.name }}</title>
+  </head>
+  <body>
+
+    {% block ui %}
+        {% block content %}
+
+        {% endblock %}
+     {% endblock ui %}
+
+  </body>
+</html>

@@ -8,14 +8,13 @@ __pycache__
 *.pyc
 
 # Backend related stuff
-/backend/bokstaever/media
-/backend/bokstaever/static/css/style.css*
-/backend/bokstaever/static/css/dashboard.css*
-/backend/bokstaever/static/css/icons.css*
+/server/bokstaever/media
+*.css
+*.css.map
 
 # Frontend related stuff
 node_modules
-/frontend/dist
+/dashboard/dist
 
 # Log files
 *.log

@@ -1,0 +1,34 @@
+{% extends 'frontend/base.html' %}
+{% load bokstaever %}
+
+{% block content %}
+{% include 'snippets/image.html' %}
+
+<h1>{{ title }}</h1>
+
+<div class="content">
+  {{ settings.info | markdownify }}
+
+  <div class="post-peak">
+    {% for post in posts %}
+      <a href="{% url 'post-detail' post.pk %}">
+        <div class="card">
+          <div class="card-header">
+            <img class="card-img-top" src="{{ post.image.image.url }}">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ post.headline }}</h4>
+            <div class="card-text">
+              {{ post.text | markdownify | truncatechars_html:200 }}
+            </div>
+            <small class="card-footer">
+              {{ post.published }}, {{ post.text | readtime }}min read
+              <span class="arrow">→</span>
+            </small>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

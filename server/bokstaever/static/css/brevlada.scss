@@ -1,0 +1,497 @@
+/*
+Brevlada stylesheet for bokstaever.
+
+Important parts:
+- .navigation (covers hiding, etc.)
+- .site (everything regarding posts and pages)
+*/
+
+@mixin site() {
+  margin: auto;
+  @media screen and (min-width: 1300px) {
+      width: 60%;
+  }
+  @media screen and (min-width: 1001px) and (max-width: 1300px) {
+    width: 70%
+  }
+  @media screen and (min-width: 700px) and (max-width: 1000px) {
+      width: 60%;
+  }
+  @media screen and (min-width: 500px) and (max-width: 700px) {
+      width: 80%;
+  }
+  @media screen and (max-width: 500px) {
+      width: 95%;
+  }
+}
+
+
+/*
+Basic styling for html elements
+*/
+
+h1, h2, h3, h4, h5 {
+  font-weight: 400;
+}
+
+/*
+Styling for Pages and posts, if desired both can be modified separately.
+*/
+.site {
+  .post, .page {
+    width: 100%;
+
+    .post-header, .page-header {
+      .post-image, .page-image {
+        width: 100%;
+        overflow: hidden;
+        top: 5rem;
+
+        @media screen and (max-width: 500px) {
+            height: 350px;
+        }
+        @media screen and (min-width: 500px) and (max-width: 800px){
+            height: 450px;
+        }
+        @media screen and (min-width: 800px) and (max-width: 1300px){
+            height: 600px;
+        }
+        @media screen and (min-width: 1300px) {
+            height: 650px;
+        }
+        img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+      }
+      .post-image-caption, .page-image-caption {
+        margin: 8px auto 10px auto;
+        width: 80%;
+        display: block;
+        text-align: center;
+        font-size: 15px;
+        color: #828282;
+      }
+    }
+
+    .post-content, .page-content {
+        h1 {
+          @include site();
+          font-size: 40px;
+          font-weight: 400;
+        }
+    }
+
+    .post-text, .page-text {
+      text-align: justify;
+      word-break: break-word;
+      hyphens: auto;
+      font-size: 18px;
+      p:first-child{
+        &:first-letter {
+          color: #903;
+          float: left;
+          font-family: Georgia;
+          font-size: 55px;
+          line-height: 41px;
+          padding: 3px 4px 0 0;
+        }
+      }
+      p, table,
+      h1, h2, h3, h4, h5 {
+        @include site();
+      }
+      table {
+        margin: 5px auto 5px auto;
+      }
+      figure {
+        width: 100%;
+        margin: 10px 0px 10px 0px;
+      }
+    }
+  }
+}
+
+
+/*
+Styling for index page in site-mode with a little peak to the last posts.
+*/
+
+.post-peak {
+  display: grid;
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+  grid-template-columns: repeat(2, 50%);
+  grid-gap: 10px;
+  width: calc(100% - 30px);
+  padding: 10px;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  .card {
+    display: flex;
+
+    height: 200px;
+
+    @media screen and (max-width: 500px) {
+      height: auto;
+      display: block;
+    }
+
+    @media screen and (min-width: 950px) {
+      height: 210px;
+    }
+    @media screen and (min-width: 1000px) {
+      height: 190px;
+    }
+    @media screen and (min-width: 1100px) {
+      height: 180px;
+    }
+    @media screen and (min-width: 1100px) {
+      height: 160px;
+    }
+    @media screen and (min-width: 1300px) {
+      height: 140px;
+    }
+    @media screen and (min-width: 1500px) {
+      height: 210px;
+    }
+    @media screen and (min-width: 1600px) {
+      height: 190px;
+    }
+    @media screen and (min-width: 1700px) {
+      height: 160px;
+    }
+
+    .card-header {
+      @media screen and (min-width: 501px) {
+        flex: 0 0 200px;
+        height: 100%;
+      }
+        width: 100%;
+        height: 200px;
+    }
+    .card-body {
+      float: right;
+      flex: 1;
+      padding: 8px 5px 5px 8px;
+      border: 1px solid #eee;
+      position: relative;
+
+      @media screen and (min-width: 501px) {
+        border-radius: 0 4px 4px 0;
+      }
+      @media screen and (max-width: 500px) {
+        border-radius: 0 0 4px 4px;
+      }
+      .card-text {
+        height: calc(100% - 60px);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 15px;
+        p {
+          margin: 0;
+        }
+
+        margin-bottom: 22px;
+      }
+      .card-title {
+        margin: 3px 0 2px 0;
+      }
+      .card-footer {
+        position: absolute;
+        left: 4px;
+        bottom: 2px;
+        width: calc(100% - 8px);
+
+        span.arrow {
+          float: right;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+
+/*
+Content on indexpage in site-mode
+*/
+.content {
+  width: 95%;
+  @media screen and (min-width: 700px) and (max-width: 900px) {
+    width: 70%;
+  }
+  @media screen and (min-width: 600px) and (max-width: 700px) {
+    width: 80%;
+  }
+  @media screen and (min-width: 1500px) {
+    width: 60%;
+  }
+  margin: auto;
+}
+
+
+.header {
+    width: 100%;
+    .header-image {
+      width: 100%;
+      height: 400px;
+      @media screen and (min-width: 700px) {
+        height: 500px;
+      }
+      @media screen and (min-width: 1200px) {
+        height: 600px;
+      }
+    }
+}
+
+
+/*
+Style of blog page / index page in blog-mode
+*/
+
+.post-list{
+  margin-top: 30px;
+
+  .post {
+    position: relative;
+    @media screen and (min-width: 581px) {
+      height: 300px;
+    }
+    width: 60%;
+    @media screen and (max-width: 1300px) {
+      width: 95%;
+    }
+    margin: auto auto 30px auto;
+
+    &:nth-child(even) {
+      .post-header {
+         float: right;
+      }
+      .post-body {
+          float: left;
+      }
+    }
+    &:nth-child(odd) {
+      .post-body {
+        float: right;
+      }
+      .post-header {
+        float: left;
+      }
+    }
+
+
+    .post-body, .post-header {
+      width: calc(50% - 10px);
+      @media screen and (min-width: 581px) {
+        height: 100%;
+      }
+      @media screen and (max-width: 580px) {
+        width: 100% !important;
+      }
+    }
+
+    .post-body {
+      display: flex;
+      color: #212529;
+      position: relative;
+      margin-top: -20px;
+      @media screen and (max-width: 990px) {
+        width: calc(65% - 10px);
+      }
+      @media screen and (max-width: 580px) {
+        margin: 0px 0px 15px 0px;
+      }
+
+      .post-content {
+        margin: auto 0 auto 0;
+        overflow: auto;
+      }
+
+      .post-title {
+        margin-bottom: 10px;
+      }
+
+      .post-text {
+        position: relative;
+        @media screen and (min-width: 581px) {
+          width: 100%;
+        }
+        p {
+          hyphens: auto;
+          word-break: break-word;
+          text-align: justify;
+          margin-top: 0;
+        }
+        .post-footer {
+          float: right;
+        }
+      }
+    }
+    .post-header {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+
+      @media screen and (max-width: 990px) {
+        width: calc(35% - 10px);
+      }
+      @media screen and (max-width: 580px) {
+        height: 300px;
+      }
+    }
+  }
+}
+
+
+/*
+Pagination at the moment only used on blog / index page
+*/
+.pagination {
+  text-align: center;
+  list-style: none;
+  a, span {
+    margin: 5px;
+    display: inline-block;
+  }
+
+  a {
+    font-size: 20px;
+    text-decoration: none;
+    color: #404040;
+    &:hover {
+      color: #303030;
+    }
+  }
+
+  .active {
+    color: black;
+    font-size: 20px;
+  }
+
+  .disabled {
+    color: #808080;
+  }
+
+  span:not(.active) {
+    font-size: 30px;
+  }
+
+  .disabled, .active {
+    cursor: default;
+  }
+}
+
+/*
+Styling for galleries on pages and posts
+*/
+.gallery {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  background-color: #fdfdfd;
+  padding: 5px 0px 5px 0px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+
+  .thumbnails {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80%;
+    @media screen and (max-width: 1000px) {
+      width: 95%;
+    }
+    .thumbnail {
+      margin: 5px;
+      @media screen and (max-width: 1200px) {
+        width: 150px;
+        height: 150px;
+      }
+      @media screen and (max-width: 800px) {
+        width: 200px;
+        height: 200px;
+      }
+      @media screen and (max-width: 442px) {
+        width: 90vw;
+        height: 90vw;
+      }
+      width: 200px;
+      height: 200px;
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+  }
+}
+
+span.danger {
+  width: 100%;
+  background-color: rgba(178, 18, 49, 0.9);
+  color: white;
+  display: block;
+  text-align: center;
+  margin: 5px 0 5px 0;
+  padding: 5px 0 5px 0;
+}
+
+
+/*
+Styling for footer, visible on all pages.
+*/
+
+.footer {
+    display: block;
+    background: #fdfdfd;
+    border-top: 1px solid #eee;
+    position: relative;
+    margin-top: 25px;
+    padding-bottom: 10px;
+
+    .container {
+        display: grid;
+        column-gap: 40px;
+        grid-template-areas:
+          'header header header'
+          'left right right';
+        margin: auto;
+        @media screen and (min-width: 1200px) {
+            width: 40%;
+        }
+        @media screen and (min-width: 700px) and (max-width: 1200px){
+            width: 70%;
+        }
+        @media screen and (max-width: 700px) {
+            width: 90%;
+        }
+
+       .title {
+           grid-area: header;
+           color: #222;
+           text-transform: lowercase;
+       }
+
+       .contact {
+          grid-area: left;
+          display: block;
+          a {
+            text-decoration: none;
+            color: #0088cc;
+          }
+       }
+
+       .info {
+         grid-area: right;
+         color: #828282;
+       }
+    }
+}
