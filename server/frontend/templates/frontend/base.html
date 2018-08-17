@@ -30,4 +30,18 @@
     {% block content %}
     {% endblock content %}
   </div>
+
+  <footer class="footer">
+        <div class="container">
+            <h3 class="title">{{ settings.name }}</h3>
+            <div class="contact">
+                  <span class="contact-type">E-Mail</span>
+                  <span class="contact"><a :href="'mailto:' + info.email">{{ settings.email }}</a></span>
+            </div>
+            <div class="info">
+                {{ settings.info }}
+            </div>
+       </div>
+   </footer>
+
 {% endblock ui %}
