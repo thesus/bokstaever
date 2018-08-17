@@ -46,7 +46,6 @@ Styling for Pages and posts, if desired both can be modified separately.
         width: 100%;
         overflow: hidden;
         top: 5rem;
-
         @media screen and (max-width: 500px) {
             height: 350px;
         }
@@ -268,6 +267,7 @@ Style of blog page / index page in blog-mode
     @media screen and (max-width: 1300px) {
       width: 95%;
     }
+    overflow: auto;
     margin: auto auto 30px auto;
 
     &:nth-child(even) {
