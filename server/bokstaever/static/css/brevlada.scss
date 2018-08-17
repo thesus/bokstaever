@@ -380,3 +380,58 @@ Pagination at the moment only used on blog / index page
     cursor: default;
   }
 }
+
+/*
+Styling for galleries on pages and posts
+*/
+.gallery {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  background-color: #fdfdfd;
+  padding: 5px 0px 5px 0px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+
+  .thumbnails {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80%;
+    @media screen and (max-width: 1000px) {
+      width: 95%;
+    }
+    .thumbnail {
+      margin: 5px;
+      @media screen and (max-width: 1200px) {
+        width: 150px;
+        height: 150px;
+      }
+      @media screen and (max-width: 800px) {
+        width: 200px;
+        height: 200px;
+      }
+      @media screen and (max-width: 442px) {
+        width: 90vw;
+        height: 90vw;
+      }
+      width: 200px;
+      height: 200px;
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+  }
+}
+
+span.danger {
+  width: 100%;
+  background-color: rgba(178, 18, 49, 0.9);
+  color: white;
+  display: block;
+  text-align: center;
+  margin: 5px 0 5px 0;
+  padding: 5px 0 5px 0;
+}

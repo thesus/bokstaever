@@ -56,6 +56,14 @@ class Image(models.Model):
         ordering = ['-pk', ]
 
 
+class Gallery(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    images = models.ManyToManyField(
+        Image
+    )
+
+
 TEXT_CHOICES = (
     ('md', 'Markdown'),
     ('mdhtml', 'Markdown with inline HTML'),
