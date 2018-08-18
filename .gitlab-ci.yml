@@ -53,8 +53,7 @@ testing:
     - cd server
   script:
     - pytest --cov-report html:public --cov-report term
-    - ls public
-    - cp public ../public
+    - cp  -r public ../public
   artifacts:
     paths:
       - public
