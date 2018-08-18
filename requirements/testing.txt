@@ -1,0 +1,5 @@
+pytest==3.7.1
+pytest-cov==2.5.1
+pytest-django==3.4.1
+pytest-flakes==4.0.0
+pyflakes==2.0.0
