@@ -3,6 +3,7 @@ from bokstaever.models import (
     Page
 )
 
+
 def info(request):
     return {
         'settings': Settings.load(),

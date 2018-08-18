@@ -38,17 +38,18 @@ class GalleryPattern(Pattern):
             thumbnail_element = etree.SubElement(link_element, "div")
             thumbnail_element.set('class', 'thumbnail')
 
-            image_element =  etree.SubElement(thumbnail_element, "img")
+            image_element = etree.SubElement(thumbnail_element, "img")
             image_element.set('src', image.thumbnail.url)
 
         return root_element
 
 
 class GalleryExtension(Extension):
-        def extendMarkdown(self, md, md_globals):
-            md.registerExtension(self)
-            self.parser = md.parser
+    def extendMarkdown(self, md, md_globals):
+        md.registerExtension(self)
+        self.parser = md.parser
 
-            GALLERY_PATTERN = r'\!\((\d+)\)'
+        GALLERY_PATTERN = r'\!\((\d+)\)'
 
-            md.inlinePatterns.add('gallery', GalleryPattern(GALLERY_PATTERN, self), '<reference')
+        md.inlinePatterns.add('gallery', GalleryPattern(
+            GALLERY_PATTERN, self), '<reference')

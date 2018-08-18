@@ -31,3 +31,4 @@ node_modules
 
 # Testing and coverage
 .pytest_cache
+.coverage

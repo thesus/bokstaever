@@ -4,8 +4,6 @@ from django.utils.text import slugify
 
 from django.contrib.auth.models import User
 
-from django.urls import reverse
-
 from bokstaever.images import resize
 
 
@@ -70,6 +68,8 @@ TEXT_CHOICES = (
     ('html', 'HTML'),
     ('raw', 'Raw, linebreaks are rendered')
 )
+
+
 class SiteModel(models.Model):
     headline = models.CharField(max_length=200)
     image = models.ForeignKey(
@@ -124,6 +124,7 @@ BEHAVIOR_CHOICES = (
     ('blog', 'Blog'),
     ('site', 'Site')
 )
+
 
 class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')

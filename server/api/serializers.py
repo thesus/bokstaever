@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+
 from bokstaever.models import (
     Post,
     Image,
@@ -8,6 +9,7 @@ from bokstaever.models import (
     Gallery
 )
 
+
 class ImageField(serializers.ReadOnlyField):
 
     def to_representation(self, obj):
@@ -15,6 +17,7 @@ class ImageField(serializers.ReadOnlyField):
             return obj.url
         except AttributeError:
             return ''
+
 
 class PostSerializer(serializers.ModelSerializer):
 
@@ -41,7 +44,7 @@ class PostListSerializer(serializers.ModelSerializer):
             'id',
             'headline',
             'published',
-             'slug'
+            'slug'
         )
 
 

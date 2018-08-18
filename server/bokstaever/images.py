@@ -22,6 +22,7 @@ def crop_image(image, width):
         )
     )
 
+
 def resize(image, width):
     original = IMG.open(image)
 

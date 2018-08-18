@@ -8,7 +8,6 @@ from frontend.views import (
     PageView
 )
 
-from bokstaever.models import Settings
 
 urlpatterns = [
     path('', index, name='index'),
