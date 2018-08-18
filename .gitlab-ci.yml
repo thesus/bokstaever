@@ -41,8 +41,15 @@ testing:
   tags:
     - docker
   stage: test
+  variables:
+    DEBUG: 'true'
+    SECRET_KEY: 'testing'
+    DATABASE_URL: 'sqlite:////tmp/test.db'
+    ALLOWED_HOSTS: 'localhost'
+    CORS_ORIGIN_WHITELIST: 'localhost'
   before_script:
     - python -V
     - pip install -r requirements/testing.txt
+    - cd server
   script:
     - pytest --cov-report=term
