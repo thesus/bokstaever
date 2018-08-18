@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
 
 cache:
   paths:
@@ -34,3 +35,14 @@ build-docker-image-caddy:
     - docker pull $IMAGE_NAME || /bin/true  # sic
     - docker build --pull -f Dockerfile.caddy -t $IMAGE_NAME_CADDY .
     - docker push $IMAGE_NAME_CADDY
+
+testing:
+  image: $IMAGE_NAME
+  tags:
+    - docker
+  stage: test
+  before_script:
+    - python -V
+    - pip install -r requirements/testing.txt
+  script:
+    - pytest --cov-report=term
