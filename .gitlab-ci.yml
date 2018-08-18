@@ -52,8 +52,9 @@ testing:
     - pip install -r requirements/testing.txt
     - cd server
   script:
-    - pytest --cov-report html:htmlcov --cov-report term
-    - mv htmlcov /public
+    - pytest --cov-report html:public --cov-report term
+    - ls public
+    - cp public ../public
   artifacts:
     paths:
       - public
