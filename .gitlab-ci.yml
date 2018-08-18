@@ -52,9 +52,4 @@ testing:
     - pip install -r requirements/testing.txt
     - cd server
   script:
-    - pytest --cov-report html:public --cov-report term
-    - cp  -r public ../public
-  artifacts:
-    paths:
-      - public
-    expire_in: 30 days
+    - pytest --cov-report term
