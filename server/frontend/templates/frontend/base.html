@@ -34,9 +34,17 @@
   <footer class="footer">
         <div class="container">
             <h3 class="title">{{ settings.name }}</h3>
-            <div class="contact">
-                  <span class="contact-type">E-Mail</span>
-                  <span class="contact"><a :href="'mailto:' + info.email">{{ settings.email }}</a></span>
+            <div class="contacts">
+              {% if settings.email %}
+                <div class="contact">
+                  <span class="contact-type icon envelope">E-Mail</span>
+                  <span class="contact-link"><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></span>
+                </div>
+              {% endif %}
+              <div class="contact">
+                <span class="contact-type icon rss">Feed</span>
+                <span class="contact-link"><a href="{% url 'feed' %}">RSS</a></span>
+              </div>
             </div>
             <div class="info">
                 {{ settings.info }}

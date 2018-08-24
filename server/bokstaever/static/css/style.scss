@@ -27,6 +27,16 @@ img {
         background: transparent url(/static/svg/arrow-right.svg) 0px 0px no-repeat;
         background-size: contain;
     }
+
+    &.envelope {
+        background: transparent url(/static/svg/envelope-closed.svg) 0px 0px no-repeat;
+        background-size: contain;
+    }
+
+    &.rss {
+        background: transparent url(/static/svg/rss.svg) 0px 0px no-repeat;
+        background-size: contain;
+    }
 }
 
 .navigation {
