@@ -14,10 +14,10 @@
       <button type="button" :disabled="!(page > 1)" @click="page -= 1" class="icon left" />
       <button type="button" :disabled="!(page < images.pages)" @click="page += 1" class="icon right" />
     </div>
-    <span v-if="multiple && selected.length >= 1">
-      {{ selected.length }} {{ selected.length | pluralize('Image') }} selected.
-    </span>
-    <div v-if="multiple" class="btn-group">
+    <div v-if="multiple" class="footer-group">
+      <span v-if="multiple && selected.length >= 1">
+        {{ selected.length }} {{ selected.length | pluralize('Image') }} selected.
+      </span>
       <button type="button" class="btn btn-default" :disabled="selected.length < 1" @click="selected = []">Clear</button>
       <button type="button" class="btn btn-default" :disabled="selected.length < 1" @click="$emit('selected', selected)">Select</button>
   </div>
@@ -104,8 +104,7 @@ export default {
   cursor: pointer;
 }
 
-.btn-group {
+.footer-group {
   float: right;
-  margin-right: 85px;
 }
 </style>

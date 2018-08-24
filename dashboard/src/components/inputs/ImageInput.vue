@@ -7,7 +7,7 @@
     <button type="button" class="btn btn-default" @click="showModal = true">
       Select Image
     </button>
-    <modal-component v-if="showModal" @close="showModal = false">
+    <modal-component v-if="showModal" @close="showModal = false" :title="getTitle">
       <image-component @selected="selectImage" :value="value" :multiple="extra['multiple']"/>
     </modal-component>
   </div>
@@ -56,6 +56,9 @@ export default {
       } else if (this.extra.multiple) {
         return this.count
       }
+    },
+    getTitle () {
+      return this.extra.multiple ? 'Select multiple Images.' : 'Click on Image to select.'
     }
   },
   methods: {

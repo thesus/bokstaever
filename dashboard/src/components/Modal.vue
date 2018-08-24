@@ -3,10 +3,11 @@
       <div class="modal-mask">
           <div class="modal-wrapper">
               <div class="modal-container">
+                  <h3 v-if="title">{{ title }}</h3>
                   <div class="modal-content">
                       <slot></slot>
                   </div>
-                  <button type="button" class="btn btn-default btn-modal" @click="$emit('close')">Close</button>
+                  <span class="btn-modal" @click="$emit('close')" />
               </div>
           </div>
       </div>
@@ -14,7 +15,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['title']
+}
 </script>
 
 <style lang="scss" scoped>
@@ -38,25 +41,47 @@ export default {}
 }
 
 .modal-container {
-    width: 50%;
-    height: 70%;
+    @media screen and (min-width: 1200px) {
+      width: 50vw;
+      height: 70vh;
+    }
+    width: 90vw;
+    height: 90vh;
+
     background-color: #fff;
     margin: 0px auto;
     position: relative;
+
     overflow: hidden;
+
+    h3 {
+      padding: 8px 0 0 15px;
+      min-height: 28px;
+      width: calc(100% - 55px);
+      margin: 0;
+    }
+
     .modal-content {
         box-sizing: border-box;
         padding: 8px;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 36px);
         overflow-x: hidden;
         overflow-y: auto;
+        border-top: solid 1px #eee;
     }
 
     .btn-modal {
         position: absolute;
-        bottom: 8px;
-        right: 8px;
+        height: 36px;
+        width: 44px;
+        top: 0;
+        right: 0;
+        line-height: 0;
+        display: block;
+        text-indent: -9999px;
+        background: #fff url(/assets/svg/x.svg) 50% 50% / 15px 15px no-repeat;
+        cursor: pointer;
     }
 }
 

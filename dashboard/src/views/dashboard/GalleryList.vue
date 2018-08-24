@@ -26,6 +26,10 @@ export default {
           {
             name: 'Name',
             identifier: 'name'
+          },
+          {
+            name: 'Identifier',
+            identifier: 'id'
           }
       ]
     }
