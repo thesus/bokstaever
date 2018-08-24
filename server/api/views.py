@@ -33,7 +33,6 @@ from rest_framework.permissions import (
 )
 
 from rest_framework.generics import (
-    GenericAPIView,
     RetrieveAPIView,
     UpdateAPIView
 )
@@ -41,6 +40,7 @@ from rest_framework.generics import (
 from rest_framework.viewsets import (
     ModelViewSet
 )
+
 
 class PostViewSet(ConditionalAuthenticationMixin,
                   MultiSerializerViewSet):
@@ -63,6 +63,7 @@ class PostViewSet(ConditionalAuthenticationMixin,
             editors=[self.request.user.pk]
         )
 
+
 class ImageViewSet(ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
@@ -73,8 +74,10 @@ class SettingsUpdateView(RetrieveAPIView,
                          UpdateAPIView):
     serializer_class = SettingsSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
     def get_object(self):
         return Settings.load()
+
 
 class PageViewSet(ConditionalAuthenticationMixin,
                   MultiSerializerViewSet):

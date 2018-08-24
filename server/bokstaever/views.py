@@ -16,7 +16,6 @@ class DatabaseAwareCacheMixin:
     version is less than the global version, the view-logic is rendered again.
     """
 
-
     def dispatch(self, request, *args, **kwargs):
         if request.method not in ('HEAD', 'GET'):
             # Don't bother checking cache.

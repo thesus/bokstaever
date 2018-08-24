@@ -5,4 +5,4 @@ class BokstaeverConfig(AppConfig):
     name = 'bokstaever'
 
     def ready(self):
-        import bokstaever.signals
+        import bokstaever.signals  # noqa

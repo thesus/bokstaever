@@ -7,6 +7,7 @@ from bokstaever.models import (
     Settings
 )
 
+
 class ImageAdmin(admin.ModelAdmin):
     readonly_fields = ['thumbnail']
 
