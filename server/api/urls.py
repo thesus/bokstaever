@@ -10,6 +10,9 @@ from api.views import (
 
 from rest_framework.routers import DefaultRouter
 
+
+app_name = 'api'
+
 router = DefaultRouter()
 
 viewsets = (

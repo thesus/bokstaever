@@ -1,5 +1,10 @@
 from django.core.cache import caches
 
+from django.contrib.syndication.views import Feed
+
+from django.shortcuts import reverse
+from bokstaever.models import Post, Settings
+
 
 MAIN_CACHE_VERSION_KEY = 'version'
 CACHE_NAME = 'default'
@@ -47,3 +52,29 @@ class DatabaseAwareCacheMixin:
     @property
     def cache(self):
         return caches[CACHE_NAME]
+
+
+class LatestPostsFeed(Feed):
+    link = "/"
+
+    def _settings(self):
+        return Settings.load()
+
+    def title(self):
+        return self._settings().name
+
+    def description(self):
+        return self._settings().info
+
+    def items(self):
+        return Post.objects.filter(draft=False).order_by('-published')[:5]
+
+    def item_title(self, item):
+        return item.headline
+
+    def item_description(self, item):
+        return item.text
+
+    # fixme add `get_absolute_url` in models
+    def item_link(self, item):
+        return reverse('frontend:post-detail', args=[item.pk])

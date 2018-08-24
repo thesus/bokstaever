@@ -9,6 +9,8 @@ from frontend.views import (
 )
 
 
+app_name = 'frontend'
+
 urlpatterns = [
     path('', index, name='index'),
     path('blog/', blog, name='blog'),

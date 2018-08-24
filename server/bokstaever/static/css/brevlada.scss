@@ -458,11 +458,13 @@ Styling for footer, visible on all pages.
     padding-bottom: 10px;
 
     .container {
+        $gap: 40px;
         display: grid;
-        column-gap: 40px;
+        grid-gap: $gap;
         grid-template-areas:
           'header header header'
           'left right right';
+
         margin: auto;
         @media screen and (min-width: 1200px) {
             width: 40%;
@@ -473,20 +475,38 @@ Styling for footer, visible on all pages.
         @media screen and (max-width: 700px) {
             width: 90%;
         }
-
+        @media screen and (max-width: 400px) {
+          grid-template-areas:
+            'header'
+            'left'
+            'right';
+        }
        .title {
            grid-area: header;
            color: #222;
            text-transform: lowercase;
        }
 
-       .contact {
+       .contacts {
           grid-area: left;
-          display: block;
-          a {
-            text-decoration: none;
-            color: #0088cc;
+          .contact {
+            margin: 3px 0 8px 0;
+            .contact-type {
+                padding-left: 25px;
+                white-space: nowrap;
+            }
+            span {
+              display: block;
+            }
+            a {
+              text-decoration: none;
+              color: #0088cc;
+            }
           }
+       }
+
+       .contacts, .info {
+          margin-top: -40px;
        }
 
        .info {

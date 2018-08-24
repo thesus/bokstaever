@@ -11,7 +11,7 @@
 
   <div class="post-peak">
     {% for post in posts %}
-      <a href="{% url 'post-detail' post.pk %}">
+      <a href="{% url 'frontend:post-detail' post.pk %}">
         <div class="card">
           <div class="card-header">
             <img class="card-img-top" src="{{ post.image.image.url }}">
