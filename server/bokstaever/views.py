@@ -55,10 +55,16 @@ class DatabaseAwareCacheMixin:
 
 
 class LatestPostsFeed(Feed):
-    settings = Settings.load()
-    title = settings.name
     link = "/"
-    description = settings.info
+
+    def _settings(self):
+        return Settings.load()
+
+    def title(self):
+        return self._settings().name
+
+    def description(self):
+        return self._settings().info
 
     def items(self):
         return Post.objects.filter(draft=False).order_by('-published')[:5]
