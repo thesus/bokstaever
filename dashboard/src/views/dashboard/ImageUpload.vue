@@ -13,7 +13,13 @@
       </label>
       <div class="image-list">
         <div class="thumbnail" v-for="image in images" v-if="images">
-          <img :src="image.url" :class="{uploading: showProgress(image)}">
+          <img
+            :src="image.url"
+            :class="{
+              uploading: showProgress(image),
+              success: image.success
+            }"
+          >
           <div
             class="progress"
             v-show="showProgress(image)"
@@ -32,12 +38,12 @@
 export default {
   data() {
     return {
-      'images': []
+      'images': {}
     }
   },
   methods: {
-    showProgress: (image) => {
-      return image.progress > 0 && image.progress < 100
+    showProgress (image) {
+      return image.progress > 0 && !(image.success != null)
     },
     imageSelect (event) {
       this.images = []
@@ -59,13 +65,35 @@ export default {
         this.uploadImage(image)
       }
     },
-    uploadImage (image) {
-      image.progress = 0.1
+    async uploadImage (image) {
+
+      this.$set(image, 'progress', 0.1)
+
       let formData = new FormData()
       formData.append('image', image.file)
       formData.append('title', image.title)
 
-      this.$api.sendFile('/images/', formData, 'post', true, image)
+      try {
+        let request = await this.$api.sendFile(
+          '/images/',
+          formData,
+          'post',
+          true,
+          image
+        )
+
+        if (request) {
+          this.$set(image, 'success', true)
+        }
+
+      } catch (error) {
+        this.$notify({
+          type: 'danger',
+          title: 'Error!',
+          text: 'Unknown error occurred!',
+          timeout: 5000
+        })
+      }
     }
   }
 }
@@ -79,6 +107,11 @@ export default {
 
 .uploading {
   filter: brightness(0.6) blur(0.8px);
+}
+
+.success {
+  box-sizing: border-box;
+  border: 5px solid green;
 }
 
 .thumbnail {
