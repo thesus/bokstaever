@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block ui %}
+  <div class="navigation">
+    <input type="checkbox" id="menu" name="menu" class="menu-checkbox">
+    <nav class="navbar">
+      <label class="menu-toggle" for="menu"><span>Toggle</span></label>
+      <ul>
+        <li>
+          <a href="{% url 'frontend:index' %}">Home</a>
+        </li>
+        {% if settings.behavior == 'site' %}
+          <li>
+            <a href="{% url 'frontend:blog' %}">Posts</a>
+          </li>
+        {% endif %}
+        {% for entry in sitemap %}
+          <li>
+            <a href="{% url 'frontend:page-detail' entry.1 %}">{{ entry.0 }}</a>
+          </li>
+        {% endfor %}
+        <li>
+          <a href="/dashboard/">Dashboard</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div>
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+  <footer class="footer">
+        <div class="container">
+            <h3 class="title">{{ settings.name }}</h3>
+            <div class="contacts">
+              {% if settings.email %}
+                <div class="contact">
+                  <span class="contact-type icon envelope">E-Mail</span>
+                  <span class="contact-link"><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></span>
+                </div>
+              {% endif %}
+              <div class="contact">
+                <span class="contact-type icon rss">Feed</span>
+                <span class="contact-link"><a href="{% url 'feed' %}">RSS</a></span>
+              </div>
+            </div>
+            <div class="info">
+                {{ settings.info }}
+            </div>
+       </div>
+   </footer>
+
+{% endblock ui %}

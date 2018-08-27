@@ -1,7 +1,34 @@
+# Virtual environment
 /venv
+.env.local
+.env.*.local
+
+# Python cache
 __pycache__
 *.pyc
-/src/bokstaever/media
-/src/bokstaever/static/css/style.css*
-/src/bokstaever/static/css/dashboard.css*
-/src/bokstaever/static/css/icons.css*
+
+# Backend related stuff
+/server/bokstaever/media
+*.css
+*.css.map
+
+# Frontend related stuff
+node_modules
+/dashboard/dist
+
+# Log files
+*.log
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+.DS_Store
+
+# Testing and coverage
+.pytest_cache
+.coverage
