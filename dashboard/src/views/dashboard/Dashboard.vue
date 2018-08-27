@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     shouldCollapse () {
-      return this.width >= 800
+      return this.width >= 980
     },
     isCollapsed () {
       return this.shouldCollapse ? true : this.open
@@ -60,6 +60,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$should_collapse: 980px;
+
 .menu-enter-active, .menu-leave-active {
   transition: opacity .2s;
 }
@@ -78,7 +80,7 @@ export default {
   width: 100%;
   height: 50px;
   background-color: white;
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: $should_collapse) {
     display: none;
   }
 }
@@ -87,7 +89,7 @@ export default {
     cursor: pointer;
     margin: 15px 25px 15px 0px;
     float: right;
-    @media screen and (min-width: 800px) {
+    @media screen and (min-width: $should_collapse) {
       display: none
     }
 }
@@ -110,11 +112,11 @@ export default {
         padding: 0;
         display: flex;
         justify-content: center;
-        @media screen and (max-width: 799px) {
+        @media screen and (max-width: $should_collapse - 1px) {
             flex-flow: column;
             padding-left: 8px;
         }
-        @media screen and (min-width: 800px) {
+        @media screen and (min-width: $should_collapse) {
             li:not(:first-child):not(:last-child){
                 margin-left: 16px;
                 margin-right: 16px;
@@ -140,7 +142,7 @@ export default {
                 margin: 0;
                 padding: 0;
             }
-            @media screen and (max-width: 799px) {
+            @media screen and (max-width: $should_collapse - 1px) {
                 &:not(:last-child) {
                     border-bottom: 1px solid #eee;
                 }

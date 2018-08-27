@@ -1,6 +1,7 @@
 <template>
 
   <form enctype="multipart/form-data" v-on:submit.prevent="submitImages">
+    <notifications />
     <div class="image-upload">
       <label class="file-input">
         <span class="btn btn-default">Upload Images</span>
@@ -13,13 +14,20 @@
       </label>
       <div class="image-list">
         <div class="thumbnail" v-for="image in images" v-if="images">
-          <img :src="image.url" :class="{uploading: showProgress(image)}">
+          <img
+            :src="image.url"
+            :class="{
+              uploading: showProgress(image),
+              success: image.success,
+              failure: (image.success === false)
+            }"
+          >
           <div
             class="progress"
             v-show="showProgress(image)"
             v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
           </div>
-          <input type="text" v-model="image.title" :disabled="showProgress(image)">
+          <input type="text" v-model="image.title" :disabled="showProgress(image) || image.success">
         </div>
       </div>
     </div>
@@ -32,12 +40,12 @@
 export default {
   data() {
     return {
-      'images': []
+      'images': {}
     }
   },
   methods: {
-    showProgress: (image) => {
-      return image.progress > 0 && image.progress < 100
+    showProgress (image) {
+      return image.progress > 0 && !(image.success != null)
     },
     imageSelect (event) {
       this.images = []
@@ -56,16 +64,54 @@ export default {
     },
     submitImages () {
       for (let image of this.images) {
-        this.uploadImage(image)
+        this.$set(image, 'success', (!image.success ? null : true))
+
+        if (image.success === null) {
+          this.uploadImage(image)
+        }
       }
     },
-    uploadImage (image) {
-      image.progress = 0.1
+    async uploadImage (image) {
+
+      this.$set(image, 'progress', 0.1)
+
       let formData = new FormData()
       formData.append('image', image.file)
       formData.append('title', image.title)
 
-      this.$api.sendFile('/images/', formData, 'post', true, image)
+      try {
+        let request = await this.$api.sendFile(
+          '/images/',
+          formData,
+          'post',
+          true,
+          image
+        )
+
+        if (request) {
+          this.$set(image, 'success', true)
+        }
+
+      } catch (error) {
+
+        this.$set(image, 'success', false)
+
+        if (error.response && error.response.data && error.response.data.title) {
+          this.$notify({
+            type: 'danger',
+            title: 'An Error occurred!',
+            text: image.title + ' : '+ error.response.data.title[0] +
+                  ' Change the title and try again!'
+          })
+        } else {
+          this.$notify({
+            type: 'danger',
+            title: 'Error!',
+            text: 'Unknown error occurred!',
+            timeout: 5000
+          })
+        }
+      }
     }
   }
 }
@@ -81,9 +127,21 @@ export default {
   filter: brightness(0.6) blur(0.8px);
 }
 
+.success, .failure {
+  box-sizing: border-box;
+}
+
+.success {
+  border: 5px solid green;
+}
+
+.failure {
+  border: 5px solid red;
+}
+
 .thumbnail {
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 42px;
 }
 
 .progress {

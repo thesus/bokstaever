@@ -62,9 +62,11 @@ const ApiPlugin = {
             'Content-Type': 'multipart/form-data'
           },
           onUploadProgress: (progressEvent) => {
-            instance.progress = (progressEvent.loaded / progressEvent.total) * 100
+              let progress = (progressEvent.loaded / progressEvent.total) * 100
+              Vue.set(instance, 'progress', progress)
           }
         }
+
         config = checkAuth(config, authenticated)
         return Vue.axios(config)
       },

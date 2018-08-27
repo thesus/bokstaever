@@ -77,8 +77,9 @@ export default {
   top: 8px;
   width: 400px;
   max-width: calc(100vw - 20px);
-  
   display: block;
+
+  z-index: 1000;
 }
 
 .card {
