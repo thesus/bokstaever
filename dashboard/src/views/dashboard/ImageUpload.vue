@@ -1,6 +1,7 @@
 <template>
 
   <form enctype="multipart/form-data" v-on:submit.prevent="submitImages">
+    <notifications />
     <div class="image-upload">
       <label class="file-input">
         <span class="btn btn-default">Upload Images</span>
@@ -17,7 +18,8 @@
             :src="image.url"
             :class="{
               uploading: showProgress(image),
-              success: image.success
+              success: image.success,
+              failure: (image.success === false)
             }"
           >
           <div
@@ -25,7 +27,7 @@
             v-show="showProgress(image)"
             v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
           </div>
-          <input type="text" v-model="image.title" :disabled="showProgress(image)">
+          <input type="text" v-model="image.title" :disabled="showProgress(image) || image.success">
         </div>
       </div>
     </div>
@@ -62,7 +64,11 @@ export default {
     },
     submitImages () {
       for (let image of this.images) {
-        this.uploadImage(image)
+        this.$set(image, 'success', (!image.success ? null : true))
+
+        if (image.success === null) {
+          this.uploadImage(image)
+        }
       }
     },
     async uploadImage (image) {
@@ -87,12 +93,24 @@ export default {
         }
 
       } catch (error) {
-        this.$notify({
-          type: 'danger',
-          title: 'Error!',
-          text: 'Unknown error occurred!',
-          timeout: 5000
-        })
+
+        this.$set(image, 'success', false)
+
+        if (error.response && error.response.data && error.response.data.title) {
+          this.$notify({
+            type: 'danger',
+            title: 'An Error occurred!',
+            text: image.title + ' : '+ error.response.data.title[0] +
+                  ' Change the title and try again!'
+          })
+        } else {
+          this.$notify({
+            type: 'danger',
+            title: 'Error!',
+            text: 'Unknown error occurred!',
+            timeout: 5000
+          })
+        }
       }
     }
   }
@@ -109,14 +127,21 @@ export default {
   filter: brightness(0.6) blur(0.8px);
 }
 
-.success {
+.success, .failure {
   box-sizing: border-box;
+}
+
+.success {
   border: 5px solid green;
+}
+
+.failure {
+  border: 5px solid red;
 }
 
 .thumbnail {
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 42px;
 }
 
 .progress {
