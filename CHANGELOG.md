@@ -1,3 +1,12 @@
+Version 0.3.0 (2018-08-27)
+==========================
+
+- Dashboard is fully responsive and usable on mobile devices
+- Image Upload in Dashboard pleasing and understanding to the eye
+- Backend-Testing and Linting via CI
+- RSS Feed for latest posts (visible in Footer)
+
+
 Version 0.2.0 (2018-08-17)                                                
 ==========================                                                
 
