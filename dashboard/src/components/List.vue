@@ -1,10 +1,10 @@
 <template>
   <div>
-    <transition name="fade" :duration="{ enter: 2000, leave: 0 }">
-      <span v-if="loading" class="icon loading" />
+    <transition name="fade" :duration="{ enter: 1000, leave: 0 }">
+      <span v-show="loading" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 400, leave: 0 }">
-      <div v-if="!loading && show">
+      <div v-show="!loading && show">
         <table class="table table-list">
           <thead>
             <tr>
@@ -71,11 +71,15 @@ export default {
   },
   methods: {
     async getInstances () {
-      this.$set(
-        this,
-        'loading',
-        true
-      )
+
+      var loadingTimer = setTimeout(() => {
+        this.$set(
+          this,
+          'loading',
+          true
+        )
+      }, 200)
+
 
       let instances = await this.$api.getByPage(
         this.info.path,
@@ -86,14 +90,16 @@ export default {
 
       this.$set(
         this,
-        'loading',
-        false
+        'instances',
+        instances
       )
+
+      clearTimeout(loadingTimer)
 
       this.$set(
         this,
-        'instances',
-        instances
+        'loading',
+        false
       )
     },
     goToEdit (instance){
