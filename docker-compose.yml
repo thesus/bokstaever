@@ -9,8 +9,8 @@ services:
       DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
       ALLOWED_HOSTS: "example.com"
       CORS_ORIGIN_WHITELIST: "example.com"
-      DEBUG: "False"
-      SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
+      DJANGO_DEBUG: "False"
+      DJANGO_SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
     restart: always
 
   caddy:

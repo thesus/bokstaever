@@ -80,7 +80,7 @@ export default {
         line-height: 0;
         display: block;
         text-indent: -9999px;
-        background: #fff url(/assets/svg/x.svg) 50% 50% / 15px 15px no-repeat;
+        background: #fff url(/dashboard/assets/svg/x.svg) 50% 50% / 15px 15px no-repeat;
         cursor: pointer;
     }
 }

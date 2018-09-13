@@ -33,17 +33,17 @@ h1, h2, h3 {
     height: 20px;
 
     &.left {
-        background: transparent url(/assets/svg/arrow-left.svg) 0px 0px no-repeat;
+        background: transparent url(/dashboard/assets/svg/arrow-left.svg) 0px 0px no-repeat;
         background-size: contain;
     }
 
     &.right {
-        background: transparent url(/assets/svg/arrow-right.svg) 0px 0px no-repeat;
+        background: transparent url(/dashboard/assets/svg/arrow-right.svg) 0px 0px no-repeat;
         background-size: contain;
     }
 
     &.menu {
-      background: transparent url(/assets/svg/menu.svg) 0px 0px no-repeat;
+      background: transparent url(/dashboard/assets/svg/menu.svg) 0px 0px no-repeat;
       background-size: contain;
     }
 
