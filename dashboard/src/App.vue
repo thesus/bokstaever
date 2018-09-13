@@ -33,18 +33,49 @@ h1, h2, h3 {
     height: 20px;
 
     &.left {
-        background: transparent url(/assets/svg/arrow-left.svg) 0px 0px no-repeat;
+        background: transparent url(/dashboard/assets/svg/arrow-left.svg) 0px 0px no-repeat;
         background-size: contain;
     }
 
     &.right {
-        background: transparent url(/assets/svg/arrow-right.svg) 0px 0px no-repeat;
+        background: transparent url(/dashboard/assets/svg/arrow-right.svg) 0px 0px no-repeat;
         background-size: contain;
     }
 
     &.menu {
-      background: transparent url(/assets/svg/menu.svg) 0px 0px no-repeat;
+      background: transparent url(/dashboard/assets/svg/menu.svg) 0px 0px no-repeat;
       background-size: contain;
+    }
+
+    &.check {
+      background: transparent url(/dashboard/assets/svg/check.svg) 0px 0px no-repeat;
+      background-size: contain;
+    }
+
+    &.loading {
+        display: block;
+        border: 4px solid transparent;
+        border-top: 4px solid rgb(44, 70, 127);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+
+        &.inline {
+          display: inline-block;
+          border-width: 2px;
+          height: 10px;
+          width: 10px;
+        }
+
+        &.inverse {
+          border-color: transparent;
+          border-top-color: white;
+        }
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 }
 

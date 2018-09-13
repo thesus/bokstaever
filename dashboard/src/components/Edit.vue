@@ -11,7 +11,11 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-default btn-right" type="submit">Submit</button>
+    <button class="btn btn-default btn-right" :class="{'success': success}" type="submit">
+      Submit
+      <span v-if="loading" class="icon loading inline inverse" />
+      <span v-if="success" class="icon check" />
+    </button>
   </form>
 </template>
 
@@ -52,7 +56,9 @@ export default {
     },
     fields: {
       required: true
-    }
+    },
+    loading: {},
+    success: {}
   },
   methods: {
     getComponentData (field) {
@@ -70,6 +76,16 @@ export default {
 <style lang="scss" scoped>
 @import '@/modules/inputs.scss';
 @import '@/modules/buttons.scss';
+
+.icon.check {
+  height: 12px;
+  width: 12px;
+  margin-left: 3px;
+}
+
+.success, .success:hover {
+  background-color: rgba(7, 112, 33, 0.9) !important;
+}
 
 .edit {
   .field {

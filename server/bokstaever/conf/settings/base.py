@@ -1,29 +1,29 @@
 """Settings for the bokstaever project."""
 
-import os
 import environ
 import datetime
 
-env = environ.Env(
-    DEBUG=(bool, False)
+ROOT_DIR = environ.Path(__file__) - 4
+APPS_DIR = ROOT_DIR
+
+env = environ.Env()
+
+environ.Env.read_env(
+    str(
+        ROOT_DIR.path(
+            env.str('ENVIRONMENT_FILE', '.env')
+        )
+    )
 )
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-)
+# Secret Key, keep this secure in production!
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env('DJANGO_DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 
 # Application definition
@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'corsheaders',
-    'djoser'
+    'rest_framework_jwt'
 ]
 
 # Own applications
@@ -50,7 +49,6 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -79,18 +77,22 @@ TEMPLATES = [
     },
 ]
 
+# Only use contrib as template dir in development
+if DEBUG:
+    TEMPLATES[0]['DIRS'] += ['contrib']
+
+
 WSGI_APPLICATION = 'bokstaever.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': env.db('DATABASE_URL')
 }
 
+
 # Password validation
-# https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -113,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -127,22 +128,20 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    str(APPS_DIR.path('bokstaever/static'))
 ]
 
 STATIC_ROOT = 'static'
-
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = str(APPS_DIR.path('bokstaever/media'))
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
+
 
 # REST Framework
 
@@ -157,11 +156,10 @@ REST_FRAMEWORK = {
 }
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1)
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
-
-# CORS
-CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST')
 
 # Caching
 CACHES = {

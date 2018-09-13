@@ -1,0 +1,10 @@
+# Javascript hell
+/dashboard/node_modules
+
+# distilled Javascript
+/dashboard/dist
+/server/contrib
+
+# Caches, virtual environment, etc.
+.pytest_cache
+/venv

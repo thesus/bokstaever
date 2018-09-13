@@ -1,7 +1,12 @@
 <template>
   <div>
     <notifications />
-    <edit-component :instance="instance" :fields="fields" @update="submitObject" />
+    <transition name="fade" :duration="{ enter: 2000, leave: 0 }">
+      <span v-if="loading" class="icon loading" />
+    </transition>
+    <transition name="content" :duration="{ enter: 400, leave: 0 }">
+      <edit-component  :loading="pushing" :success="success" v-if="!loading && instance" :instance="instance" :fields="fields" @update="submitObject" />
+    </transition>
   </div>
 </template>
 
@@ -17,7 +22,7 @@ export default {
         return {
           'field': null,
           'create': null,
-          'edit': null
+          'edit': null,
         }
       }
     },
@@ -35,13 +40,22 @@ export default {
   },
   data () {
     return {
-      instance: {},
+      instance: null,
       showModal: false,
+      loading: false,
+      pushing: false,
+      success: false
     }
   },
   mounted () {
     if (!this.isNew) {
       this.getObject()
+    } else {
+      this.$set(
+        this,
+        'instance',
+        {}
+      )
     }
   },
   computed: {
@@ -68,11 +82,35 @@ export default {
       )
     },
     async getObject () {
+      var loadingTimer = setTimeout(() => {
+        this.$set(
+          this,
+          'loading',
+          true
+        )
+      }, 200)
+
       this.setInstance(
           await this.$api.get(this.getURL, true)
       )
+
+      clearTimeout(loadingTimer)
+      this.$set(this, 'loading', false)
     },
     async submitObject () {
+      var pushingTimer = setTimeout(() => {
+        this.$set(
+          this,
+          'pushing',
+          true
+        )
+      }, 200)
+      this.$set(
+        this,
+        'success',
+        false
+      )
+
       let data = {}
       for (let i of this.fields) {
         if (!i.readonly) {
@@ -89,17 +127,16 @@ export default {
           true
         )
       } catch(error) {
-          // If request was unsuccessfull, return here,
-          // Notification already created in ApiPlugin
-          return
+        // Error handling is done elsewhere. :)
+        return
+      } finally {
+        clearTimeout(pushingTimer)
+        this.$set(
+          this,
+          'pushing',
+          false
+        )
       }
-
-      this.$notify({
-        'type': 'success',
-        'title': 'Successfull',
-        'text': 'Saving of instance was successfull!',
-        'timeout': 4000
-      })
 
       if (this.isNew && !this.singleton) {
         let params = {}
@@ -114,10 +151,21 @@ export default {
       } else {
         this.setInstance(response)
       }
+
+      this.$set(
+        this,
+        'success',
+        true
+      )
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/modules/transitions.scss';
+
+.loading {
+  margin: 0px auto 0px auto;
+}
 </style>

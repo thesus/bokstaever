@@ -7,8 +7,8 @@ let checkAuth = (config, authenticated) => {
 }
 
 const ApiPlugin = {
-  apiRoot: process.env.VUE_APP_API_ROOT,
-  mediaRoot: process.env.VUE_APP_MEDIA_ROOT,
+  apiRoot: '/api',
+  mediaRoot: '',
 
   install (Vue, options) {
     Vue.prototype.$apiRoot = this.apiRoot
