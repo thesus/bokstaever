@@ -13,7 +13,7 @@ export default {
     return {
       posts: {},
       info: {
-        limit: 8,
+        limit: 16,
         path: '/posts/',
         router: {
           field: 'id',

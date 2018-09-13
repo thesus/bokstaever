@@ -1,7 +1,12 @@
 <template>
   <div>
     <notifications />
-    <edit-component :instance="instance" :fields="fields" @update="submitObject" />
+    <transition name="fade" :duration="{ enter: 2000, leave: 0 }">
+      <span v-if="loading" class="icon loading" />
+    </transition>
+    <transition name="content" :duration="{ enter: 400, leave: 0 }">
+      <edit-component v-if="!loading" :instance="instance" :fields="fields" @update="submitObject" />
+    </transition>
   </div>
 </template>
 
@@ -37,6 +42,7 @@ export default {
     return {
       instance: {},
       showModal: false,
+      loading: true
     }
   },
   mounted () {
@@ -71,6 +77,7 @@ export default {
       this.setInstance(
           await this.$api.get(this.getURL, true)
       )
+      this.$set(this, 'loading', false)
     },
     async submitObject () {
       let data = {}
@@ -120,4 +127,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/modules/transitions.scss';
+
+.loading {
+  margin: 0px auto 0px auto;
+}
 </style>

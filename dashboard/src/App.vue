@@ -46,6 +46,20 @@ h1, h2, h3 {
       background: transparent url(/assets/svg/menu.svg) 0px 0px no-repeat;
       background-size: contain;
     }
+
+    &.loading {
+        display: block;
+        border: 4px solid transparent;
+        border-top: 4px solid rgb(44, 70, 127);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 }
 
 </style>
