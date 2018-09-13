@@ -47,6 +47,11 @@ h1, h2, h3 {
       background-size: contain;
     }
 
+    &.check {
+      background: transparent url(/dashboard/assets/svg/check.svg) 0px 0px no-repeat;
+      background-size: contain;
+    }
+
     &.loading {
         display: block;
         border: 4px solid transparent;
@@ -55,6 +60,18 @@ h1, h2, h3 {
         width: 30px;
         height: 30px;
         animation: spin 2s linear infinite;
+
+        &.inline {
+          display: inline-block;
+          border-width: 2px;
+          height: 10px;
+          width: 10px;
+        }
+
+        &.inverse {
+          border-color: transparent;
+          border-top-color: white;
+        }
     }
     @keyframes spin {
         0% { transform: rotate(0deg); }

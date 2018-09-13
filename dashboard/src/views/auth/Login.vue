@@ -67,6 +67,7 @@ export default {
 }
 
 input {
+  outline: none;
   width: 100%;
   &:first-child {
     border-bottom: none;
