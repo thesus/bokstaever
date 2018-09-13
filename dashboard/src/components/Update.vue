@@ -42,7 +42,7 @@ export default {
     return {
       instance: {},
       showModal: false,
-      loading: true
+      loading: false
     }
   },
   mounted () {
@@ -74,9 +74,19 @@ export default {
       )
     },
     async getObject () {
+      var loadingTimer = setTimeout(() => {
+        this.$set(
+          this,
+          'loading',
+          true
+        )
+      }, 200)
+
       this.setInstance(
           await this.$api.get(this.getURL, true)
       )
+
+      clearTimeout(loadingTimer)
       this.$set(this, 'loading', false)
     },
     async submitObject () {
