@@ -63,7 +63,7 @@ ROOT_URLCONF = 'bokstaever.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['contrib'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,6 +76,11 @@ TEMPLATES = [
         },
     },
 ]
+
+# Only use contrib as template dir in development
+if DEBUG:
+    TEMPLATES[0]['DIRS'] += ['contrib']
+
 
 WSGI_APPLICATION = 'bokstaever.wsgi.application'
 
