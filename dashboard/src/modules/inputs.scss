@@ -31,7 +31,8 @@ textarea {
 input[type=text],
 input[type=email],
 input[type=password] {
-  height: 12px;
+  height: 46px;
   width: 100%;
-  padding: 19px 14px 19px 14px;
+  padding: 15px 14px 15px 14px;
+  box-sizing: border-box;
 }
