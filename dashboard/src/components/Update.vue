@@ -4,7 +4,7 @@
     <transition name="fade" :duration="{ enter: 2000, leave: 0 }">
       <span v-if="loading" class="icon loading" />
     </transition>
-    <transition name="content" :duration="{ enter: 400, leave: 0 }">
+    <transition name="content" :duration="{ enter: 100, leave: 0 }">
       <edit-component  :loading="pushing" :success="success" v-if="!loading && instance" :instance="instance" :fields="fields" @update="submitObject" />
     </transition>
   </div>
