@@ -22,10 +22,7 @@ from api.serializers import (
     GalleryListSerializer
 )
 
-from api.viewsets import (
-    MultiSerializerViewSet,
-    ConditionalAuthenticationMixin
-)
+from api.viewsets import (MultiSerializerViewSet)
 
 from rest_framework.permissions import (
     IsAuthenticated,
@@ -42,16 +39,13 @@ from rest_framework.viewsets import (
 )
 
 
-class PostViewSet(ConditionalAuthenticationMixin,
-                  MultiSerializerViewSet):
+class PostViewSet(MultiSerializerViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     serializer_action_classes = {
         'list': PostListSerializer
     }
-    unauthenticated_actions = [
-        'list', 'retrieve'
-    ]
+    permission_classes = (IsAuthenticated,)
 
     def perform_update(self, serializer):
         serializer.instance.editors.add(self.request.user.pk)
@@ -79,16 +73,13 @@ class SettingsUpdateView(RetrieveAPIView,
         return Settings.load()
 
 
-class PageViewSet(ConditionalAuthenticationMixin,
-                  MultiSerializerViewSet):
+class PageViewSet(MultiSerializerViewSet):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
     serializer_action_classes = {
         'list': PageListSerializer
     }
-    unauthenticated_actions = [
-        'list', 'retrieve'
-    ]
+    permussion_class = (IsAuthenticated, )
     lookup_field = 'slug'
 
 
@@ -98,4 +89,4 @@ class GalleryViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'list': GalleryListSerializer
     }
-    permission_class = (IsAuthenticated,)
+    permission_class = (IsAuthenticated, )
