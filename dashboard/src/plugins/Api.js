@@ -1,7 +1,8 @@
+import store from '@/store'
+
 let checkAuth = (config, authenticated) => {
   if (authenticated) {
-    let token = localStorage.getItem('jwt_token')
-    config['headers'] = { 'Authorization': 'JWT ' + token }
+    config['headers'] = { 'Authorization': 'JWT ' + store.getters.jwt }
   }
   return config
 }
@@ -85,40 +86,6 @@ const ApiPlugin = {
           pages: pages,
           results: data.results
         }
-      },
-      authenticate: (username, password) => {
-        return Vue.axios({
-          method: 'post',
-          url: `${this.apiRoot}/auth/jwt/create/`,
-          data: {
-            username: username,
-            password: password
-          }
-        }).then((response) => {
-          let data = response.data
-          localStorage.setItem('jwt_token', data.token)
-          return true
-        }).catch((error) => {
-          let errors = error.response.data || {}
-          if (errors.non_field_errors && errors.non_field_errors.length > 0) {
-            for (let i of errors.non_field_errors) {
-              Vue.notify({
-                type: 'danger',
-                title: 'Login failed!',
-                text: i,
-                timeout: 5000
-              })
-            }
-          } else {
-            Vue.notify({
-              type: 'danger',
-              title: 'Login failed!',
-              text: 'Unknown error occurred!',
-              timeout: 5000
-            })
-          }
-          return false
-        })
       }
     }
   }

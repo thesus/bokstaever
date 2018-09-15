@@ -1,12 +1,15 @@
 import Vue from 'vue'
-import App from './App.vue'
+
 import router from './router'
+import store from './store'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import ApiPlugin from '@/plugins/Api.js'
 import NotifyPlugin from '@/plugins/Notify.js'
+
+import App from './App.vue'
 
 Vue.use(NotifyPlugin)
 Vue.use(ApiPlugin)
@@ -18,10 +21,12 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
 
-
+// If the status code of a http request is 401 or 403 (unauthenticated), redirect
+// to the logout side. If other errors are catched, reject them with a Promise
 Vue.axios.interceptors.response.use(
   (response) => {
     return response

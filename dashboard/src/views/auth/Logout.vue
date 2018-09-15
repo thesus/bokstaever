@@ -9,7 +9,7 @@
 <script>
 export default {
   mounted () {
-    localStorage.removeItem('jwt_token')
+    this.$store.dispatch('logout')
   }
 }
 </script>

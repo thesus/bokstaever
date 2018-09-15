@@ -7,7 +7,6 @@
         <input type="password" v-model="password" placeholder="Password">
         <button type="submit" class="btn btn-default btn-right">Login</button>
       </form>
-      {{ status }}
     </div>
   </div>
 </template>
@@ -17,15 +16,12 @@ export default {
   data () {
     return {
       username: null,
-      password: null,
-      status: null
+      password: null
     }
   },
   methods: {
-    async submit () {
-      if (await this.$api.authenticate(this.username, this.password)) {
-        this.$router.push({ path: this.$route.query.next || '/' })
-      }
+    submit () {
+      this.$store.dispatch('login', this.$data)
     }
   }
 }

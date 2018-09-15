@@ -1,44 +1,38 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Dashboard from './views/dashboard/Dashboard'
-import DashboardHome from './views/dashboard/Home'
+import Dashboard from '../views/dashboard/Dashboard'
+import DashboardHome from '../views/dashboard/Home'
 
-import PostList from './views/dashboard/PostList'
-import PostEdit from './views/dashboard/PostEdit'
+import PostList from '../views/dashboard/PostList'
+import PostEdit from '../views/dashboard/PostEdit'
 
-import PageList from './views/dashboard/PageList'
-import PageEdit from './views/dashboard/PageEdit'
+import PageList from '../views/dashboard/PageList'
+import PageEdit from '../views/dashboard/PageEdit'
 
-import GalleryList from './views/dashboard/GalleryList'
-import GalleryEdit from './views/dashboard/GalleryEdit'
+import GalleryList from '../views/dashboard/GalleryList'
+import GalleryEdit from '../views/dashboard/GalleryEdit'
 
-import ImageList from './views/dashboard/ImageList'
-import ImageUpload from './views/dashboard/ImageUpload'
+import ImageList from '../views/dashboard/ImageList'
+import ImageUpload from '../views/dashboard/ImageUpload'
 
-import SettingsEdit from './views/dashboard/SettingsEdit'
+import SettingsEdit from '../views/dashboard/SettingsEdit'
 
-import Login from './views/auth/Login'
-import Logout from './views/auth/Logout'
+import Login from '../views/auth/Login'
+import Logout from '../views/auth/Logout'
+
+import store from '@/store'
 
 Vue.use(VueRouter)
 
 let loginRequired = (to, from, next) => {
-  if (!localStorage.getItem('jwt_token')) {
+  if (!store.getters.isLoggedIn) {
     next({
       name: 'login',
       query: {
         next: to.path
       }
     })
-  } else {
-    next()
-  }
-}
-
-let loggedIn = (to, from, next) => {
-  if (localStorage.getItem('jwt_token')) {
-    next({ name: 'dashboard' })
   } else {
     next()
   }
@@ -134,7 +128,14 @@ const router = new VueRouter({
       path: '/login',
       name: 'login',
       component: Login,
-      beforeEnter: loggedIn
+      beforeEnter: (to, from, next) => {
+        // If the user is logged in, send him to the dashboard
+        if (store.getters.isLoggedIn) {
+          next({ name: 'dashboard' })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/logout',
