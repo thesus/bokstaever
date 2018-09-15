@@ -47,7 +47,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       instances: {},
       loading: false,
@@ -71,7 +71,6 @@ export default {
   },
   methods: {
     async getInstances () {
-
       var loadingTimer = setTimeout(() => {
         this.$set(
           this,
@@ -79,7 +78,6 @@ export default {
           true
         )
       }, 200)
-
 
       let instances = await this.$api.getByPage(
         this.info.path,
@@ -102,7 +100,7 @@ export default {
         false
       )
     },
-    goToEdit (instance){
+    goToEdit (instance) {
       let params = {}
       params[this.info.router.field] = instance[this.info.router.field]
       this.$router.push({ name: this.info.router.edit, params: params })

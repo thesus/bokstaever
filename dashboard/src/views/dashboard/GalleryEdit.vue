@@ -13,19 +13,19 @@ export default {
     return {
       data: {
         fields: [
-            {
-              name: 'Title',
-              identifier: 'name',
-              component: 'string',
-            },
-            {
-              name: 'Image',
-              identifier: 'images',
-              component: 'image',
-              extra: {
-                'multiple': true
-              }
+          {
+            name: 'Title',
+            identifier: 'name',
+            component: 'string'
+          },
+          {
+            name: 'Image',
+            identifier: 'images',
+            component: 'image',
+            extra: {
+              'multiple': true
             }
+          }
         ],
         router: {
           'field': 'id',

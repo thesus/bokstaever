@@ -10,6 +10,8 @@ import NotifyPlugin from '@/plugins/Notify.js'
 
 Vue.use(NotifyPlugin)
 Vue.use(ApiPlugin)
+
+// Axios http library
 Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
@@ -19,12 +21,16 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-Vue.axios.interceptors.response.use (
+
+Vue.axios.interceptors.response.use(
   (response) => {
     return response
   },
   (error) => {
-    if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
+    if (error &&
+        error.response &&
+        (error.response.status === 401 || error.response.status === 403)
+    ) {
       router.push('/logout')
     } else {
       return Promise.reject(error)

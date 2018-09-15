@@ -39,7 +39,7 @@ let loginRequired = (to, from, next) => {
 let loggedIn = (to, from, next) => {
   if (localStorage.getItem('jwt_token')) {
     next({ name: 'dashboard' })
-  }  else {
+  } else {
     next()
   }
 }
@@ -127,8 +127,8 @@ const router = new VueRouter({
           name: 'settings-edit',
           component: SettingsEdit,
           beforeEnter: loginRequired
-        },
-      ],
+        }
+      ]
     },
     {
       path: '/login',
@@ -139,11 +139,11 @@ const router = new VueRouter({
     {
       path: '/logout',
       name: 'logout',
-      component: Logout,
-    },
+      component: Logout
+    }
   ],
   scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0}
+    return { x: 0, y: 0 }
   }
 })
 

@@ -45,7 +45,7 @@ export default {
       images: {},
       page: 1,
       selected: (Array.isArray(this.value)) ? this.value : []
-      }
+    }
   },
   mounted () {
     this.getImages()

@@ -23,14 +23,14 @@ export default {
         }
       },
       fields: [
-          {
-            name: 'Slug',
-            identifier: 'slug'
-          },
-          {
-            name: 'Headline',
-            identifier: 'headline'
-          }
+        {
+          name: 'Slug',
+          identifier: 'slug'
+        },
+        {
+          name: 'Headline',
+          identifier: 'headline'
+        }
       ]
     }
   }

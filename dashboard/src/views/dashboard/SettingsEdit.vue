@@ -13,47 +13,47 @@ export default {
     return {
       data: {
         fields: [
-            {
-              name: 'Title',
-              identifier: 'name',
-              component: 'string',
-            },
-            {
-              name: 'Info',
-              identifier: 'info',
-              component: 'text'
-            },
-            {
-              name: 'Behavior',
-              identifier: 'behavior',
-              component: 'select',
-              extra: [
-                ['site', 'Site'],
-                ['blog', 'Blog'],
-              ]
-            },
-            {
-              name: 'Theme',
-              identifier: 'theme',
-              component: 'select',
-              extra: [
-                ['css/brevlada.css', 'brevlåda'],
-                ['css/frimarke.css', 'frimärke']
-              ]
-            },
-            {
-              name: 'E-Mail',
-              identifier: 'email',
-              component: 'email'
-            },
-            {
-              name: 'Image',
-              identifier: 'image',
-              component: 'image',
-              extra: {
-                multiple: false
-              }
+          {
+            name: 'Title',
+            identifier: 'name',
+            component: 'string'
+          },
+          {
+            name: 'Info',
+            identifier: 'info',
+            component: 'text'
+          },
+          {
+            name: 'Behavior',
+            identifier: 'behavior',
+            component: 'select',
+            extra: [
+              ['site', 'Site'],
+              ['blog', 'Blog']
+            ]
+          },
+          {
+            name: 'Theme',
+            identifier: 'theme',
+            component: 'select',
+            extra: [
+              ['css/brevlada.css', 'brevlåda'],
+              ['css/frimarke.css', 'frimärke']
+            ]
+          },
+          {
+            name: 'E-Mail',
+            identifier: 'email',
+            component: 'email'
+          },
+          {
+            name: 'Image',
+            identifier: 'image',
+            component: 'image',
+            extra: {
+              multiple: false
             }
+          }
         ],
         url: '/settings/',
         singleton: true

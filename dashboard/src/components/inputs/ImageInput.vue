@@ -27,17 +27,17 @@ export default {
     'image-component': ImageSelect
   },
   props: {
-      'value': {
-        required: false
-      },
-      'extra': {
-        type: Object,
-        default: () => {
-          return {
-            multiple: false
-          }
+    'value': {
+      required: false
+    },
+    'extra': {
+      type: Object,
+      default: () => {
+        return {
+          multiple: false
         }
       }
+    }
   },
   data () {
     return {
@@ -62,7 +62,7 @@ export default {
     }
   },
   methods: {
-    async getImage (value=this.value) {
+    async getImage (value = this.value) {
       if (value !== undefined && !(Array.isArray(value))) {
         this.$set(
           this,

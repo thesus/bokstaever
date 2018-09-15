@@ -42,7 +42,7 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.addEventListener('resize', this.getWidth)
     })
 

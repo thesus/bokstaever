@@ -9,9 +9,9 @@
 import ImageSelect from '@/components/ImageSelect'
 
 export default {
-    components: {
-      'image-component': ImageSelect
-    }
+  components: {
+    'image-component': ImageSelect
+  }
 }
 </script>
 

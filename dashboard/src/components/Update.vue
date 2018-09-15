@@ -22,7 +22,7 @@ export default {
         return {
           'field': null,
           'create': null,
-          'edit': null,
+          'edit': null
         }
       }
     },
@@ -36,7 +36,7 @@ export default {
     }
   },
   components: {
-    'edit-component': Edit,
+    'edit-component': Edit
   },
   data () {
     return {
@@ -91,7 +91,7 @@ export default {
       }, 200)
 
       this.setInstance(
-          await this.$api.get(this.getURL, true)
+        await this.$api.get(this.getURL, true)
       )
 
       clearTimeout(loadingTimer)
@@ -114,7 +114,7 @@ export default {
       let data = {}
       for (let i of this.fields) {
         if (!i.readonly) {
-          //TODO (till@cryptec.at): Add validation with required=true, maybe default
+          // TODO (till@cryptec.at): Add validation with required=true, maybe default
           data[i.identifier] = this.instance[i.identifier]
         }
       }
@@ -126,7 +126,7 @@ export default {
           this.getMethod,
           true
         )
-      } catch(error) {
+      } catch (error) {
         // Error handling is done elsewhere. :)
         return
       } finally {

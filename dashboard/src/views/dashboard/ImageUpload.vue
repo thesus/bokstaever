@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       'images': {}
     }
@@ -72,7 +72,6 @@ export default {
       }
     },
     async uploadImage (image) {
-
       this.$set(image, 'progress', 0.1)
 
       let formData = new FormData()
@@ -91,16 +90,14 @@ export default {
         if (request) {
           this.$set(image, 'success', true)
         }
-
       } catch (error) {
-
         this.$set(image, 'success', false)
 
         if (error.response && error.response.data && error.response.data.title) {
           this.$notify({
             type: 'danger',
             title: 'An Error occurred!',
-            text: image.title + ' : '+ error.response.data.title[0] +
+            text: image.title + ' : ' + error.response.data.title[0] +
                   ' Change the title and try again!'
           })
         } else {
@@ -116,7 +113,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import '@/modules/buttons.scss';

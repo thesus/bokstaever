@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import ImageInput from "@/components/inputs/ImageInput"
-import TextInput from "@/components/inputs/TextInput"
-import SelectInput from "@/components/inputs/SelectInput"
+import ImageInput from '@/components/inputs/ImageInput'
+import TextInput from '@/components/inputs/TextInput'
+import SelectInput from '@/components/inputs/SelectInput'
 
 const components = {
   'string': {
@@ -64,7 +64,7 @@ export default {
     getComponentData (field) {
       let component = components[field.component]
       this.$set(component, 'value', this.instance[field.identifier])
-      if ("extra" in field) {
+      if ('extra' in field) {
         this.$set(component, 'extra', field.extra)
       }
       return component

@@ -1,7 +1,7 @@
 let checkAuth = (config, authenticated) => {
   if (authenticated) {
     let token = localStorage.getItem('jwt_token')
-    config['headers'] = {'Authorization': 'JWT ' + token}
+    config['headers'] = { 'Authorization': 'JWT ' + token }
   }
   return config
 }
@@ -15,10 +15,10 @@ const ApiPlugin = {
     Vue.prototype.$mediaRoot = this.mediaRoot
 
     Vue.prototype.$api = {
-      get: (url, authenticated=false) => {
+      get: (url, authenticated = false) => {
         let config = {
           method: 'get',
-          url: this.apiRoot + url,
+          url: this.apiRoot + url
         }
         config = checkAuth(config, authenticated)
 
@@ -26,7 +26,7 @@ const ApiPlugin = {
           return response.data
         })
       },
-      send: (url, data, method, authenticated=false) => {
+      send: (url, data, method, authenticated = false) => {
         let config = {
           method: method,
           url: this.apiRoot + url,
@@ -53,8 +53,8 @@ const ApiPlugin = {
           throw new Error(error)
         })
       },
-      sendFile: (url, data, method='post', authenticated=false, instance) => {
-        let config =  {
+      sendFile: (url, data, method = 'post', authenticated = false, instance) => {
+        let config = {
           method: 'post',
           url: this.apiRoot + url,
           data: data,
@@ -62,15 +62,15 @@ const ApiPlugin = {
             'Content-Type': 'multipart/form-data'
           },
           onUploadProgress: (progressEvent) => {
-              let progress = (progressEvent.loaded / progressEvent.total) * 100
-              Vue.set(instance, 'progress', progress)
+            let progress = (progressEvent.loaded / progressEvent.total) * 100
+            Vue.set(instance, 'progress', progress)
           }
         }
 
         config = checkAuth(config, authenticated)
         return Vue.axios(config)
       },
-      async getByPage (url, limit, page, authenticated=false) {
+      async getByPage (url, limit, page, authenticated = false) {
         let offset = limit * (page - 1)
         let data = await this.get(
           `${url}?limit=${limit}&offset=${offset}`,

@@ -23,14 +23,14 @@ export default {
         }
       },
       fields: [
-          {
-            name: 'Name',
-            identifier: 'name'
-          },
-          {
-            name: 'Identifier',
-            identifier: 'id'
-          }
+        {
+          name: 'Name',
+          identifier: 'name'
+        },
+        {
+          name: 'Identifier',
+          identifier: 'id'
+        }
       ]
     }
   }

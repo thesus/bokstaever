@@ -23,18 +23,18 @@ export default {
         }
       },
       fields: [
-          {
-            name: 'ID',
-            identifier: 'id'
-          },
-          {
-            name: 'Headline',
-            identifier: 'headline'
-          },
-          {
-            name: 'Date',
-            identifier: 'published'
-          }
+        {
+          name: 'ID',
+          identifier: 'id'
+        },
+        {
+          name: 'Headline',
+          identifier: 'headline'
+        },
+        {
+          name: 'Date',
+          identifier: 'published'
+        }
       ]
     }
   }

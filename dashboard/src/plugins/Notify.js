@@ -8,14 +8,12 @@ const NotifyPlugin = {
     Vue.component('notifications', Notification)
 
     const notify = (message) => {
-        events.$emit('add', message)
+      events.$emit('add', message)
     }
 
     Vue.prototype.$notify = notify
     Vue.notify = notify
-
   }
 }
-
 
 export default NotifyPlugin
