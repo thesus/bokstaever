@@ -1,21 +1,23 @@
 <template>
   <div>
     <transition name="fade" :duration="{ enter: 1000, leave: 0 }">
-      <span v-show="loading" class="icon loading" />
+      <span v-show="$store.getters.isLoading()" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 400, leave: 0 }">
-      <div v-show="!loading && show">
+      <div v-show="!$store.getters.isLoading() && show">
         <table class="table table-list">
           <thead>
             <tr>
-              <th v-for="field in fields"> {{ field.name }}</th>
+              <th v-for="field in fields" :key="field.name"> {{ field.name }}</th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="instance in instances.results"
-              @click="goToEdit(instance)">
-              <td v-for="field in fields" v-html="instance[field.identifier]" />
+              :key="instance.id"
+              @click="goToEdit(instance)"
+            >
+              <td v-for="field in fields" :key="field.name" v-html="instance[field.identifier]" />
             </tr>
           </tbody>
         </table>
@@ -32,6 +34,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
+import { Request, run } from '@/utils'
 
 export default {
   components: {
@@ -71,33 +74,20 @@ export default {
   },
   methods: {
     async getInstances () {
-      var loadingTimer = setTimeout(() => {
-        this.$set(
-          this,
-          'loading',
-          true
-        )
-      }, 200)
+      let request = new Request()
 
-      let instances = await this.$api.getByPage(
-        this.info.path,
-        this.info.limit,
-        this.currentPage,
-        true
-      )
+      let constructed = () => {
+        return request.list(
+          this.info.path,
+          this.info.limit,
+          this.currentPage
+        )
+      }
 
       this.$set(
         this,
         'instances',
-        instances
-      )
-
-      clearTimeout(loadingTimer)
-
-      this.$set(
-        this,
-        'loading',
-        false
+        await run(constructed)
       )
     },
     goToEdit (instance) {

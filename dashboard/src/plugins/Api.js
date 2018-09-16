@@ -16,6 +16,7 @@ const ApiPlugin = {
     Vue.prototype.$mediaRoot = this.mediaRoot
 
     Vue.prototype.$api = {
+      Request: Request,
       get: (url, authenticated = false) => {
         let config = {
           method: 'get',
@@ -70,22 +71,6 @@ const ApiPlugin = {
 
         config = checkAuth(config, authenticated)
         return Vue.axios(config)
-      },
-      async getByPage (url, limit, page, authenticated = false) {
-        let offset = limit * (page - 1)
-        let data = await this.get(
-          `${url}?limit=${limit}&offset=${offset}`,
-          authenticated
-        )
-
-        let count = data.count || 0
-        let pages = Math.ceil(count / limit)
-
-        return {
-          count: count,
-          pages: pages,
-          results: data.results
-        }
       }
     }
   }

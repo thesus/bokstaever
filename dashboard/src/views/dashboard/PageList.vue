@@ -11,7 +11,6 @@ export default {
   },
   data () {
     return {
-      posts: {},
       info: {
         limit: 8,
         path: '/pages/',

@@ -11,10 +11,9 @@ export default {
   },
   data () {
     return {
-      posts: {},
       info: {
         limit: 16,
-        path: '/posts/',
+        path: 'posts',
         router: {
           field: 'id',
           edit: 'post-edit',
