@@ -16,6 +16,9 @@ const propExists = (obj, path) => {
 }
 
 const run = async (func) => {
+  /**
+   * Set's up a timer running as long as the given function.
+  */
   let loadingTimer = setTimeout(() => {
     store.dispatch('loading')
   }, 200)
@@ -43,7 +46,7 @@ class Request {
         store.dispatch('loading', this.loading)
       }, 200)
     }
-
+    // Add Authorization Header
     this.authenticate()
   }
 
@@ -51,7 +54,6 @@ class Request {
     /**
      * Add JSON Web Token as a Authorization header to the request.
     */
-
     this.config['headers']['Authorization'] = 'JWT ' + store.getters.jwt
   }
 
@@ -59,7 +61,6 @@ class Request {
     /**
      * Clear the timer and return the given parameter
     */
-
     if (this.loading) {
       store.dispatch('success', this.loading)
       if (this.timer) {
@@ -77,7 +78,6 @@ class Request {
      @param {number} [limit] - Items per Page
      @param {number} [page] - Number of the returned pages
     */
-
     let offset = limit * (page - 1)
 
     this['config']['url'] += `/${model}/?limit=${limit}&offset=${offset}`
@@ -101,7 +101,6 @@ class Request {
      * @param {string} [model] - The model from that'll be fetched
      * @param {string} [identifier] - Unique identifier of the instance
     */
-
     this['config']['url'] += `/${model}/`
     if (identifier) {
       this['config']['url'] += `${identifier}/`
@@ -114,6 +113,17 @@ class Request {
     return this.resolve(response.data)
   }
 
+  createSendConfig (model, identifier, instance) {
+    this['config']['url'] += `/${model}/`
+
+    if (identifier) {
+      this['config']['url'] += `${identifier}/`
+    }
+
+    this['config']['method'] = (identifier !== undefined) ? 'put' : 'post'
+    this['config']['data'] = instance
+  }
+
   async send (model, identifier, instance) {
     /**
      * POST or PUT an instance to the server
@@ -123,22 +133,31 @@ class Request {
      * If null, assume the model has no identifier. -> PUT
      * @param {object} [instance] - Instance that gets send to the server
     */
-
-    this['config']['url'] += `/${model}/`
-
-    if (identifier) {
-      this['config']['url'] += `${identifier}/`
-    }
-
-    this['config']['method'] = (identifier !== undefined) ? 'put' : 'post'
-    this['config']['data'] = instance
+    this.createSendConfig(model, identifier, instance)
 
     let response = await this.execute()
 
     return this.resolve(response.data)
   }
 
-  async execute () {
+  async upload (model, identifier, instance, name) {
+    /**
+     * Send an instance to the server that contains files.
+    */
+    this.createSendConfig(model, identifier, instance)
+
+    this['config']['headers']['Content-Type'] = 'multipart/form-data'
+    this['config']['onUploadProgress'] = (event) => {
+      let progress = (event.loaded / event.total) * 100
+      store.dispatch('setProgress', { value: progress, name: name })
+    }
+
+    let response = await this.execute(false)
+
+    return this.resolve(response.data)
+  }
+
+  async execute (notify = true) {
     try {
       return await axios(
         this.config
@@ -146,30 +165,38 @@ class Request {
     } catch (error) {
       if (this.timer) {
         clearTimeout(this.timer)
+
         store.dispatch('failure', this.loading)
+
+        delete this.loading
+        delete this.timer
       }
 
-      /* Error handling */
-      if (propExists(error, 'response.data')) {
-        let data = error.response.data
-        if (typeof data === 'object') {
-          for (let key in data) {
-            Vue.notify({
-              type: 'danger',
-              title: `Error: ${key}`,
-              text: `${data[key]}`,
-              timeout: 5000
-            })
+      if (notify) {
+        /* Error handling */
+        if (propExists(error, 'response.data')) {
+          let data = error.response.data
+          if (typeof data === 'object') {
+            for (let key in data) {
+              Vue.notify({
+                type: 'danger',
+                title: `Error: ${key}`,
+                text: `${data[key]}`,
+                timeout: 5000
+              })
+            }
           }
+        } else {
+          Vue.notify({
+            type: 'danger',
+            title: 'Error ocurred!',
+            text: error,
+            timeout: 5000
+          })
         }
-      } else {
-        Vue.notify({
-          type: 'danger',
-          title: 'Error ocurred!',
-          text: error,
-          timeout: 5000
-        })
       }
+
+      // Return error for further processing.
       return Promise.reject(error)
     }
   }

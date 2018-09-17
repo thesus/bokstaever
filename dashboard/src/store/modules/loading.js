@@ -1,13 +1,20 @@
 import Vue from 'vue'
 
-const state = {
-  indicators: {
-    'default': {
-      finished: false,
-      success: null
+const initialState = () => {
+  return {
+    indicators: {
+      'default': {
+        finished: false,
+        success: null
+      }
+    },
+    progress: {
+      'default': 0
     }
   }
 }
+
+const state = initialState()
 
 const getters = {
   isLoading: state => (name = 'default') => {
@@ -17,6 +24,12 @@ const getters = {
   isSucceded: state => (name = 'default') => {
     let exists = ((state.indicators[name]) && (typeof (state.indicators[name]['success']) === 'boolean'))
     return exists ? state.indicators[name]['success'] : false
+  },
+  requestExists: state => (name = 'default') => {
+    return (typeof (state.indicators[name]) === 'object')
+  },
+  getProgress: state => (name = 'default') => {
+    return (state.progress[name]) ? state.progress[name] : 0
   }
 }
 
@@ -29,6 +42,12 @@ const actions = {
   },
   failure ({ commit }, name = 'default') {
     commit('failed', { name: name })
+  },
+  setProgress ({ commit }, { value, name }) {
+    commit('progress', { value, name })
+  },
+  reset ({ commit }) {
+    commit('reset')
   }
 }
 
@@ -41,6 +60,15 @@ const mutations = {
   },
   failed (state, { name }) {
     Vue.set(state.indicators, name, { finished: true, success: false })
+  },
+  progress (state, { value, name }) {
+    Vue.set(state.progress, name, value)
+  },
+  reset (state) {
+    const s = initialState()
+    Object.keys(s).forEach(key => {
+      state[key] = s[key]
+    })
   }
 }
 

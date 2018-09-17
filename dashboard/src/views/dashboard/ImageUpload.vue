@@ -17,17 +17,22 @@
           <img
             :src="image.url"
             :class="{
-              uploading: showProgress(image),
-              success: image.success,
-              failure: (image.success === false)
+              uploading: showProgress(image.id),
+              success: (imageSuccess(image.id) === true),
+              failure: (imageSuccess(image.id) === false)
             }"
           >
           <div
             class="progress"
-            v-show="showProgress(image)"
-            v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
+            v-show="showProgress(image.id)"
+            v-bind:style="{height: 'calc(' + $store.getters.getProgress(image.id) + '% - 10px)'}"
+          >
           </div>
-          <input type="text" v-model="image.title" :disabled="showProgress(image) || image.success">
+          <input
+            type="text"
+            v-model="image.title"
+            :disabled="showProgress(image.id) || imageSuccess(image.id)"
+          >
         </div>
       </div>
     </div>
@@ -37,68 +42,75 @@
 </template>
 
 <script>
+import { Request } from '@/utils'
+
 export default {
   data () {
     return {
-      'images': {}
+      'images': []
     }
   },
   methods: {
-    showProgress (image) {
-      return image.progress > 0 && !(image.success != null)
+    imageSuccess (id) {
+      if (this.$store.getters.requestExists(id) && !this.$store.getters.isLoading(id)) {
+        return this.$store.getters.isSucceded(id)
+      } else {
+        return null
+      }
+    },
+    showProgress (id) {
+      let progress = this.$store.getters.getProgress(id) || 0
+      return progress > 0 && this.$store.getters.isLoading(id)
     },
     imageSelect (event) {
+      this.$store.dispatch('reset')
+
       this.images = []
       let images = this.$refs.upload.files
-      for (let i = 0; i < images.length; i++) {
-        let name = images[i].name
+      let i = 0
+
+      for (let image of images) {
+        let name = image.name
         let title = name.substring(0, name.lastIndexOf('.'))
 
         this.images.push({
           'title': title,
-          'file': images[i],
-          'url': URL.createObjectURL(images[i]),
-          'progress': 0
+          'file': image,
+          'url': URL.createObjectURL(image),
+          'id': 'image_' + i
         })
+
+        i++
       }
     },
     submitImages () {
       for (let image of this.images) {
-        this.$set(image, 'success', (!image.success ? null : true))
-
-        if (image.success === null) {
-          this.uploadImage(image)
+        if (this.imageSuccess(image.id) !== true) {
+           this.uploadImage(image)
         }
       }
     },
     async uploadImage (image) {
-      this.$set(image, 'progress', 0.1)
-
-      let formData = new FormData()
-      formData.append('image', image.file)
-      formData.append('title', image.title)
-
+      let data = new FormData()
+      data.append('image', image.file)
+      data.append('title', image.title)
       try {
-        let request = await this.$api.sendFile(
-          '/images/',
-          formData,
-          'post',
-          true,
-          image
+        let request = new Request(image.id)
+
+        await request.upload(
+          'images',
+          undefined,
+          data,
+          image.id
         )
-
-        if (request) {
-          this.$set(image, 'success', true)
-        }
       } catch (error) {
-        this.$set(image, 'success', false)
-
         if (error.response && error.response.data && error.response.data.title) {
           this.$notify({
             type: 'danger',
             title: 'An Error occurred!',
             text: image.title + ' : ' + error.response.data.title[0] +
-                  ' Change the title and try again!'
+                  ' Change the title and try again!',
+            timeout: 5000
           })
         } else {
           this.$notify({
