@@ -2,18 +2,27 @@
   <div>
     <notifications />
     <transition name="fade" :duration="{ enter: 2000, leave: 0 }">
-      <span v-if="this.isNew ? false : loading" class="icon loading" />
+      <span v-if="isNew ? false : loading" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 100, leave: 0 }">
       <edit-component
-        v-if="(!loading && instance) || this.isNew"
-        :sending="sending"
-        :success="success"
+        v-if="(!loading && instance) || isNew"
         :instance="instance"
         :fields="fields"
-        @update="success = null"
-        @submit="submitObject" />
+        @input="success = null"
+      />
     </transition>
+
+    <button
+      class="btn btn-default btn-right"
+      :class="{'success': (success === true)}"
+      @click="submitObject"
+    >
+      Submit
+      <span v-if="(sending === true)" class="icon loading inline inverse" />
+      <span v-if="(success === true)" class="icon check" />
+    </button>
+
   </div>
 </template>
 
@@ -146,6 +155,18 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/modules/transitions.scss';
+@import '@/modules/inputs.scss';
+@import '@/modules/buttons.scss';
+
+.icon.check {
+  height: 12px;
+  width: 12px;
+  margin-left: 3px;
+}
+
+.success, .success:hover {
+  background-color: rgba(7, 112, 33, 0.9) !important;
+}
 
 .loading {
   margin: 0px auto 0px auto;
