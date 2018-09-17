@@ -101,7 +101,9 @@ class Request {
     this['config']['url'] += `/${model}/${identifier}`
     this['config']['method'] = 'get'
 
-    return this.resolve(await this.execute())
+    let response = await this.execute()
+
+    return this.resolve(response.data)
   }
 
   execute () {

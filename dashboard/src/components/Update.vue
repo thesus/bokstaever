@@ -2,16 +2,22 @@
   <div>
     <notifications />
     <transition name="fade" :duration="{ enter: 2000, leave: 0 }">
-      <span v-if="loading" class="icon loading" />
+      <span v-if="$store.getters.isLoading()" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 100, leave: 0 }">
-      <edit-component  :loading="pushing" :success="success" v-if="!loading && instance" :instance="instance" :fields="fields" @update="submitObject" />
+      <edit-component
+        :success="success"
+        v-if="!$store.getters.isLoading() && instance"
+        :instance="instance"
+        :fields="fields"
+        @update="submitObject" />
     </transition>
   </div>
 </template>
 
 <script>
 import Edit from '@/components/Edit'
+import { Request } from '@/utils'
 
 export default {
   props: {
@@ -26,7 +32,7 @@ export default {
         }
       }
     },
-    url: {
+    model: {
       type: String,
       required: true
     },
@@ -42,7 +48,6 @@ export default {
     return {
       instance: null,
       showModal: false,
-      loading: false,
       pushing: false,
       success: false
     }
@@ -62,15 +67,12 @@ export default {
     isNew () {
       return this.$route.name === this.router.create
     },
-    getURL () {
-      if (!this.singleton) {
-        return this.isNew ? this.url : this.url + this.$route.params[this.router.field] + '/'
+    getIdentifier () {
+      if (!this.singleton && !this.isNew) {
+        return this.$route.params[this.router.field]
       } else {
-        return this.url
+        return null
       }
-    },
-    getMethod () {
-      return this.isNew ? 'post' : 'put'
     }
   },
   methods: {
@@ -82,20 +84,10 @@ export default {
       )
     },
     async getObject () {
-      var loadingTimer = setTimeout(() => {
-        this.$set(
-          this,
-          'loading',
-          true
-        )
-      }, 200)
-
+      let request = new Request()
       this.setInstance(
-        await this.$api.get(this.getURL, true)
+        await request.get(this.model, this.getIdentifier)
       )
-
-      clearTimeout(loadingTimer)
-      this.$set(this, 'loading', false)
     },
     async submitObject () {
       var pushingTimer = setTimeout(() => {

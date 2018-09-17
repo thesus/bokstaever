@@ -48,7 +48,7 @@ export default {
           'create': 'post-create',
           'edit': 'post-edit'
         },
-        url: '/posts/'
+        model: 'posts'
       }
     }
   }

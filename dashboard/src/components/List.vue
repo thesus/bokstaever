@@ -53,7 +53,6 @@ export default {
   data () {
     return {
       instances: {},
-      loading: false,
       show: false
     }
   },
@@ -76,7 +75,7 @@ export default {
     async getInstances () {
       let request = new Request()
       let response = await request.list(
-        this.info.path,
+        this.info.model,
         this.info.limit,
         this.currentPage
       )
