@@ -34,7 +34,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import { Request, run } from '@/utils'
+import { Request } from '@/utils'
 
 export default {
   components: {
@@ -75,19 +75,15 @@ export default {
   methods: {
     async getInstances () {
       let request = new Request()
-
-      let constructed = () => {
-        return request.list(
-          this.info.path,
-          this.info.limit,
-          this.currentPage
-        )
-      }
-
+      let response = await request.list(
+        this.info.path,
+        this.info.limit,
+        this.currentPage
+      )
       this.$set(
         this,
         'instances',
-        await run(constructed)
+        response
       )
     },
     goToEdit (instance) {
