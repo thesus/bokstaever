@@ -17,6 +17,7 @@
 import ImageSelect from '@/components/ImageSelect'
 import Modal from '@/components/Modal'
 import { pluralize } from '@/filters/Text'
+import { Request } from '@/utils'
 
 export default {
   filters: {
@@ -62,13 +63,16 @@ export default {
     }
   },
   methods: {
-    async getImage (value = this.value) {
-      if (value !== undefined && !(Array.isArray(value))) {
-        this.$set(
-          this,
-          'image',
-          await this.$api.get(`/images/${value}/`, true)
-        )
+    async getImage (identifier = this.value) {
+      if (identifier !== undefined && !(Array.isArray(identifier))) {
+        try {
+          let request = new Request()
+          this.$set(
+            this,
+            'image',
+            await request.get('images', identifier)
+          )
+        } catch (e) {} // Discarding error here.
       }
     },
     selectImage (value) {
