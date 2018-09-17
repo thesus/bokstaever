@@ -13,25 +13,30 @@
           @change="imageSelect">
       </label>
       <div class="image-list">
-        <div class="thumbnail" v-for="image in images" v-if="images">
+        <div
+          class="thumbnail"
+          v-if="images"
+          v-for="image in images"
+          :key="images.indexOf(image)"
+        >
           <img
             :src="image.url"
             :class="{
-              uploading: showProgress(image.id),
-              success: (imageSuccess(image.id) === true),
-              failure: (imageSuccess(image.id) === false)
+              uploading: showProgress(image),
+              success: (image.success === true),
+              failure: (image.success === false)
             }"
           >
           <div
             class="progress"
-            v-show="showProgress(image.id)"
-            v-bind:style="{height: 'calc(' + $store.getters.getProgress(image.id) + '% - 10px)'}"
+            v-show="showProgress(image)"
+            v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}"
           >
           </div>
           <input
             type="text"
             v-model="image.title"
-            :disabled="showProgress(image.id) || imageSuccess(image.id)"
+            :disabled="showProgress(image) || image.success"
           >
         </div>
       </div>
@@ -42,7 +47,7 @@
 </template>
 
 <script>
-import { Request } from '@/utils'
+import { propExists, Request } from '@/utils'
 
 export default {
   data () {
@@ -51,23 +56,12 @@ export default {
     }
   },
   methods: {
-    imageSuccess (id) {
-      if (this.$store.getters.requestExists(id) && !this.$store.getters.isLoading(id)) {
-        return this.$store.getters.isSucceded(id)
-      } else {
-        return null
-      }
-    },
-    showProgress (id) {
-      let progress = this.$store.getters.getProgress(id) || 0
-      return progress > 0 && this.$store.getters.isLoading(id)
+    showProgress (image) {
+      return (image.progress > 0) && !(typeof (image.success) === 'boolean')
     },
     imageSelect (event) {
-      this.$store.dispatch('reset')
-
       this.images = []
       let images = this.$refs.upload.files
-      let i = 0
 
       for (let image of images) {
         let name = image.name
@@ -77,16 +71,18 @@ export default {
           'title': title,
           'file': image,
           'url': URL.createObjectURL(image),
-          'id': 'image_' + i
+          'progress': 0,
+          'success': null
         })
-
-        i++
       }
     },
     submitImages () {
       for (let image of this.images) {
-        if (this.imageSuccess(image.id) !== true) {
-           this.uploadImage(image)
+        if (image.success !== true) {
+          this.$set(image, 'progress', 0.1)
+          this.$set(image, 'success', null)
+
+          this.uploadImage(image)
         }
       }
     },
@@ -101,10 +97,14 @@ export default {
           'images',
           undefined,
           data,
-          image.id
+          (progress) => {
+            this.$set(image, 'progress', progress)
+          }
         )
+        this.$set(image, 'success', true)
       } catch (error) {
-        if (error.response && error.response.data && error.response.data.title) {
+        this.$set(image, 'success', false)
+        if (propExists(error, 'response.data.title')) {
           this.$notify({
             type: 'danger',
             title: 'An Error occurred!',

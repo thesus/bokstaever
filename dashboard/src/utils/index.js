@@ -15,36 +15,20 @@ const propExists = (obj, path) => {
   }, obj)
 }
 
-const run = async (func) => {
-  /**
-   * Set's up a timer running as long as the given function.
-  */
-  let loadingTimer = setTimeout(() => {
-    store.dispatch('loading')
-  }, 200)
+const create = (func) => {
+  return setTimeout(func, 200)
+}
 
-  let result = await func()
-
-  clearTimeout(loadingTimer)
-  store.dispatch('finished')
-
-  return result
+const resolve = (timer, func) => {
+  clearTimeout(timer)
+  func()
 }
 
 class Request {
-  constructor (loading = 'default') {
+  constructor () {
     this.config = {
       url: '/api',
       headers: {}
-    }
-    this.loading = loading
-
-    // If loading is set to true, start a timer to run a mutation
-    // for a loading indicator in 200 ms.
-    if (loading) {
-      this.timer = setTimeout(() => {
-        store.dispatch('loading', this.loading)
-      }, 200)
     }
     // Add Authorization Header
     this.authenticate()
@@ -55,20 +39,6 @@ class Request {
      * Add JSON Web Token as a Authorization header to the request.
     */
     this.config['headers']['Authorization'] = 'JWT ' + store.getters.jwt
-  }
-
-  resolve (result) {
-    /**
-     * Clear the timer and return the given parameter
-    */
-    if (this.loading) {
-      store.dispatch('success', this.loading)
-      if (this.timer) {
-        clearTimeout(this.timer)
-      }
-    }
-
-    return result
   }
 
   async list (model, limit, page) {
@@ -88,11 +58,11 @@ class Request {
     let count = response.data.count || 0
     let pages = Math.ceil(count / limit)
 
-    return this.resolve({
+    return {
       count: count,
       pages: pages,
       results: response.data.results
-    })
+    }
   }
 
   async get (model, identifier) {
@@ -110,7 +80,7 @@ class Request {
 
     let response = await this.execute()
 
-    return this.resolve(response.data)
+    return response.data
   }
 
   createSendConfig (model, identifier, instance) {
@@ -137,10 +107,10 @@ class Request {
 
     let response = await this.execute()
 
-    return this.resolve(response.data)
+    return response.data
   }
 
-  async upload (model, identifier, instance, name) {
+  async upload (model, identifier, instance, func) {
     /**
      * Send an instance to the server that contains files.
     */
@@ -149,12 +119,12 @@ class Request {
     this['config']['headers']['Content-Type'] = 'multipart/form-data'
     this['config']['onUploadProgress'] = (event) => {
       let progress = (event.loaded / event.total) * 100
-      store.dispatch('setProgress', { value: progress, name: name })
+      func(progress)
     }
 
     let response = await this.execute(false)
 
-    return this.resolve(response.data)
+    return response.data
   }
 
   async execute (notify = true) {
@@ -163,15 +133,6 @@ class Request {
         this.config
       )
     } catch (error) {
-      if (this.timer) {
-        clearTimeout(this.timer)
-
-        store.dispatch('failure', this.loading)
-
-        delete this.loading
-        delete this.timer
-      }
-
       if (notify) {
         /* Error handling */
         if (propExists(error, 'response.data')) {
@@ -204,6 +165,7 @@ class Request {
 
 export {
   propExists,
-  run,
+  create,
+  resolve,
   Request
 }

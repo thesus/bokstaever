@@ -2,21 +2,24 @@
   <div>
     <notifications />
     <transition name="fade" :duration="{ enter: 2000, leave: 0 }">
-      <span v-if="$store.getters.isLoading()" class="icon loading" />
+      <span v-if="this.isNew ? false : loading" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 100, leave: 0 }">
       <edit-component
-        v-if="!$store.getters.isLoading() && instance"
+        v-if="(!loading && instance) || this.isNew"
+        :sending="sending"
+        :success="success"
         :instance="instance"
         :fields="fields"
-        @update="submitObject" />
+        @update="success = null"
+        @submit="submitObject" />
     </transition>
   </div>
 </template>
 
 <script>
 import Edit from '@/components/Edit'
-import { Request } from '@/utils'
+import { Request, create, resolve } from '@/utils'
 
 export default {
   props: {
@@ -46,18 +49,16 @@ export default {
   data () {
     return {
       instance: null,
-      showModal: false
+      loading: null,
+      sending: null,
+      success: null
     }
   },
-  mounted () {
+  created () {
     if (!this.isNew) {
       this.getObject()
     } else {
-      this.$set(
-        this,
-        'instance',
-        {}
-      )
+      this.setInstance({})
     }
   },
   computed: {
@@ -83,12 +84,28 @@ export default {
       )
     },
     async getObject () {
-      let request = new Request()
-      this.setInstance(
-        await request.get(this.model, this.getIdentifier)
-      )
+      let timer = create(() => {
+        this.$set(this, 'loading', true)
+      })
+
+      try {
+        let request = new Request()
+        this.setInstance(
+          await request.get(this.model, this.getIdentifier)
+        )
+      } catch (e) {
+
+      } finally {
+        resolve(timer, () => {
+          this.$set(this, 'loading', false)
+        })
+      }
     },
     async submitObject () {
+      let timer = create(() => {
+        this.$set(this, 'sending', true)
+      })
+
       let data = {}
       for (let i of this.fields) {
         if (!i.readonly) {
@@ -100,6 +117,8 @@ export default {
       try {
         let request = new Request('send')
         let response = await request.send(this.model, this.getIdentifier, data)
+
+        this.$set(this, 'success', true)
 
         if (this.isNew && !this.singleton) {
           let params = {}
@@ -113,7 +132,13 @@ export default {
         } else {
           this.setInstance(response)
         }
-      } catch (e) {} // Discard error, since it's handled elsewhere
+      } catch (e) { // Discard error, since it's handled elsewhere
+        this.$set(this, 'success', false)
+      } finally {
+        resolve(timer, () => {
+          this.$set(this, 'sending', false)
+        })
+      }
     }
   }
 }

@@ -6,13 +6,11 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
-import ApiPlugin from '@/plugins/Api.js'
 import NotifyPlugin from '@/plugins/Notify.js'
 
 import App from './App.vue'
 
 Vue.use(NotifyPlugin)
-Vue.use(ApiPlugin)
 
 // Axios http library
 Vue.use(VueAxios, axios)

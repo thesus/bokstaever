@@ -1,10 +1,10 @@
 <template>
   <div>
     <transition name="fade" :duration="{ enter: 1000, leave: 0 }">
-      <span v-show="$store.getters.isLoading()" class="icon loading" />
+      <span v-show="loading" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 400, leave: 0 }">
-      <div v-show="!$store.getters.isLoading() && show">
+      <div v-show="(!loading && instances.results)">
         <table class="table table-list">
           <thead>
             <tr>
@@ -34,7 +34,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import { Request } from '@/utils'
+import { Request, create, resolve } from '@/utils'
 
 export default {
   components: {
@@ -53,6 +53,7 @@ export default {
   data () {
     return {
       instances: {},
+      loading: null,
       show: false
     }
   },
@@ -64,15 +65,12 @@ export default {
       return parseInt(this.$route.query.page) || 1
     }
   },
-  updated () {
-    this.$set(
-      this,
-      'show',
-      true
-    )
-  },
   methods: {
     async getInstances () {
+      let timer = create(() => {
+        this.$set(this, 'loading', true)
+      })
+
       try {
         let request = new Request()
         let response = await request.list(
@@ -80,12 +78,19 @@ export default {
           this.info.limit,
           this.currentPage
         )
+
         this.$set(
           this,
           'instances',
           response
         )
-      } catch (e) {} // Discard error, since it's handled elsewhere
+      } catch (e) {
+
+      } finally {
+        resolve(timer, () => {
+          this.$set(this, 'loading', false)
+        })
+      }
     },
     goToEdit (instance) {
       let params = {}

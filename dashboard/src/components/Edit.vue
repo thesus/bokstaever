@@ -1,20 +1,20 @@
 <template>
-  <form @submit.prevent="$emit('update', instance)">
+  <form @submit.prevent="$emit('submit', instance)">
     <div class="edit">
-      <div class="field" v-for="field in fields">
+      <div class="field" v-for="field in fields" :key="field.identifier">
         <div class="label">{{ field.name }}</div>
         <div class="input">
           <component
           v-bind="getComponentData(field)"
-          @input="instance[field.identifier] = $event.target.value" >
+          @input="update(field.identifier, $event.target.value)">
           </component>
         </div>
       </div>
     </div>
-    <button class="btn btn-default btn-right" :class="{'success': $store.getters.isSucceded('send')}" type="submit">
+    <button class="btn btn-default btn-right" :class="{'success': (success === true)}" type="submit">
       Submit
-      <span v-if="$store.getters.isLoading('send')" class="icon loading inline inverse" />
-      <span v-if="$store.getters.isSucceded('send')" class="icon check" />
+      <span v-if="(sending === true)" class="icon loading inline inverse" />
+      <span v-if="(success === true)" class="icon check" />
     </button>
   </form>
 </template>
@@ -56,7 +56,9 @@ export default {
     },
     fields: {
       required: true
-    }
+    },
+    sending: {},
+    success: {}
   },
   methods: {
     getComponentData (field) {
@@ -66,6 +68,13 @@ export default {
         this.$set(component, 'extra', field.extra)
       }
       return component
+    },
+    update (identifier, value) {
+      this.$set(this.instance, identifier, value)
+
+      if (this.success === true) {
+        this.$emit('update')
+      }
     }
   }
 }
