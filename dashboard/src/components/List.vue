@@ -73,17 +73,19 @@ export default {
   },
   methods: {
     async getInstances () {
-      let request = new Request()
-      let response = await request.list(
-        this.info.model,
-        this.info.limit,
-        this.currentPage
-      )
-      this.$set(
-        this,
-        'instances',
-        response
-      )
+      try {
+        let request = new Request()
+        let response = await request.list(
+          this.info.model,
+          this.info.limit,
+          this.currentPage
+        )
+        this.$set(
+          this,
+          'instances',
+          response
+        )
+      } catch (e) {} // Discard error, since it's handled elsewhere
     },
     goToEdit (instance) {
       let params = {}

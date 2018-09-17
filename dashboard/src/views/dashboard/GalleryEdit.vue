@@ -12,6 +12,12 @@ export default {
   data () {
     return {
       data: {
+        router: {
+          'field': 'id',
+          'create': 'gallery-create',
+          'edit': 'gallery-edit'
+        },
+        model: 'galleries',
         fields: [
           {
             name: 'Title',
@@ -26,13 +32,7 @@ export default {
               'multiple': true
             }
           }
-        ],
-        router: {
-          'field': 'id',
-          'create': 'gallery-create',
-          'edit': 'gallery-edit'
-        },
-        url: '/galleries/'
+        ]
       }
     }
   }

@@ -14,7 +14,7 @@ export default {
       posts: {},
       info: {
         limit: 10,
-        path: '/galleries/',
+        model: 'galleries',
         router: {
           field: 'id',
           edit: 'gallery-edit',

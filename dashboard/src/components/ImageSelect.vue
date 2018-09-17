@@ -1,7 +1,7 @@
 <template>
   <div class="image">
     <div class="image-list">
-      <div v-if="images" v-for="image in images.results" class="thumbnail">
+      <div v-if="images" v-for="image in images.results" class="thumbnail" :key="image.id">
         <img
          :src="image.thumbnail"
          :class="{ 'selected': isSelected(image.id) }"
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { Request } from '@/utils'
 import { pluralize } from '@/filters/Text'
 
 export default {
@@ -57,11 +58,14 @@ export default {
       }
     },
     async getImages () {
-      this.$set(
-        this,
-        'images',
-        await this.$api.getByPage('/images/', this.limit, this.page, true)
-      )
+      try {
+        let request = new Request()
+        this.$set(
+          this,
+          'images',
+          await request.list('images', this.limit, this.page)
+        )
+      } catch (e) {} // Discard error
     },
     selectImage (image) {
       var id = image.id

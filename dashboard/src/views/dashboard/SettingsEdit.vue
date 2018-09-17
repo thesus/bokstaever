@@ -12,6 +12,8 @@ export default {
   data () {
     return {
       data: {
+        model: 'settings',
+        singleton: true,
         fields: [
           {
             name: 'Title',
@@ -54,9 +56,7 @@ export default {
               multiple: false
             }
           }
-        ],
-        url: '/settings/',
-        singleton: true
+        ]
       }
     }
   }

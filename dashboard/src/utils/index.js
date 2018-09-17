@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Vue from 'vue'
+
 import store from '@/store'
 
 const propExists = (obj, path) => {
@@ -59,8 +61,10 @@ class Request {
     */
 
     if (this.loading) {
-      clearTimeout(this.timer)
-      store.dispatch('finished', this.loading)
+      store.dispatch('success', this.loading)
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
     }
 
     return result
@@ -98,7 +102,11 @@ class Request {
      * @param {string} [identifier] - Unique identifier of the instance
     */
 
-    this['config']['url'] += `/${model}/${identifier}`
+    this['config']['url'] += `/${model}/`
+    if (identifier) {
+      this['config']['url'] += `${identifier}/`
+    }
+
     this['config']['method'] = 'get'
 
     let response = await this.execute()
@@ -106,10 +114,64 @@ class Request {
     return this.resolve(response.data)
   }
 
-  execute () {
-    return axios(
-      this.config
-    )
+  async send (model, identifier, instance) {
+    /**
+     * POST or PUT an instance to the server
+     * @param {string} [model] - The model that'll be saved
+     * @param {string} [identifier] - Identifier of the instance.
+     * If undefined, create a new instance. -> POST.
+     * If null, assume the model has no identifier. -> PUT
+     * @param {object} [instance] - Instance that gets send to the server
+    */
+
+    this['config']['url'] += `/${model}/`
+
+    if (identifier) {
+      this['config']['url'] += `${identifier}/`
+    }
+
+    this['config']['method'] = (identifier !== undefined) ? 'put' : 'post'
+    this['config']['data'] = instance
+
+    let response = await this.execute()
+
+    return this.resolve(response.data)
+  }
+
+  async execute () {
+    try {
+      return await axios(
+        this.config
+      )
+    } catch (error) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+        store.dispatch('failure', this.loading)
+      }
+
+      /* Error handling */
+      if (propExists(error, 'response.data')) {
+        let data = error.response.data
+        if (typeof data === 'object') {
+          for (let key in data) {
+            Vue.notify({
+              type: 'danger',
+              title: `Error: ${key}`,
+              text: `${data[key]}`,
+              timeout: 5000
+            })
+          }
+        }
+      } else {
+        Vue.notify({
+          type: 'danger',
+          title: 'Error ocurred!',
+          text: error,
+          timeout: 5000
+        })
+      }
+      return Promise.reject(error)
+    }
   }
 }
 

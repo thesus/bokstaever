@@ -11,10 +11,10 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-default btn-right" :class="{'success': success}" type="submit">
+    <button class="btn btn-default btn-right" :class="{'success': $store.getters.isSucceded('send')}" type="submit">
       Submit
-      <span v-if="loading" class="icon loading inline inverse" />
-      <span v-if="success" class="icon check" />
+      <span v-if="$store.getters.isLoading('send')" class="icon loading inline inverse" />
+      <span v-if="$store.getters.isSucceded('send')" class="icon check" />
     </button>
   </form>
 </template>
@@ -56,9 +56,7 @@ export default {
     },
     fields: {
       required: true
-    },
-    loading: {},
-    success: {}
+    }
   },
   methods: {
     getComponentData (field) {
