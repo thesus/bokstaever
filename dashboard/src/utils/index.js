@@ -27,7 +27,7 @@ const run = async (func) => {
 }
 
 class Request {
-  constructor (loading = true) {
+  constructor (loading = 'default') {
     this.config = {
       url: '/api',
       headers: {}
@@ -38,7 +38,7 @@ class Request {
     // for a loading indicator in 200 ms.
     if (loading) {
       this.timer = setTimeout(() => {
-        store.dispatch('loading')
+        store.dispatch('loading', this.loading)
       }, 200)
     }
 
@@ -60,7 +60,7 @@ class Request {
 
     if (this.loading) {
       clearTimeout(this.timer)
-      store.dispatch('finished')
+      store.dispatch('finished', this.loading)
     }
 
     return result

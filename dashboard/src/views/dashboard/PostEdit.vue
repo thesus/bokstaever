@@ -12,6 +12,12 @@ export default {
   data () {
     return {
       data: {
+        router: {
+          'field': 'id',
+          'create': 'post-create',
+          'edit': 'post-edit'
+        },
+        model: 'posts',
         fields: [
           {
             name: 'Title',
@@ -42,13 +48,7 @@ export default {
               multiple: false
             }
           }
-        ],
-        router: {
-          'field': 'id',
-          'create': 'post-create',
-          'edit': 'post-edit'
-        },
-        model: 'posts'
+        ]
       }
     }
   }

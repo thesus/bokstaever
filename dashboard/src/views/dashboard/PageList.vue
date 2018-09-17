@@ -13,7 +13,7 @@ export default {
     return {
       info: {
         limit: 8,
-        path: '/pages/',
+        model: 'pages',
         router: {
           field: 'slug',
           edit: 'page-edit',

@@ -12,6 +12,12 @@ export default {
   data () {
     return {
       data: {
+        router: {
+          'field': 'slug',
+          'create': 'page-create',
+          'edit': 'page-edit'
+        },
+        model: 'pages',
         fields: [
           {
             name: 'Title',
@@ -42,13 +48,7 @@ export default {
               multiple: false
             }
           }
-        ],
-        router: {
-          'field': 'slug',
-          'create': 'page-create',
-          'edit': 'page-edit'
-        },
-        url: '/pages/'
+        ]
       }
     }
   }
