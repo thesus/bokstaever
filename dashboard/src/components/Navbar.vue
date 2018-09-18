@@ -78,7 +78,6 @@ $should_collapse: 980px;
 .navbar-toggle-container {
   width: 100%;
   height: 50px;
-  background-color: white;
   @media screen and (min-width: $should_collapse) {
     display: none;
   }
@@ -95,7 +94,7 @@ $should_collapse: 980px;
 
 .navbar {
     width: 100%;
-    background: #fff;
+    background: rgb(34, 34, 34);
     margin: 0px 0px 10px 0px;
 
     .container {
@@ -104,8 +103,8 @@ $should_collapse: 980px;
     }
 
     ul {
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
         list-style: none;
         margin: 0px;
         padding: 0;
@@ -113,7 +112,7 @@ $should_collapse: 980px;
         justify-content: center;
         @media screen and (max-width: $should_collapse - 1px) {
             flex-flow: column;
-            padding-left: 8px;
+            padding: 0px 4px 0px 4px;
         }
         @media screen and (min-width: $should_collapse) {
             li:not(:first-child):not(:last-child){
@@ -131,19 +130,20 @@ $should_collapse: 980px;
             text-transform: uppercase;
             letter-spacing: .2rem;
             position: relative;
-            line-height: 4rem;
-            height: 4rem;
+            line-height: 3rem;
+            height: 3rem;
             a {
                 text-decoration: none;
-                color: #222;
+                color: #ccc;
                 width: 100%;
                 display: block;
                 margin: 0;
                 padding: 0;
             }
             @media screen and (max-width: $should_collapse - 1px) {
+                padding-left: 4px;
                 &:not(:last-child) {
-                    border-bottom: 1px solid #eee;
+                    border-bottom: 1px solid #ccc;
                 }
             }
         }
