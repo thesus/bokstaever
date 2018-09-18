@@ -42,11 +42,13 @@ export default {
 
 .modal-container {
     @media screen and (min-width: 1200px) {
-      width: 50vw;
-      height: 70vh;
+      max-width: 60vw;
     }
-    width: 90vw;
-    height: 90vh;
+
+    width: auto;
+
+    min-width: 100px;
+    max-width: 90vw;
 
     background-color: #fff;
     margin: 0px auto;
@@ -65,7 +67,10 @@ export default {
         box-sizing: border-box;
         padding: 8px;
         width: 100%;
-        height: calc(100% - 36px);
+
+        min-height: 60px;
+        max-height: 85vh;
+
         overflow-x: hidden;
         overflow-y: auto;
         border-top: solid 1px #eee;

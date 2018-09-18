@@ -23,11 +23,14 @@
       <span v-if="(success === true)" class="icon check" />
     </button>
 
+    <delete v-if="(!isNew && !singleton)" :model="model" :id="getIdentifier" />
   </div>
 </template>
 
 <script>
 import Edit from '@/components/Edit'
+import Delete from '@/components/Delete'
+
 import { Request, create, resolve } from '@/utils'
 
 export default {
@@ -53,7 +56,8 @@ export default {
     }
   },
   components: {
-    'edit-component': Edit
+    'edit-component': Edit,
+    'delete': Delete
   },
   data () {
     return {

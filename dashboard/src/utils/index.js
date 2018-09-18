@@ -127,6 +127,21 @@ class Request {
     return response.data
   }
 
+  async delete (model, identifier) {
+    /**
+     * Delete a given instance from the server
+     * @param {string} [model] - Model of the instance
+     * @param {string} [identifier] - Unique identifier of the instance
+    */
+
+    this['config']['url'] += `/${model}/${identifier}/`
+    this['config']['method'] = 'delete'
+
+    let response = await this.execute()
+
+    return response.data
+  }
+
   async execute (notify = true) {
     try {
       return await axios(
