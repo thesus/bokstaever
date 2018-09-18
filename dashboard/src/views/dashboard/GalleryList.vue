@@ -14,7 +14,7 @@ export default {
       posts: {},
       info: {
         limit: 10,
-        path: '/galleries/',
+        model: 'galleries',
         router: {
           field: 'id',
           edit: 'gallery-edit',
@@ -23,14 +23,14 @@ export default {
         }
       },
       fields: [
-          {
-            name: 'Name',
-            identifier: 'name'
-          },
-          {
-            name: 'Identifier',
-            identifier: 'id'
-          }
+        {
+          name: 'Name',
+          identifier: 'name'
+        },
+        {
+          name: 'Identifier',
+          identifier: 'id'
+        }
       ]
     }
   }

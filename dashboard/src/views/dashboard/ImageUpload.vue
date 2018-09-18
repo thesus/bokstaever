@@ -13,21 +13,31 @@
           @change="imageSelect">
       </label>
       <div class="image-list">
-        <div class="thumbnail" v-for="image in images" v-if="images">
+        <div
+          class="thumbnail"
+          v-if="images"
+          v-for="image in images"
+          :key="images.indexOf(image)"
+        >
           <img
             :src="image.url"
             :class="{
               uploading: showProgress(image),
-              success: image.success,
+              success: (image.success === true),
               failure: (image.success === false)
             }"
           >
           <div
             class="progress"
             v-show="showProgress(image)"
-            v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}">
+            v-bind:style="{height: 'calc(' + image.progress + '% - 10px)'}"
+          >
           </div>
-          <input type="text" v-model="image.title" :disabled="showProgress(image) || image.success">
+          <input
+            type="text"
+            v-model="image.title"
+            :disabled="showProgress(image) || image.success"
+          >
         </div>
       </div>
     </div>
@@ -37,71 +47,70 @@
 </template>
 
 <script>
+import { propExists, Request } from '@/utils'
+
 export default {
-  data() {
+  data () {
     return {
-      'images': {}
+      'images': []
     }
   },
   methods: {
     showProgress (image) {
-      return image.progress > 0 && !(image.success != null)
+      return (image.progress > 0) && !(typeof (image.success) === 'boolean')
     },
     imageSelect (event) {
       this.images = []
       let images = this.$refs.upload.files
-      for (let i = 0; i < images.length; i++) {
-        let name = images[i].name
+
+      for (let image of images) {
+        let name = image.name
         let title = name.substring(0, name.lastIndexOf('.'))
 
         this.images.push({
           'title': title,
-          'file': images[i],
-          'url': URL.createObjectURL(images[i]),
-          'progress': 0
+          'file': image,
+          'url': URL.createObjectURL(image),
+          'progress': 0,
+          'success': null
         })
       }
     },
     submitImages () {
       for (let image of this.images) {
-        this.$set(image, 'success', (!image.success ? null : true))
+        if (image.success !== true) {
+          this.$set(image, 'progress', 0.1)
+          this.$set(image, 'success', null)
 
-        if (image.success === null) {
           this.uploadImage(image)
         }
       }
     },
     async uploadImage (image) {
-
-      this.$set(image, 'progress', 0.1)
-
-      let formData = new FormData()
-      formData.append('image', image.file)
-      formData.append('title', image.title)
-
+      let data = new FormData()
+      data.append('image', image.file)
+      data.append('title', image.title)
       try {
-        let request = await this.$api.sendFile(
-          '/images/',
-          formData,
-          'post',
-          true,
-          image
+        let request = new Request(image.id)
+
+        await request.upload(
+          'images',
+          undefined,
+          data,
+          (progress) => {
+            this.$set(image, 'progress', progress)
+          }
         )
-
-        if (request) {
-          this.$set(image, 'success', true)
-        }
-
+        this.$set(image, 'success', true)
       } catch (error) {
-
         this.$set(image, 'success', false)
-
-        if (error.response && error.response.data && error.response.data.title) {
+        if (propExists(error, 'response.data.title')) {
           this.$notify({
             type: 'danger',
             title: 'An Error occurred!',
-            text: image.title + ' : '+ error.response.data.title[0] +
-                  ' Change the title and try again!'
+            text: image.title + ' : ' + error.response.data.title[0] +
+                  ' Change the title and try again!',
+            timeout: 5000
           })
         } else {
           this.$notify({
@@ -116,7 +125,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import '@/modules/buttons.scss';

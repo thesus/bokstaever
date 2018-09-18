@@ -11,10 +11,9 @@ export default {
   },
   data () {
     return {
-      posts: {},
       info: {
         limit: 16,
-        path: '/posts/',
+        model: 'posts',
         router: {
           field: 'id',
           edit: 'post-edit',
@@ -23,18 +22,18 @@ export default {
         }
       },
       fields: [
-          {
-            name: 'ID',
-            identifier: 'id'
-          },
-          {
-            name: 'Headline',
-            identifier: 'headline'
-          },
-          {
-            name: 'Date',
-            identifier: 'published'
-          }
+        {
+          name: 'ID',
+          identifier: 'id'
+        },
+        {
+          name: 'Headline',
+          identifier: 'headline'
+        },
+        {
+          name: 'Date',
+          identifier: 'published'
+        }
       ]
     }
   }

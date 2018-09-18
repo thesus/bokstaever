@@ -13,7 +13,6 @@ $font-family-sans-serif:
   "Helvetica Neue", Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
 
-
 body {
     font-family: $font-family-sans-serif;
     background-color: #fdfdfd;

@@ -14,7 +14,7 @@ export default {
     value () {
       this.text = this.value
     },
-    text() {
+    text () {
       this.$emit(
         'input',
         { target: { value: this.text } }

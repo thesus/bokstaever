@@ -4,18 +4,20 @@
       <span v-show="loading" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 400, leave: 0 }">
-      <div v-show="!loading && show">
+      <div v-show="(!loading && instances.results)">
         <table class="table table-list">
           <thead>
             <tr>
-              <th v-for="field in fields"> {{ field.name }}</th>
+              <th v-for="field in fields" :key="field.name"> {{ field.name }}</th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="instance in instances.results"
-              @click="goToEdit(instance)">
-              <td v-for="field in fields" v-html="instance[field.identifier]" />
+              :key="instance.id"
+              @click="goToEdit(instance)"
+            >
+              <td v-for="field in fields" :key="field.name" v-html="instance[field.identifier]" />
             </tr>
           </tbody>
         </table>
@@ -32,6 +34,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
+import { Request, create, resolve } from '@/utils'
 
 export default {
   components: {
@@ -47,10 +50,10 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       instances: {},
-      loading: false,
+      loading: null,
       show: false
     }
   },
@@ -62,47 +65,34 @@ export default {
       return parseInt(this.$route.query.page) || 1
     }
   },
-  updated () {
-    this.$set(
-      this,
-      'show',
-      true
-    )
-  },
   methods: {
     async getInstances () {
+      let timer = create(() => {
+        this.$set(this, 'loading', true)
+      })
 
-      var loadingTimer = setTimeout(() => {
+      try {
+        let request = new Request()
+        let response = await request.list(
+          this.info.model,
+          this.info.limit,
+          this.currentPage
+        )
+
         this.$set(
           this,
-          'loading',
-          true
+          'instances',
+          response
         )
-      }, 200)
+      } catch (e) {
 
-
-      let instances = await this.$api.getByPage(
-        this.info.path,
-        this.info.limit,
-        this.currentPage,
-        true
-      )
-
-      this.$set(
-        this,
-        'instances',
-        instances
-      )
-
-      clearTimeout(loadingTimer)
-
-      this.$set(
-        this,
-        'loading',
-        false
-      )
+      } finally {
+        resolve(timer, () => {
+          this.$set(this, 'loading', false)
+        })
+      }
     },
-    goToEdit (instance){
+    goToEdit (instance) {
       let params = {}
       params[this.info.router.field] = instance[this.info.router.field]
       this.$router.push({ name: this.info.router.edit, params: params })
