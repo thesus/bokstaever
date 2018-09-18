@@ -5,25 +5,27 @@
       <span v-if="isNew ? false : loading" class="icon loading" />
     </transition>
     <transition name="content" :duration="{ enter: 100, leave: 0 }">
-      <edit-component
-        v-if="(!loading && instance) || isNew"
-        :instance="instance"
-        :fields="fields"
-        @input="success = null"
-      />
+      <div v-if="(!loading && instance) || isNew">
+        <edit-component
+          :instance="instance"
+          :fields="fields"
+          @input="success = null"
+          @rendered="buttons = true"
+        />
+
+        <button
+          class="btn btn-default btn-right"
+          :class="{'success': (success === true)}"
+          @click="submitObject"
+        >
+          Submit
+          <span v-if="(sending === true)" class="icon loading inline inverse" />
+          <span v-if="(success === true)" class="icon check" />
+        </button>
+
+        <delete v-if="(!isNew && !singleton)" :model="model" :id="getIdentifier" />
+      </div>
     </transition>
-
-    <button
-      class="btn btn-default btn-right"
-      :class="{'success': (success === true)}"
-      @click="submitObject"
-    >
-      Submit
-      <span v-if="(sending === true)" class="icon loading inline inverse" />
-      <span v-if="(success === true)" class="icon check" />
-    </button>
-
-    <delete v-if="(!isNew && !singleton)" :model="model" :id="getIdentifier" />
   </div>
 </template>
 
