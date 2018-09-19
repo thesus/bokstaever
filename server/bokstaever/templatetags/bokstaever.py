@@ -13,7 +13,11 @@ register = template.Library()
 
 @register.filter()
 def markdownify(text, html_escape=True):
-    extensions = ['markdown.extensions.extra', GalleryExtension()]
+    extensions = [
+        'markdown.extensions.extra',
+        'markdown.extensions.nl2br',
+        GalleryExtension()
+    ]
 
     extensions += [EscapeHTMLExtension(), ] if html_escape else []
 
