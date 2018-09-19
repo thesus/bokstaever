@@ -82,22 +82,28 @@ Styling for Pages and posts, if desired both can be modified separately.
         }
     }
 
+    .post-text > p:first-child,
+    .page-text > p:first-child {
+      &:first-letter {
+        color: #903;
+        float: left;
+        font-family: Georgia;
+        font-size: 55px;
+        line-height: 41px;
+        padding: 3px 4px 0 0;
+      }
+    }
+
     .post-text, .page-text {
       text-align: justify;
       word-break: break-word;
       hyphens: auto;
       font-size: 18px;
-      p:first-child{
-        &:first-letter {
-          color: #903;
-          float: left;
-          font-family: Georgia;
-          font-size: 55px;
-          line-height: 41px;
-          padding: 3px 4px 0 0;
-        }
-      }
-      p, table,
+
+      p,
+      ul, ol,
+      table,
+      pre,
       h1, h2, h3, h4, h5 {
         @include site();
       }
@@ -107,6 +113,13 @@ Styling for Pages and posts, if desired both can be modified separately.
       figure {
         width: 100%;
         margin: 10px 0px 10px 0px;
+      }
+      h2 {
+        margin: 5px auto 8px auto;
+      }
+
+      h3 {
+        margin: 2px auto 6px auto;
       }
     }
   }
