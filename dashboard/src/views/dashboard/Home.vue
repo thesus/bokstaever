@@ -1,4 +1,5 @@
 <template>
+  <span>Dashboard</span>
 </template>
 
 <script>
