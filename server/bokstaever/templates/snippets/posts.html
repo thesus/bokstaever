@@ -11,7 +11,7 @@
             <div class="post-content">
               <h3 class="post-title">{{ post.headline }}</h3>
               <div class="post-text">
-                {{ post.text | truncatechars_html:350 }}
+                {{ post.text | markdownify | truncatechars_html:350 | striptags }}
                 <small class="post-footer">
                   {{ post.published }}, {{ post.text | readtime }}min read
                   <span class="arrow">→</span>
