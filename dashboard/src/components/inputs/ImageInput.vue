@@ -1,6 +1,6 @@
 <template>
   <div class="image-select">
-    <div class="current-image" v-if="image">
+    <div class="current-image" v-if="image.thumbnail != null">
       <img :src="image.thumbnail">
     </div>
     <span class="multiple" v-if="extra.multiple">{{ imageCount }} {{ imageCount|pluralize('Image') }} selected</span>
