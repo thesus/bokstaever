@@ -14,12 +14,17 @@
       <button type="button" :disabled="!(page > 1)" @click="page -= 1" class="icon left" />
       <button type="button" :disabled="!(page < images.pages)" @click="page += 1" class="icon right" />
     </div>
-    <div v-if="multiple" class="footer-group">
+    <div v-if="multiple || !required" class="footer-group">
+
       <span v-if="multiple && selected.length >= 1">
         {{ selected.length }} {{ selected.length | pluralize('Image') }} selected.
       </span>
-      <button type="button" class="btn btn-default" :disabled="selected.length < 1" @click="selected = []">Clear</button>
-      <button type="button" class="btn btn-default" :disabled="selected.length < 1" @click="$emit('selected', selected)">Select</button>
+
+      <input type="button" class="btn btn-default" v-if="multiple" :disabled="(selected.length < 1)" @click="selected = []" value="Clear">
+
+      <input type="button" class="btn btn-default" v-if="!multiple && !required" @click="$emit('selected', null)" value="Clear">
+
+      <input type="button" class="btn btn-default" v-if="multiple" :disabled="!required ? false : (selected.length < 1)" @click="$emit('selected', selected)" value="Select">
   </div>
 </div>
 </template>
@@ -34,6 +39,10 @@ export default {
   },
   props: {
     'multiple': Boolean,
+    'required': {
+      type: Boolean,
+      default: true
+    },
     'limit': {
       type: Number,
       default: 15
