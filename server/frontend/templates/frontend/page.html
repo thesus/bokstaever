@@ -14,8 +14,10 @@
         {{ page.image.title }}
       </span>
     </div>
-    {% endif %}
     <div class="page-content">
+    {% else %}
+    <div class="page-content spacer">
+    {% endif %}
       <h1>{{ page.headline }}</h1>
       <div class="page-text" lang="de">
         {% with page as site %}

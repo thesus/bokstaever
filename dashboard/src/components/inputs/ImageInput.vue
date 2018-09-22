@@ -1,6 +1,6 @@
 <template>
   <div class="image-select">
-    <div class="current-image" v-if="image">
+    <div class="current-image" v-if="(image != null) && (image.thumbnail != null)">
       <img :src="image.thumbnail">
     </div>
     <span class="multiple" v-if="extra.multiple">{{ imageCount }} {{ imageCount|pluralize('Image') }} selected</span>
@@ -8,7 +8,7 @@
       Select Image
     </button>
     <modal-component v-if="showModal" @close="showModal = false" :title="getTitle">
-      <image-component @selected="selectImage" :value="value" :multiple="extra['multiple']"/>
+      <image-component @submit="selectImage" :value="Array.isArray(value) ? value.slice(0) : value" :multiple="extra['multiple']" :required="extra['required']"/>
     </modal-component>
   </div>
 </template>
@@ -35,7 +35,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          multiple: false
+          multiple: false,
+          required: true
         }
       }
     }
@@ -73,6 +74,12 @@ export default {
             await request.get('images', identifier)
           )
         } catch (e) {} // Discarding error here.
+      } else {
+        this.$set(
+          this,
+          'image',
+          null
+        )
       }
     },
     selectImage (value) {

@@ -29,7 +29,8 @@ export default {
             identifier: 'images',
             component: 'image',
             extra: {
-              'multiple': true
+              'multiple': true,
+              'required': true
             }
           }
         ]

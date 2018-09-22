@@ -31,7 +31,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .5);
-    transition: opacity .3s ease;
+    transition: opacity .3s;
     display: table;
 }
 
