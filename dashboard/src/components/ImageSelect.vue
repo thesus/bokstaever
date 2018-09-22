@@ -22,9 +22,9 @@
 
       <input type="button" class="btn btn-default" v-if="multiple" :disabled="(selected.length < 1)" @click="selected = []" value="Clear">
 
-      <input type="button" class="btn btn-default" v-if="!multiple && !required" @click="$emit('selected', null)" value="Clear">
+      <input type="button" class="btn btn-default" v-if="!multiple && !required" @click="$emit('submit', null)" value="Clear">
 
-      <input type="button" class="btn btn-default" v-if="multiple" :disabled="!required ? false : (selected.length < 1)" @click="$emit('selected', selected)" value="Select">
+      <input type="button" class="btn btn-default" v-if="multiple" :disabled="!required ? false : (selected.length < 1)" @click="$emit('submit', selected)" value="Select">
   </div>
 </div>
 </template>
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     isSelected (id) {
-      if (this.$props.multiple) {
+      if (this.multiple) {
         return this.selected.includes(id)
       }
     },
@@ -78,7 +78,7 @@ export default {
     },
     selectImage (image) {
       var id = image.id
-      if (this.$props.multiple) {
+      if (this.multiple) {
         if (this.selected.includes(id)) {
           let index = this.selected.indexOf(id)
           this.selected.splice(index, 1)
@@ -86,7 +86,7 @@ export default {
           this.selected.push(id)
         }
       } else {
-        this.$emit('selected', id)
+        this.$emit('submit', id)
       }
     }
   },

@@ -8,7 +8,7 @@
       Select Image
     </button>
     <modal-component v-if="showModal" @close="showModal = false" :title="getTitle">
-      <image-component @selected="selectImage" :value="value" :multiple="extra['multiple']" :required="extra['required']"/>
+      <image-component @submit="selectImage" :value="Array.isArray(value) ? value.slice(0) : value" :multiple="extra['multiple']" :required="extra['required']"/>
     </modal-component>
   </div>
 </template>
