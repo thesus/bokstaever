@@ -1,3 +1,14 @@
+Version 0.4.0 (2018-09-22)
+==========================
+
+- Better UX in Dashboard
+- Improved markdown rendering and styling of main pages
+- Removed unneeded dependencies
+- Authentication in Frontend via vuex
+- New Request-Api in Frontend
+- Various tweaks in the standard theme
+
+
 Version 0.3.0 (2018-08-27)
 ==========================
 
