@@ -49,7 +49,7 @@ export default {
       }
     },
     destroy (id) {
-      this.messages = this.messages.filter(message => message.ID != id);
+      this.messages = this.messages.filter(message => message.ID != id)
     }
   }
 }

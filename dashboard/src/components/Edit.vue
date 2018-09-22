@@ -1,24 +1,24 @@
 <template>
-  <form @submit.prevent="$emit('update', instance)">
+  <form @submit.prevent="$emit('submit', instance)">
     <div class="edit">
-      <div class="field" v-for="field in fields">
+      <div class="field" v-for="field in fields" :key="field.identifier">
         <div class="label">{{ field.name }}</div>
         <div class="input">
           <component
           v-bind="getComponentData(field)"
-          @input="instance[field.identifier] = $event.target.value" >
+          @input="update(field.identifier, $event.target.value)"
+          >
           </component>
         </div>
       </div>
     </div>
-    <button class="btn btn-default btn-right" type="submit">Submit</button>
   </form>
 </template>
 
 <script>
-import ImageInput from "@/components/inputs/ImageInput"
-import TextInput from "@/components/inputs/TextInput"
-import SelectInput from "@/components/inputs/SelectInput"
+import ImageInput from '@/components/inputs/ImageInput'
+import TextInput from '@/components/inputs/TextInput'
+import SelectInput from '@/components/inputs/SelectInput'
 
 const components = {
   'string': {
@@ -58,10 +58,14 @@ export default {
     getComponentData (field) {
       let component = components[field.component]
       this.$set(component, 'value', this.instance[field.identifier])
-      if ("extra" in field) {
+      if ('extra' in field) {
         this.$set(component, 'extra', field.extra)
       }
       return component
+    },
+    update (identifier, value) {
+      this.$set(this.instance, identifier, value)
+      this.$emit('input')
     }
   }
 }

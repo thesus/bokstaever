@@ -18,7 +18,6 @@
 }
 
 :80/dashboard/ {
-  on startup /etc/compile.sh
   root /srv/dashboard
   log stdout
 }

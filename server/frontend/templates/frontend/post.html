@@ -14,8 +14,10 @@
         {{ post.image.title }}
       </span>
     </div>
-    {% endif %}
     <div class="post-content">
+    {% else %}
+    <div class="post-content spacer">
+    {% endif %}
       <h1>{{ post.headline }}</h1>
       <div class="post-text" lang="de">
         {% with post as site %}

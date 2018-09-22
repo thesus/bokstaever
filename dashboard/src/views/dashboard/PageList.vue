@@ -11,10 +11,9 @@ export default {
   },
   data () {
     return {
-      posts: {},
       info: {
         limit: 8,
-        path: '/pages/',
+        model: 'pages',
         router: {
           field: 'slug',
           edit: 'page-edit',
@@ -23,14 +22,14 @@ export default {
         }
       },
       fields: [
-          {
-            name: 'Slug',
-            identifier: 'slug'
-          },
-          {
-            name: 'Headline',
-            identifier: 'headline'
-          }
+        {
+          name: 'Slug',
+          identifier: 'slug'
+        },
+        {
+          name: 'Headline',
+          identifier: 'headline'
+        }
       ]
     }
   }

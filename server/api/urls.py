@@ -1,5 +1,11 @@
 from django.urls import path, include
 
+
+from rest_framework_jwt.views import (
+    obtain_jwt_token,
+    refresh_jwt_token
+)
+
 from api.views import (
     PostViewSet,
     ImageViewSet,
@@ -27,5 +33,7 @@ for viewset in viewsets:
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('settings/', SettingsUpdateView.as_view())
+    path('settings/', SettingsUpdateView.as_view()),
+    path('auth/jwt/create/', obtain_jwt_token),
+    path('auth/jwt/refresh/', refresh_jwt_token)
 ]

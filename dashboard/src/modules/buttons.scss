@@ -34,6 +34,14 @@ btn-type, e.g. "btn-default"
   &.btn-right {
     float: right;
   }
+  &:disabled {
+    opacity: 0.8;
+    cursor: default;
+    background-color: rgb(44, 70, 127);
+    &:hover {
+      background-color: rgb(44, 70, 127);
+    }
+  }
 }
 
 a.btn, span.btn {

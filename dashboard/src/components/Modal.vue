@@ -31,7 +31,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .5);
-    transition: opacity .3s ease;
+    transition: opacity .3s;
     display: table;
 }
 
@@ -42,11 +42,13 @@ export default {
 
 .modal-container {
     @media screen and (min-width: 1200px) {
-      width: 50vw;
-      height: 70vh;
+      max-width: 60vw;
     }
-    width: 90vw;
-    height: 90vh;
+
+    width: auto;
+
+    min-width: 100px;
+    max-width: 90vw;
 
     background-color: #fff;
     margin: 0px auto;
@@ -65,7 +67,10 @@ export default {
         box-sizing: border-box;
         padding: 8px;
         width: 100%;
-        height: calc(100% - 36px);
+
+        min-height: 60px;
+        max-height: 85vh;
+
         overflow-x: hidden;
         overflow-y: auto;
         border-top: solid 1px #eee;
@@ -80,7 +85,7 @@ export default {
         line-height: 0;
         display: block;
         text-indent: -9999px;
-        background: #fff url(/assets/svg/x.svg) 50% 50% / 15px 15px no-repeat;
+        background: #fff url(/dashboard/assets/svg/x.svg) 50% 50% / 15px 15px no-repeat;
         cursor: pointer;
     }
 }

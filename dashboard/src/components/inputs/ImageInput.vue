@@ -1,6 +1,6 @@
 <template>
   <div class="image-select">
-    <div class="current-image" v-if="image">
+    <div class="current-image" v-if="(image != null) && (image.thumbnail != null)">
       <img :src="image.thumbnail">
     </div>
     <span class="multiple" v-if="extra.multiple">{{ imageCount }} {{ imageCount|pluralize('Image') }} selected</span>
@@ -8,7 +8,7 @@
       Select Image
     </button>
     <modal-component v-if="showModal" @close="showModal = false" :title="getTitle">
-      <image-component @selected="selectImage" :value="value" :multiple="extra['multiple']"/>
+      <image-component @submit="selectImage" :value="Array.isArray(value) ? value.slice(0) : value" :multiple="extra['multiple']" :required="extra['required']"/>
     </modal-component>
   </div>
 </template>
@@ -17,6 +17,7 @@
 import ImageSelect from '@/components/ImageSelect'
 import Modal from '@/components/Modal'
 import { pluralize } from '@/filters/Text'
+import { Request } from '@/utils'
 
 export default {
   filters: {
@@ -27,17 +28,18 @@ export default {
     'image-component': ImageSelect
   },
   props: {
-      'value': {
-        required: false
-      },
-      'extra': {
-        type: Object,
-        default: () => {
-          return {
-            multiple: false
-          }
+    'value': {
+      required: false
+    },
+    'extra': {
+      type: Object,
+      default: () => {
+        return {
+          multiple: false,
+          required: true
         }
       }
+    }
   },
   data () {
     return {
@@ -62,12 +64,21 @@ export default {
     }
   },
   methods: {
-    async getImage (value=this.value) {
-      if (value !== undefined && !(Array.isArray(value))) {
+    async getImage (identifier = this.value) {
+      if (identifier !== undefined && !(Array.isArray(identifier))) {
+        try {
+          let request = new Request()
+          this.$set(
+            this,
+            'image',
+            await request.get('images', identifier)
+          )
+        } catch (e) {} // Discarding error here.
+      } else {
         this.$set(
           this,
           'image',
-          await this.$api.get(`/images/${value}/`, true)
+          null
         )
       }
     },

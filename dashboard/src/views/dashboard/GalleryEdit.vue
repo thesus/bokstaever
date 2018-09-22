@@ -12,27 +12,28 @@ export default {
   data () {
     return {
       data: {
-        fields: [
-            {
-              name: 'Title',
-              identifier: 'name',
-              component: 'string',
-            },
-            {
-              name: 'Image',
-              identifier: 'images',
-              component: 'image',
-              extra: {
-                'multiple': true
-              }
-            }
-        ],
         router: {
           'field': 'id',
           'create': 'gallery-create',
           'edit': 'gallery-edit'
         },
-        url: '/galleries/'
+        model: 'galleries',
+        fields: [
+          {
+            name: 'Title',
+            identifier: 'name',
+            component: 'string'
+          },
+          {
+            name: 'Image',
+            identifier: 'images',
+            component: 'image',
+            extra: {
+              'multiple': true,
+              'required': true
+            }
+          }
+        ]
       }
     }
   }
