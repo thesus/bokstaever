@@ -148,3 +148,8 @@ class Settings(SingletonModel):
         choices=BEHAVIOR_CHOICES,
         default='site'
     )
+
+    # Default page size for paginated views in the frontend part
+    pagesize = models.PositiveSmallIntegerField(
+        default=4
+    )

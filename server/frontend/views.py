@@ -29,8 +29,11 @@ class BlogView(DatabaseAwareCacheMixin, ListView):
     model = Post
     template_name = 'frontend/site/blog.html'
     context_object_name = 'posts'
-    paginate_by = 4
+    # paginate_by = 4
     queryset = Post.objects.filter(draft=False)
+
+    def get_paginate_by(self, queryset):
+        return Settings.load().pagesize
 
 
 class IndexBlogView(BlogView):

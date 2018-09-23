@@ -53,8 +53,14 @@ export default {
             identifier: 'image',
             component: 'image',
             extra: {
-              multiple: false
+              multiple: false,
+              required: false
             }
+          },
+          {
+            name: 'Pagesize',
+            identifier: 'pagesize',
+            component: 'number'
           }
         ]
       }

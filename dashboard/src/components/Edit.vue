@@ -25,6 +25,10 @@ const components = {
     is: 'input',
     type: 'text'
   },
+  'number': {
+    is: 'input',
+    type: 'number'
+  },
   'email': {
     is: 'input',
     type: 'email'
