@@ -17,7 +17,7 @@ RUN wget https://github.com/sass/dart-sass/releases/download/1.10.1/dart-sass-1.
 RUN tar -xvf dart-sass-1.10.1-linux-x64.tar.gz
 
 WORKDIR /src/static/css
-RUN /dart-sass/sass style.scss:style.css brevlada.scss:brevlada.css
+RUN /dart-sass/sass style.scss:style.css brevlada.scss:brevlada.css --style compressed
 RUN rm *.scss
 
 
