@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block ui %}
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/brevlada.css' %}">
+{% endblock header %}
+
+
+{% block overlay %}
   <div class="navigation">
     <input type="checkbox" id="menu" name="menu" class="menu-checkbox">
     <nav class="navbar">
@@ -52,4 +58,4 @@
        </div>
    </footer>
 
-{% endblock ui %}
+{% endblock overlay %}
