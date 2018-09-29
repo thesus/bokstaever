@@ -39,8 +39,8 @@ export default {
             identifier: 'theme',
             component: 'select',
             extra: [
-              ['css/brevlada.css', 'brevlåda'],
-              ['css/frimarke.css', 'frimärke']
+              ['brevlada', 'brevlåda'],
+              ['frimarke', 'frimärke']
             ]
           },
           {
