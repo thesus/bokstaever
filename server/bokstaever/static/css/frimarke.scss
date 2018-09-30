@@ -1,0 +1,37 @@
+
+.posts {
+  margin: 0 auto;
+  .post {
+    width: 350px;
+    margin-bottom: 20px;
+
+    // Border styling for boxes
+    $border_styling: #eee solid 1px;
+    border: $border_styling;
+    border-radius: 5px;
+    border-top: transparent solid 4px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+    .post-image {
+      img {
+        max-height: 200px;
+        margin-left: -1px;
+        width: calc(100% + 2px);
+      }
+    }
+
+    .post-header {
+      padding: 4px;
+      h2 {
+        margin: 3px 0 4px 0;
+
+      }
+    }
+
+    .post-content {
+      text-align: justify;
+      padding: 4px;
+    }
+  }
+}

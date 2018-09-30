@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/frimarke.css' %}">
+{% endblock header %}
+
+{% block overlay %}
+  <nav>
+      <a href="{% url 'frontend:index' %}">Home</a>
+      {% for entry in sitemap %}
+      <a href="{% url 'frontend:page-detail' entry.1 %}">{{ entry.0 }}</a>
+      {% endfor %}
+  </nav>
+
+  {% block content %}
+  {% endblock content %}
+{% endblock overlay %}

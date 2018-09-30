@@ -1,0 +1,33 @@
+{% extends 'layouts/frimarke/base.html' %}
+{% load bokstaever %}
+{% load static %}
+
+{% block content %}
+  <div class="posts">
+      {% for post in posts %}
+        {% if post.image %}
+          <div class="post">
+        {% else %}
+          <div class="post" style="border-top-color: {% cycle '#68CEB2' '#F2055C' '#026773' '#008A99' '#71D9B3' '#C83821' '#C83821' '#017024' '#D9BE2F' %};">
+        {% endif %}
+          {% if post.image %}
+          <div class="post-image">
+            <img src="{{ post.image.image.url }}">
+          </div>
+          {% endif %}
+          <div class="post-header">
+            <h2>{{ post.headline }}</h2>
+          </div>
+          <div class="post-content">
+            {{ post.text | markdownify | truncatechars_html:150 | striptags }}
+          </div>
+          <div class="post-footer">
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+
+<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'js/frimarke.js' %}"></script>
+{% endblock content %}
