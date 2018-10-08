@@ -8,6 +8,12 @@ RUN pip install -r /requirements/base.txt
 # Copy source code.
 COPY server/ /src
 
+COPY utils/download_theme_dependencies.sh /
+
+ENV DESTINATION=/src/bokstaever/static/
+
+RUN bash download_theme_dependencies.sh
+
 WORKDIR /src
 
 RUN python manage.py collectstatic --noinput
