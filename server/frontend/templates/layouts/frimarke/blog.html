@@ -5,27 +5,33 @@
 {% block content %}
   <div class="posts">
       {% for post in posts %}
-        {% if post.image %}
-          <div class="post">
-        {% else %}
-          <div class="post" style="border-top-color: {% cycle '#68CEB2' '#F2055C' '#026773' '#008A99' '#71D9B3' '#C83821' '#C83821' '#017024' '#D9BE2F' %};">
-        {% endif %}
+        <a href="{% url 'frontend:post-detail' post.pk %}">
           {% if post.image %}
-          <div class="post-image">
-            <img src="{{ post.image.image.url }}">
-          </div>
+            <div class="post">
+          {% else %}
+            <div class="post" style="border-top-color: {% cycle '#68CEB2' '#F2055C' '#026773' '#008A99' '#71D9B3' '#C83821' '#C83821' '#017024' '#D9BE2F' %};">
           {% endif %}
-          <div class="post-header">
-            <h2>{{ post.headline }}</h2>
+            {% if post.image %}
+            <div class="post-image">
+              <img src="{{ post.image.image.url }}">
+            </div>
+            {% endif %}
+            <div class="post-header">
+              <h2>{{ post.headline }}</h2>
+            </div>
+            <div class="post-content">
+              {{ post.text | markdownify | truncatechars_html:250 | striptags }}
+            </div>
+            <small class="post-footer">
+              {{ post.published }}, {{ post.text | readtime }}min read
+              <span class="arrow">→</span>
+            </small>
           </div>
-          <div class="post-content">
-            {{ post.text | markdownify | truncatechars_html:150 | striptags }}
-          </div>
-          <div class="post-footer">
-          </div>
-        </div>
+        </a>
         {% endfor %}
     </div>
+
+    {% include 'snippets/pagination.html' %}
 
 <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
 <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>

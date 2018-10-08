@@ -7,10 +7,14 @@
 
 {% block overlay %}
   <nav>
-      <a href="{% url 'frontend:index' %}">Home</a>
+    <ul class="navigation">
+      <li><a href="{% url 'frontend:index' %}">Home</a></li>
       {% for entry in sitemap %}
-      <a href="{% url 'frontend:page-detail' entry.1 %}">{{ entry.0 }}</a>
+      <li>
+        <a href="{% url 'frontend:page-detail' entry.1 %}">{{ entry.0 }}</a>
+      </li>
       {% endfor %}
+    </ul>
   </nav>
 
   {% block content %}
