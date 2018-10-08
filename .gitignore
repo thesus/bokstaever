@@ -11,6 +11,7 @@ __pycache__
 /server/bokstaever/media
 *.css
 *.css.map
+*.min.js
 
 # Frontend related stuff
 node_modules
