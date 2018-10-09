@@ -7,7 +7,9 @@
 
 {% block overlay %}
   <nav>
-    <ul class="navigation">
+    <script src="{% static 'js/navigation.js' %}"></script>
+    <button onclick="toggleMenu()" class="menu-toggle"></button>
+    <ul id="navigation" class="hidden">
       <li><a href="{% url 'frontend:index' %}">Home</a></li>
       {% for entry in sitemap %}
       <li>
@@ -16,7 +18,6 @@
       {% endfor %}
     </ul>
   </nav>
-
   {% block content %}
   {% endblock content %}
 {% endblock overlay %}

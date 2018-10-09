@@ -1,6 +1,7 @@
+$breakpoint: 500px;
 
 .posts {
-  margin: 0 auto;
+  margin: 60px auto auto auto;
 
   a {
     text-decoration: none;
@@ -53,9 +54,22 @@
 
 .site {
   .post, .page {
+    .post-header {
+      .post-image-caption {
+        margin: 3px 0 0 0;
+        display: block;
+        opacity: 0.8;
+        font-style: italic;
+        text-align: center;
+      }
+    }
+
     font-size: 18px;
     .post-content, .page-content {
       width: 70%;
+      &:not(.image) {
+        margin-top: 60px;
+      }
       margin: auto;
     }
     .post-text {
@@ -64,39 +78,77 @@
   }
 }
 
-
 nav {
-  ul.navigation {
+  @media screen and (max-width: $breakpoint) {
+    button.menu-toggle {
+      border: none;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 60px;
+      height: 60px;
+      line-height: 0;
+      display: block !important;
+      text-indent: -9999px;
+      background: #fff url(/static/svg/menu.svg) 50% 50% / 25px 25px no-repeat;
+      cursor: pointer;
+    }
+  }
+  button.menu-toggle {
+    display: none;
+    z-index: 100;
+  }
+
+  ul#navigation {
     list-style: none;
     margin: 0 0 8px 0;
     padding: 0;
     display: flex;
     justify-content: center;
     font-size: 25px;
-    font-weight: 280;
+    font-weight: 300;
 
-    $menu_colors: #026773 #C83821 #017024 #D9BE2F #F47942;
-   
-    $i: 1;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    background-color: white;
 
-    @each $color in $menu_colors {
-      li:nth-child(#{$i}):hover {
-          background-color: $color;
-      }
-      $i: $i + 1;
-    }
+    z-index: 50;
 
     li {
       &:hover {
+        background-color: #026773;
         color: white;
       }
       color: black;
-
-      padding: 8px;
+      padding: 0;
       a {
+        padding: 14px 5px 2px 5px;
+        display: inline-block;
         text-decoration: none;
         color: inherit;
         opacity: 0.95;
+      }
+    }
+
+    @media screen and (max-width: $breakpoint) {
+      flex-flow: column;
+      &.hidden {
+        display: none;
+      }
+      li {
+        display: block;
+        margin-left: 8px;
+        &:first-child {
+          margin-top: 60px;
+        }
+        &:last-child {
+          margin-bottom: 8px;
+        }
+        a {
+          padding: 2px 5px 2px 8px;
+          width: 100%;
+        }
       }
     }
   }

@@ -14,7 +14,11 @@
         {{ post.image.title }}
       </span>
     </div>
-    <div class="post-content">
+    {% if post.image %}
+        <div class="post-content image">
+    {% else %}
+        <div class="post-content">
+    {% endif %}
     {% else %}
     <div class="post-content spacer">
     {% endif %}
