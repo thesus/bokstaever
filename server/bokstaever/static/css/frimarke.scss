@@ -64,24 +64,38 @@
   }
 }
 
+
 nav {
   ul.navigation {
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
     list-style: none;
-    margin: 5px 0 8px 0;
+    margin: 0 0 8px 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    font-size: 22px;
-    font-weight: 300;
+    font-size: 25px;
+    font-weight: 280;
 
+    $menu_colors: #026773 #C83821 #017024 #D9BE2F #F47942;
+   
+    $i: 1;
+
+    @each $color in $menu_colors {
+      li:nth-child(#{$i}):hover {
+          background-color: $color;
+      }
+      $i: $i + 1;
+    }
 
     li {
+      &:hover {
+        color: white;
+      }
+      color: black;
+
       padding: 8px;
       a {
         text-decoration: none;
-        color: black;
+        color: inherit;
         opacity: 0.95;
       }
     }
