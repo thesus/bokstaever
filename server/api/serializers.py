@@ -66,7 +66,8 @@ class SettingsSerializer(serializers.ModelSerializer):
             'info',
             'image',
             'theme',
-            'behavior'
+            'behavior',
+            'pagesize'
         )
 
 

@@ -39,8 +39,8 @@ export default {
             identifier: 'theme',
             component: 'select',
             extra: [
-              ['css/brevlada.css', 'brevlåda'],
-              ['css/frimarke.css', 'frimärke']
+              ['brevlada', 'brevlåda'],
+              ['frimarke', 'frimärke']
             ]
           },
           {
@@ -53,8 +53,14 @@ export default {
             identifier: 'image',
             component: 'image',
             extra: {
-              multiple: false
+              multiple: false,
+              required: false
             }
+          },
+          {
+            name: 'Pagesize',
+            identifier: 'pagesize',
+            component: 'number'
           }
         ]
       }

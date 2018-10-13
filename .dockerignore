@@ -5,6 +5,9 @@
 /dashboard/dist
 /server/contrib
 
+# Downloaded dependencies
+/server/bokstaever/static/js/*.min.js
+
 # Caches, virtual environment, etc.
 .pytest_cache
 /venv

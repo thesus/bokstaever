@@ -1,0 +1,11 @@
+{% extends 'layouts/frimarke/base.html' %}
+{% load bokstaever %}
+
+{% block content %}
+{% include 'snippets/image.html' %}
+
+<h1>{{ title }}</h1>
+
+<div class="content">
+  {{ settings.info | markdownify }}
+{% endblock %}

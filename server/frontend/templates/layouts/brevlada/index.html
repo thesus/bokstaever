@@ -1,4 +1,4 @@
-{% extends 'frontend/base.html' %}
+{% extends 'layouts/brevlada/base.html' %}
 {% load bokstaever %}
 
 {% block content %}
@@ -8,7 +8,6 @@
 
 <div class="content">
   {{ settings.info | markdownify }}
-
   <div class="post-peak">
     {% for post in posts %}
       <a href="{% url 'frontend:post-detail' post.pk %}">

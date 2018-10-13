@@ -1,0 +1,30 @@
+{% extends 'layouts/brevlada/base.html' %}
+
+{% block title %} {{ page.headline }} -{% endblock title %}
+
+{% block content %}
+<div class="site">
+  <div class="page">
+    {% if page.image %}
+    <div class="page-header">
+      <div class="page-image">
+        <img src="{{ page.image.image.url }}">
+      </div>
+      <span class="page-image-caption">
+        {{ page.image.title }}
+      </span>
+    </div>
+    <div class="page-content">
+    {% else %}
+    <div class="page-content spacer">
+    {% endif %}
+      <h1>{{ page.headline }}</h1>
+      <div class="page-text" lang="de">
+        {% with page as site %}
+          {% include 'snippets/renderer.html' %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

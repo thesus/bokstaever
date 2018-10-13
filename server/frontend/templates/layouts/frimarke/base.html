@@ -1,35 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block ui %}
-  <div class="navigation">
-    <input type="checkbox" id="menu" name="menu" class="menu-checkbox">
-    <nav class="navbar">
-      <label class="menu-toggle" for="menu"><span>Toggle</span></label>
-      <ul>
-        <li>
-          <a href="{% url 'frontend:index' %}">Home</a>
-        </li>
-        {% if settings.behavior == 'site' %}
-          <li>
-            <a href="{% url 'frontend:blog' %}">Posts</a>
-          </li>
-        {% endif %}
-        {% for entry in sitemap %}
-          <li>
-            <a href="{% url 'frontend:page-detail' entry.1 %}">{{ entry.0 }}</a>
-          </li>
-        {% endfor %}
-        <li>
-          <a href="/dashboard/">Dashboard</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/frimarke.css' %}">
+{% endblock header %}
 
-  <div>
-    {% block content %}
-    {% endblock content %}
-  </div>
+{% block overlay %}
+  <nav>
+    <script src="{% static 'js/navigation.js' %}"></script>
+    <button onclick="toggleMenu()" class="menu-toggle"></button>
+    <ul id="navigation" class="hidden">
+      <li><a href="{% url 'frontend:index' %}">Home</a></li>
+      {% for entry in sitemap %}
+      <li>
+        <a href="{% url 'frontend:page-detail' entry.1 %}">{{ entry.0 }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  {% block content %}
+  {% endblock content %}
 
   <footer class="footer">
         <div class="container">
@@ -51,5 +41,4 @@
             </div>
        </div>
    </footer>
-
-{% endblock ui %}
+{% endblock overlay %}

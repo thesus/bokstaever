@@ -14,8 +14,20 @@ from bokstaever.models import (
 from bokstaever.views import DatabaseAwareCacheMixin
 
 
+class BlogView(DatabaseAwareCacheMixin, ListView):
+    model = Post
+    context_object_name = 'posts'
+    queryset = Post.objects.filter(draft=False)
+
+    def get_paginate_by(self, queryset):
+        return Settings.load().pagesize
+
+    def get_template_names(self):
+        theme = Settings.load().theme
+        return 'layouts/{0}/blog.html'.format(theme)
+
+
 class IndexSiteView(DatabaseAwareCacheMixin, TemplateView):
-    template_name = 'frontend/site/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,17 +36,13 @@ class IndexSiteView(DatabaseAwareCacheMixin, TemplateView):
 
         return context
 
-
-class BlogView(DatabaseAwareCacheMixin, ListView):
-    model = Post
-    template_name = 'frontend/site/blog.html'
-    context_object_name = 'posts'
-    paginate_by = 4
-    queryset = Post.objects.filter(draft=False)
+    def get_template_names(self):
+        theme = Settings.load().theme
+        return 'layouts/{0}/index.html'.format(theme)
 
 
 class IndexBlogView(BlogView):
-    template_name = 'frontend/blog/index.html'
+    pass
 
 
 def index(request):
@@ -56,11 +64,18 @@ def blog(request):
 
 class PostView(DatabaseAwareCacheMixin, DetailView):
     queryset = Post.objects.filter(draft=False)
-    template_name = 'frontend/post.html'
     template_name_field = 'post'
+
+    def get_template_names(self):
+        theme = Settings.load().theme
+        return 'layouts/{0}/post.html'.format(theme)
 
 
 class PageView(DatabaseAwareCacheMixin, DetailView):
     model = Page
     template_name = 'frontend/page.html'
     template_name_field = 'page'
+
+    def get_template_names(self):
+        theme = Settings.load().theme
+        return 'layouts/{0}/page.html'.format(theme)
