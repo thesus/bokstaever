@@ -14,15 +14,19 @@
         {{ post.image.title }}
       </span>
     </div>
-    {% if post.image %}
-        <div class="post-content image">
+    <div class="post-content image">
     {% else %}
-        <div class="post-content">
+    <div class="post-content">
     {% endif %}
-    {% else %}
-    <div class="post-content spacer">
-    {% endif %}
-      <h1>{{ post.headline }}</h1>
+      <h1 class="post-title">{{ post.headline }}</h1>
+      <div class="post-info">
+        <span class="date">
+          {{ post.published|date:"DATE_FORMAT" }}
+        </span>
+        <span class="authors">
+          {% for editor in post.editors.all %}{% if not forloop.first %}, {% endif %}{{ editor.first_name }} {{ editor.last_name }}{% endfor %}
+        </span>
+      </div>
       <div class="post-text" lang="de">
         {% with post as site %}
           {% include 'snippets/renderer.html' %}

@@ -1,6 +1,9 @@
 $breakpoint: 760px;
 
+
 $color_blue: #026773;
+$color_dark_blue: #013940;
+$color_light_blue: #04CEE5;
 
 .posts {
   margin: 60px auto auto auto;
@@ -27,6 +30,7 @@ $color_blue: #026773;
     }
     width: 350px;
     margin-bottom: 20px;
+    background-color: white;
 
     .post-body {
         padding-bottom: 23px;
@@ -80,6 +84,9 @@ $color_blue: #026773;
   .post, .page {
     .post-header, .page-header {
       .post-image, .page-image {
+        @media screen and (max-width: 650px) {
+          width: 90%;
+        }
         width: 70%;
         margin: 80px auto auto auto;
         overflow: hidden;
@@ -96,7 +103,7 @@ $color_blue: #026773;
             height: 500px;
         }
       } 
-      .post-image-caption {
+      .post-image-caption, .page-image-caption {
         margin: 3px 0 0 0;
         display: block;
         opacity: 0.8;
@@ -115,8 +122,24 @@ $color_blue: #026773;
         margin-top: 60px;
       }
       margin: auto;
+
+      .post-title {
+        margin-bottom: 10px;
+      }
+
+      .post-info {
+        font-size: 16px;
+        font-weight: 300;
+        .authors {
+          margin-right: 10px;
+        }
+        .date {
+          margin-left: 10px;
+          float: right;
+        }
+      }
     }
-    .post-text {
+    .post-text, .page-text {
       line-height: 25px;
     }
   }
@@ -237,6 +260,63 @@ Styling for galleries on pages and posts
         height: 100%;
         width: 100%;
         object-fit: cover;
+    }
+  }
+}
+
+.footer {
+  @media screen and (max-width: 400px) {
+    width: 85%;
+  }
+
+  width: 70%;
+  margin: 10px auto 0 auto;
+  border-top: solid 1px $color_blue;
+
+  .contacts {
+    margin-bottom: 10px;
+    .contact {
+      border-top: solid 1px $color_blue;
+      padding-top: 5px; 
+      margin: 9px auto 0 auto;
+      .contact-type {
+        padding-left: 30px;
+        white-space: nowrap;
+        opacity: 0.8;
+        width: 70px;
+      }
+      .contact-link {
+        float: right;
+        a {
+          text-decoration: none;
+          color: $color_dark_blue; 
+          // color: $color_light_blue;
+        }
+      }
+    }
+  }
+  .info {
+    font-weight: 300;
+    opacity: 0.8;
+    margin-bottom: 10px;
+  }
+}
+
+.pagination {
+  text-align: center;
+  list-style: none;
+  font-size: 20px;
+  font-weight: 300;
+  a {
+   text-decoration: none;
+   color: $color_dark_blue;
+  }
+  span {
+    &:first-child {
+      margin-right: 10px;
+    }
+    &:last-child {
+      margin-left: 10px;
     }
   }
 }
