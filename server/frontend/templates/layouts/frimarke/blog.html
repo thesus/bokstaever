@@ -9,23 +9,25 @@
           {% if post.image %}
             <div class="post">
           {% else %}
-            <div class="post" style="border-top-color: #026773;">
+            <div class="post noimage">
           {% endif %}
             {% if post.image %}
             <div class="post-image">
               <img src="{{ post.image.image.url }}">
             </div>
             {% endif %}
-            <div class="post-header">
-              <h2>{{ post.headline }}</h2>
+            <div class="post-body">
+              <div class="post-header">
+                <h2>{{ post.headline }}</h2>
+              </div>
+              <div class="post-content">
+                {{ post.text | markdownify | truncatechars_html:250 | striptags }}
+              </div>
+              <small class="post-footer">
+                {{ post.published }}, {{ post.text | readtime }}min read
+                <span class="arrow">→</span>
+              </small>
             </div>
-            <div class="post-content">
-              {{ post.text | markdownify | truncatechars_html:250 | striptags }}
-            </div>
-            <small class="post-footer">
-              {{ post.published }}, {{ post.text | readtime }}min read
-              <span class="arrow">→</span>
-            </small>
           </div>
         </a>
         {% endfor %}

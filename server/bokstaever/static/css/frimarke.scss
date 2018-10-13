@@ -1,4 +1,5 @@
 $breakpoint: 500px;
+$color_blue: #026773;
 
 .posts {
   margin: 60px auto auto auto;
@@ -9,13 +10,37 @@ $breakpoint: 500px;
   }
 
   .post {
+    @media screen and (max-width: $breakpoint) {
+      width: 100%;
+      border: none;
+      &.noimage {
+        .post-header  {
+          border-top: $color_blue solid 1px;
+          border-radius: 0px;
+          margin: 0 20px 0 20px;  
+        }
+      }
+      .post-body {
+        border: none !important;
+      }
+    }
     width: 350px;
     margin-bottom: 20px;
 
-    // Border styling for boxes
-    $border_styling: #eee solid 1px;
-    border: $border_styling;
-    border-radius: 5px;
+    .post-body {
+        padding-bottom: 23px;
+        $border_styling: #eee solid 1px;
+        border: $border_styling;
+        border-radius: 5px;
+        border-top: none;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    &.noimage {
+        border-top-color: $color_blue;
+    }
+
     border-top: transparent solid 4px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
@@ -23,8 +48,6 @@ $breakpoint: 500px;
     .post-image {
       img {
         max-height: 200px;
-        margin-left: -1px;
-        width: calc(100% + 2px);
       }
     }
 
@@ -42,7 +65,7 @@ $breakpoint: 500px;
     .post-content {
       text-align: justify;
       font-size: 17px;
-      padding: 6px;
+      padding: 6px 6px 0 6px;
     }
 
     .post-footer {
@@ -54,7 +77,24 @@ $breakpoint: 500px;
 
 .site {
   .post, .page {
-    .post-header {
+    .post-header, .page-header {
+      .post-image, .page-image {
+        width: 70%;
+        margin: 80px auto auto auto;
+        overflow: hidden;
+        @media screen and (max-width: 500px) {
+            height: 300px;
+        }
+        @media screen and (min-width: 500px) and (max-width: 800px){
+            height: 400px;
+        }
+        @media screen and (min-width: 800px) and (max-width: 1300px){
+            height: 450px;
+        }
+        @media screen and (min-width: 1300px) {
+            height: 500px;
+        }
+      } 
       .post-image-caption {
         margin: 3px 0 0 0;
         display: block;
@@ -66,6 +106,9 @@ $breakpoint: 500px;
 
     font-size: 18px;
     .post-content, .page-content {
+      @media screen and (max-width: 400px) {
+        width: 90%;
+      }
       width: 70%;
       &:not(.image) {
         margin-top: 60px;
@@ -117,7 +160,7 @@ nav {
 
     li {
       &:hover {
-        background-color: #026773;
+        background-color: $color_blue;
         color: white;
       }
       color: black;
@@ -150,6 +193,49 @@ nav {
           width: 100%;
         }
       }
+    }
+  }
+}
+
+/*
+Styling for galleries on pages and posts
+*/
+.gallery {
+  width: 100%;
+  margin: 10px auto 10px auto;
+  background-color: white;
+  padding: 5px 0px 5px 0px;
+
+  border-top: 1px solid $color_blue;
+  border-bottom: 1px solid $color_blue;
+
+  .thumbnails {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
+    .thumbnail {
+      margin: 5px;
+      @media screen and (max-width: 1200px) {
+        width: 150px;
+        height: 150px;
+      }
+      @media screen and (max-width: 800px) {
+        width: 200px;
+        height: 200px;
+      }
+      @media screen and (max-width: 442px) {
+        width: 90vw;
+        height: 90vw;
+      }
+      width: 200px;
+      height: 200px;
+    }
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
     }
   }
 }
