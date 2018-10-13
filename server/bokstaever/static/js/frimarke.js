@@ -1,5 +1,7 @@
 var msnry
 
+var breakpoint = 760
+
 var grid = document.querySelector('.posts')
 
 function createMasonry (grid) {
@@ -11,7 +13,7 @@ function createMasonry (grid) {
   }) 
 }
 
-if (window.innerWidth > 500) {
+if (window.innerWidth > breakpoint) {
   msnry = createMasonry(grid)
 } else {
   msnry = undefined
@@ -19,7 +21,7 @@ if (window.innerWidth > 500) {
 
 function checkMasonry () {
   let width = window.innerWidth
-  if (width <= 500) {
+  if (width <= breakpoint) {
     if (msnry != undefined) {
       // console.log('destroying msnry')
       msnry.destroy()
