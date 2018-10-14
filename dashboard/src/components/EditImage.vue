@@ -1,28 +1,45 @@
 <template>
   <div>
-    <input v-model="image.title">
-    {{ id }}
-    <button
-      class="btn btn-default"
-      @click="submitImage"
+    <notification />
+    <div class="indicator" v-show="sending || loading">
+      <span class="icon loading" />
+    </div>
+    <div
+      :class="{
+        cover: (sending || loading),
+      }"
     >
-      Submit
-    </button>
+      <img class="thumbnail" :src="image.thumbnail">
+      <input type="text" v-model="image.title">
+      <button
+        class="btn btn-default"
+        @click="submitImage"
+      >
+        Submit
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import Notification from '@/components/Notification'
 import { Request, create, resolve } from '@/utils'
 
 export default {
+  components: {
+    'notification': Notification
+  },
   props: ['id'],
   data () {
     return {
-      loading: null,
+      loading: true,
       sending: null,
       success: null,
       image: {}
     }
+  },
+  mounted () {
+    this.getImage()
   },
   methods: {
     async getImage () {
@@ -59,26 +76,45 @@ export default {
         let request = new Request()
         await request.patch('images', this.image.id, data)
 
-        this.$set(this, 'success', true)
+        this.$emit('success')
       } catch (e) {
-
-      } finally {
         resolve(timer, () => {
           this.$set(this, 'sending', false)
         })
       }
     }
-  },
-  watch: {
-    id () {
-      if (this.id !== null && this.id !== undefined) {
-        this.getImage()
-      }
-    }
   }
+  // watch: {
+  //   id () {
+  //     if (this.id !== null && this.id !== undefined) {
+  //       this.getImage()
+  //     }
+  //   }
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/modules/inputs.scss';
+@import '@/modules/buttons.scss';
 
+.cover {
+  opacity: 0.2;
+}
+
+.thumbnail {
+  height: 200px;
+  width: 200px;
+}
+
+.indicator {
+  position: absolute;
+  top: calc(50% - 36px);
+  left: calc(50% - 41px); // padding + icon width / 2
+}
+
+.icon.loading {
+  width: 50px;
+  height: 50px;
+}
 </style>
