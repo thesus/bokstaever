@@ -110,6 +110,23 @@ class Request {
     return response.data
   }
 
+  async patch (model, identifier, instance) {
+    /**
+     * PATCH an instance on the server, otherwise same as 'send'
+     * @param {string} [model] - Model to be updated
+     * @param {string} [identifier] - Instance identifier
+     * @param {object} [instance] - Instance sent to the server
+    */
+
+    this.createSendConfig(model, identifier, instance)
+
+    this['config']['method'] = 'patch' // Set method to patch
+
+    let response = await this.execute()
+
+    return response.data
+  }
+
   async upload (model, identifier, instance, func) {
     /**
      * Send an instance to the server that contains files.
