@@ -8,11 +8,12 @@
       :class="{
         cover: (sending || loading),
       }"
+      class="wrapper"
     >
       <img class="thumbnail" :src="image.thumbnail">
       <input type="text" v-model="image.title">
       <button
-        class="btn btn-default"
+        class="btn btn-default btn-right"
         @click="submitImage"
       >
         Submit
@@ -94,9 +95,28 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+
+<style lang="scss">
+/* Disclaimer */
+// This component is unscoped on purpose.
+// It reuses many other components, that aren't flexible.
+
 @import '@/modules/inputs.scss';
 @import '@/modules/buttons.scss';
+
+.modal-container {
+  max-width: 235px !important;
+  min-width: 220px !important;
+}
+
+.wrapper {
+  margin: auto;
+  width: 200px;
+}
+
+input {
+  width: 200px !important;
+}
 
 .cover {
   opacity: 0.2;
@@ -109,12 +129,20 @@ export default {
 
 .indicator {
   position: absolute;
-  top: calc(50% - 36px);
-  left: calc(50% - 41px); // padding + icon width / 2
+  top: calc(50% - 25px);
+  left: calc(50% - 20px);
 }
 
 .icon.loading {
   width: 50px;
   height: 50px;
+}
+
+.btn {
+  margin-right: 0;
+}
+
+.notifications {
+  max-width: calc(100% - 18px) !important;
 }
 </style>
