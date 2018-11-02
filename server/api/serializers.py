@@ -108,3 +108,8 @@ class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ('id', 'name', 'images')
+
+
+class StatisticsSerializer(serializers.Serializer):
+    post_count = serializers.IntegerField()
+    activity = serializers.DictField()

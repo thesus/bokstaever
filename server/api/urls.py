@@ -11,7 +11,8 @@ from api.views import (
     ImageViewSet,
     SettingsUpdateView,
     PageViewSet,
-    GalleryViewSet
+    GalleryViewSet,
+    StatisticsView,
 )
 
 from rest_framework.routers import DefaultRouter
@@ -34,6 +35,7 @@ for viewset in viewsets:
 urlpatterns = [
     path('', include(router.urls)),
     path('settings/', SettingsUpdateView.as_view()),
+    path('statistics/', StatisticsView.as_view()),
     path('auth/jwt/create/', obtain_jwt_token),
     path('auth/jwt/refresh/', refresh_jwt_token)
 ]
