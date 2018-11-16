@@ -2,7 +2,7 @@
   <div>
     <image-component :limit="30" @submit="openImage"></image-component>
     <router-link class="btn btn-default btn-right" :to="{ name: 'image-upload' }">Upload</router-link>
-    <modal-component v-if="imageID != null" title="Edit Image" @close="imageID = null">
+    <modal-component v-if="imageID != null" title="Edit Image" @close="imageID = null" min="220px" max="230px">
       <image-edit :id="imageID" @success="imageID = null"/>
     </modal-component>
   </div>

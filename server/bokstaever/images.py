@@ -19,7 +19,8 @@ def crop_image(image, width):
                 image.size[1],
                 width
             ))
-        )
+        ),
+        IMG.HAMMING
     )
 
 

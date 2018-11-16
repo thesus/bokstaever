@@ -1,8 +1,16 @@
 <template>
-  <span>Dashboard</span>
+  <div>
+    <statistics />
+  </div>
 </template>
 
 <script>
-// TODO(till): Add nice graphics 'n stuff.
-export default {}
+import Statistics from '@/components/Statistics'
+
+export default {
+  components: {
+    'statistics': Statistics
+  }
+}
+
 </script>

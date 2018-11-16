@@ -2,7 +2,13 @@
   <transition name="modal">
       <div class="modal-mask">
           <div class="modal-wrapper">
-              <div class="modal-container">
+              <div
+                class="modal-container"
+                :style="{
+                  'min-width': min,
+                  'max-width': max
+                }"
+                >
                   <h3 v-if="title">{{ title }}</h3>
                   <div class="modal-content">
                       <slot></slot>
@@ -16,7 +22,11 @@
 
 <script>
 export default {
-  props: ['title']
+  props: [
+    'title',
+    'min',
+    'max'
+  ]
 }
 </script>
 

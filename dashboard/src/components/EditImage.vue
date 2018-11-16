@@ -56,8 +56,7 @@ export default {
           await request.get('images', this.id)
         )
       } catch (e) {
-        // TODO: Dismiss error later on.
-        console.log(e)
+        // Error is handled elsewhere
       } finally {
         resolve(timer, () => {
           this.$set(this, 'loading', false)
@@ -95,19 +94,9 @@ export default {
 }
 </script>
 
-
-<style lang="scss">
-/* Disclaimer */
-// This component is unscoped on purpose.
-// It reuses many other components, that aren't flexible.
-
+<style lang="scss" scoped>
 @import '@/modules/inputs.scss';
 @import '@/modules/buttons.scss';
-
-.modal-container {
-  max-width: 235px !important;
-  min-width: 220px !important;
-}
 
 .wrapper {
   margin: auto;
@@ -140,9 +129,5 @@ input {
 
 .btn {
   margin-right: 0;
-}
-
-.notifications {
-  max-width: calc(100% - 18px) !important;
 }
 </style>
