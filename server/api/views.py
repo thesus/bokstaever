@@ -121,7 +121,7 @@ class StatisticsView(RetrieveAPIView):
         for i in range(0, 3):
             year = today.year - i
             data[year] = []
-            for month in range(1, 12):
+            for month in range(1, 13):
                 try:
                     data[year].append(
                         (

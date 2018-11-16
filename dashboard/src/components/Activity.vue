@@ -75,7 +75,7 @@ export default {
 
 .months {
   @media screen and (max-width: 700px) {
-    width: 100px;
+    width: 90px;
   }
   @media screen and (max-width: 400px) {
     width: 70px;
