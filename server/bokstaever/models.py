@@ -37,12 +37,12 @@ class Image(models.Model):
         if self.image:
             self.image.save(
                 '{0}.png'.format(self.title),
-                resize(self.image, 1600),
+                resize(self.image, 1800),
                 save=False
             )
             self.thumbnail.save(
                 '{0}.png'.format(self.title),
-                resize(self.image, 400),
+                resize(self.image, 500),
                 save=False
             )
         super(Image, self).save(*args, **kwargs)
