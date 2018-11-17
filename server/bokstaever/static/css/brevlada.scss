@@ -259,6 +259,13 @@ Content on indexpage in site-mode
     width: 60%;
   }
   margin: auto;
+
+  @media screen and (min-width: 800px) {
+    .description {
+        width: 80%;
+        margin: auto;
+    }
+  }
 }
 
 
