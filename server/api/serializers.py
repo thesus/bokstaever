@@ -64,6 +64,7 @@ class SettingsSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'info',
+            'description',
             'image',
             'theme',
             'behavior',

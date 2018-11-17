@@ -129,7 +129,13 @@ BEHAVIOR_CHOICES = (
 class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')
     email = models.EmailField(blank=True)
+
+    # Short info used in footer
     info = models.TextField(blank=True)
+
+    # Longer information featured on the index page.
+    description = models.TextField(blank=True)
+
     image = models.ForeignKey(
         Image,
         on_delete=models.CASCADE,

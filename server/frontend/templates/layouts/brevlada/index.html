@@ -7,7 +7,7 @@
 <h1>{{ title }}</h1>
 
 <div class="content">
-  {{ settings.info | markdownify }}
+  {{ settings.description | markdownify }}
   <div class="post-peak">
     {% for post in posts %}
       <a href="{% url 'frontend:post-detail' post.pk %}">
