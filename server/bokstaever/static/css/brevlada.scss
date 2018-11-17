@@ -99,6 +99,15 @@ Styling for Pages and posts, if desired both can be modified separately.
       }
     }
 
+    // Dont require full height of image if it's inline
+    .post-text > p > img,
+    .page-text > p > img{
+          height: initial;
+          width: 100%;
+          object-fit: cover;
+          margin: 8px 0 8px 0;
+      }
+
     .post-text, .page-text {
       text-align: justify;
       word-break: break-word;
@@ -120,11 +129,10 @@ Styling for Pages and posts, if desired both can be modified separately.
         margin: 10px 0px 10px 0px;
       }
       h2 {
-        margin: 5px auto 8px auto;
+        margin: 6px auto 8px auto;
       }
-
       h3 {
-        margin: 2px auto 6px auto;
+        margin: 4px auto 6px auto;
       }
     }
   }
