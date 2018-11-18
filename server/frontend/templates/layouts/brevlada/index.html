@@ -8,7 +8,7 @@
 
 <div class="content">
   <div class="description">
-    {{ settings.description | markdownify }}
+    {{ settings.description | markdownify:False }}
   </div>
   <div class="post-peak">
     {% for post in posts %}
