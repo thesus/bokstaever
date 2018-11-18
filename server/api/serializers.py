@@ -64,9 +64,11 @@ class SettingsSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'info',
+            'description',
             'image',
             'theme',
-            'behavior'
+            'behavior',
+            'pagesize'
         )
 
 
@@ -107,3 +109,8 @@ class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ('id', 'name', 'images')
+
+
+class StatisticsSerializer(serializers.Serializer):
+    post_count = serializers.IntegerField()
+    activity = serializers.DictField()

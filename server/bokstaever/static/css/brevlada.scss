@@ -94,10 +94,19 @@ Styling for Pages and posts, if desired both can be modified separately.
         float: left;
         font-family: Georgia;
         font-size: 55px;
-        line-height: 41px;
+        line-height: 35px;
         padding: 3px 4px 0 0;
       }
     }
+
+    // Dont require full height of image if it's inline
+    .post-text > p > img,
+    .page-text > p > img{
+          height: initial;
+          width: 100%;
+          object-fit: cover;
+          margin: 8px 0 8px 0;
+      }
 
     .post-text, .page-text {
       text-align: justify;
@@ -120,11 +129,10 @@ Styling for Pages and posts, if desired both can be modified separately.
         margin: 10px 0px 10px 0px;
       }
       h2 {
-        margin: 5px auto 8px auto;
+        margin: 6px auto 8px auto;
       }
-
       h3 {
-        margin: 2px auto 6px auto;
+        margin: 4px auto 6px auto;
       }
     }
   }
@@ -251,6 +259,13 @@ Content on indexpage in site-mode
     width: 60%;
   }
   margin: auto;
+
+  @media screen and (min-width: 800px) {
+    .description {
+        width: 80%;
+        margin: auto;
+    }
+  }
 }
 
 
@@ -542,4 +557,63 @@ Styling for footer, visible on all pages.
          color: #828282;
        }
     }
+}
+
+/*
+Navigation styling
+*/
+
+.navigation {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 220px;
+    height: 100%;
+    transform: translate3d(-220px, 0, 0);
+    transition: transform .35s;
+    z-index: 1000;
+    // border-right: 1px solid #eee;
+    // box-sizing: border-box;
+    ul {
+      list-style: none;
+      padding: 0px 10px 0px 15px;
+      li {
+        text-transform: uppercase;
+        letter-spacing: .2rem;
+        line-height: 3rem;
+        border-bottom: 1px solid #eee;
+        a {
+          text-decoration: none;
+          color: #222;
+          width: 100%;
+          display: block;
+        }
+      }
+    }
+  }
+
+  label.menu-toggle {
+    // border-right: 1px solid #eee;
+    // border-bottom: 1px solid #eee;
+    // box-sizing: border-box;
+    position: absolute;
+    right: -60px;
+    width: 60px;
+    height: 60px;
+    line-height: 0;
+    display: block;
+    text-indent: -9999px;
+    background: #fff url(/static/svg/menu.svg) 50% 50% / 25px 25px no-repeat;
+    cursor: pointer;
+  }
+
+  .menu-checkbox {
+    display: none;
+  }
+
+  .menu-checkbox:checked + .navbar {
+    transform: translate3d(0, 0, 0);
+  }
 }

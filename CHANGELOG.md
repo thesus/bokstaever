@@ -1,3 +1,14 @@
+Version 0.5.0 (2018-11-18)
+==========================
+
+- Basic reporting in Dashboard
+- Ability to rename images
+- Better image quality due to antialiasing
+- "Frimärke" finished and included
+- Finishing touches for default layout
+- Extensive Settings in Dashboard
+
+
 Version 0.4.0 (2018-09-22)
 ==========================
 
@@ -18,16 +29,16 @@ Version 0.3.0 (2018-08-27)
 - RSS Feed for latest posts (visible in Footer)
 
 
-Version 0.2.0 (2018-08-17)                                                
-==========================                                                
+Version 0.2.0 (2018-08-17)
+==========================
 
-- Frontend for public is built with Django                                
-- Caching layer for frontend                                              
-- Integration on one domain                                               
-- Markdown extension to support new Gallery-Feature                       
-- Notifications in Dashboard                                              
-- Multiselect for options and images in Dashboard                         
-- Theming support  
+- Frontend for public is built with Django
+- Caching layer for frontend
+- Integration on one domain
+- Markdown extension to support new Gallery-Feature
+- Notifications in Dashboard
+- Multiselect for options and images in Dashboard
+- Theming support
 
 
 Version 0.1.0 (2018-07-31)

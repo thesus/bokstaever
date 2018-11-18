@@ -49,7 +49,7 @@ export default {
       }
     },
     destroy (id) {
-      this.messages = this.messages.filter(message => message.ID != id)
+      this.messages = this.messages.filter(message => message.ID !== id)
     }
   }
 }
@@ -76,7 +76,7 @@ export default {
   right: 10px;
   top: 8px;
   width: 400px;
-  max-width: calc(100vw - 20px);
+  max-width: calc(100% - 20px);
   display: block;
 
   z-index: 1000;

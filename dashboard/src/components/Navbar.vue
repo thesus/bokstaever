@@ -57,7 +57,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 $should_collapse: 980px;
 

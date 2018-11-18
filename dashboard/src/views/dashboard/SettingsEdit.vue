@@ -21,8 +21,13 @@ export default {
             component: 'string'
           },
           {
-            name: 'Info',
+            name: 'Short information for the footer',
             identifier: 'info',
+            component: 'text'
+          },
+          {
+            name: 'Description for the Startpage',
+            identifier: 'description',
             component: 'text'
           },
           {
@@ -39,8 +44,8 @@ export default {
             identifier: 'theme',
             component: 'select',
             extra: [
-              ['css/brevlada.css', 'brevlåda'],
-              ['css/frimarke.css', 'frimärke']
+              ['brevlada', 'brevlåda'],
+              ['frimarke', 'frimärke']
             ]
           },
           {
@@ -53,8 +58,14 @@ export default {
             identifier: 'image',
             component: 'image',
             extra: {
-              multiple: false
+              multiple: false,
+              required: false
             }
+          },
+          {
+            name: 'Pagesize',
+            identifier: 'pagesize',
+            component: 'number'
           }
         ]
       }

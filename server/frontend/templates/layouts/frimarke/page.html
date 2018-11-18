@@ -1,4 +1,4 @@
-{% extends 'frontend/base.html' %}
+{% extends 'layouts/frimarke/base.html' %}
 
 {% block title %} {{ page.headline }} -{% endblock title %}
 
@@ -14,9 +14,9 @@
         {{ page.image.title }}
       </span>
     </div>
-    <div class="page-content">
+    <div class="page-content image">
     {% else %}
-    <div class="page-content spacer">
+    <div class="page-content">
     {% endif %}
       <h1>{{ page.headline }}</h1>
       <div class="page-text" lang="de">

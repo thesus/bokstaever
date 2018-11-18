@@ -37,12 +37,12 @@ class Image(models.Model):
         if self.image:
             self.image.save(
                 '{0}.png'.format(self.title),
-                resize(self.image, 1600),
+                resize(self.image, 1800),
                 save=False
             )
             self.thumbnail.save(
                 '{0}.png'.format(self.title),
-                resize(self.image, 400),
+                resize(self.image, 500),
                 save=False
             )
         super(Image, self).save(*args, **kwargs)
@@ -116,8 +116,8 @@ class Page(SiteModel):
 
 
 THEME_CHOICES = (
-    ('css/brevlada.css', 'brevlåda'),
-    ('css/frimarke.css', 'frimärke')
+    ('brevlada', 'brevlåda'),
+    ('frimarke', 'frimärke')
 )
 
 BEHAVIOR_CHOICES = (
@@ -129,7 +129,13 @@ BEHAVIOR_CHOICES = (
 class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')
     email = models.EmailField(blank=True)
+
+    # Short info used in footer
     info = models.TextField(blank=True)
+
+    # Longer information featured on the index page.
+    description = models.TextField(blank=True)
+
     image = models.ForeignKey(
         Image,
         on_delete=models.CASCADE,
@@ -140,11 +146,16 @@ class Settings(SingletonModel):
     theme = models.CharField(
         max_length=50,
         choices=THEME_CHOICES,
-        default='css/brevlada.css'
+        default='brevlada'
     )
 
     behavior = models.CharField(
         max_length=20,
         choices=BEHAVIOR_CHOICES,
         default='site'
+    )
+
+    # Default page size for paginated views in the frontend part
+    pagesize = models.PositiveSmallIntegerField(
+        default=4
     )
