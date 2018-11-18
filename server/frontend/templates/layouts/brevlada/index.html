@@ -7,7 +7,9 @@
 <h1>{{ title }}</h1>
 
 <div class="content">
-  {{ settings.info | markdownify }}
+  <div class="description">
+    {{ settings.description | markdownify }}
+  </div>
   <div class="post-peak">
     {% for post in posts %}
       <a href="{% url 'frontend:post-detail' post.pk %}">
@@ -18,7 +20,7 @@
           <div class="card-body">
             <h4 class="card-title">{{ post.headline }}</h4>
             <div class="card-text">
-              {{ post.text | markdownify | truncatechars_html:200 | striptags }}
+              {{ post.text | markdownify | truncatechars_html:180 | striptags }}
             </div>
             <small class="card-footer">
               {{ post.published }}, {{ post.text | readtime }}min read

@@ -21,8 +21,13 @@ export default {
             component: 'string'
           },
           {
-            name: 'Info',
+            name: 'Short information for the footer',
             identifier: 'info',
+            component: 'text'
+          },
+          {
+            name: 'Description for the Startpage',
+            identifier: 'description',
             component: 'text'
           },
           {
