@@ -114,6 +114,17 @@ Styling for Pages and posts, if desired both can be modified separately.
       hyphens: auto;
       font-size: 18px;
 
+      /* Space between text blocks */
+      p {
+        margin-top: 7px !important;
+        margin-bottom: 7px !important;
+      }
+
+      /* Otherwise horizontal overflow of text block */
+      ul {
+        box-sizing: border-box;
+      }
+
       p,
       ul, ol,
       table,
