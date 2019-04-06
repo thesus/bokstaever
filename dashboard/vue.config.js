@@ -1,3 +1,3 @@
 module.exports = {
-  baseUrl: '/dashboard/'
+  publicPath: '/dashboard/'
 }
