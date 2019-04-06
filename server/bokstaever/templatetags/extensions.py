@@ -9,7 +9,7 @@ from bokstaever.models import Gallery
 
 
 class EscapeHTMLExtension(Extension):
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         del md.preprocessors['html_block']
         del md.inlinePatterns['html']
 
@@ -45,11 +45,11 @@ class GalleryPattern(Pattern):
 
 
 class GalleryExtension(Extension):
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         md.registerExtension(self)
         self.parser = md.parser
 
         GALLERY_PATTERN = r'\!\((\d+)\)'
 
-        md.inlinePatterns.add('gallery', GalleryPattern(
+        md.inlinePatterns.register('gallery', GalleryPattern(
             GALLERY_PATTERN, self), '<reference')
