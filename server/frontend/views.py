@@ -11,6 +11,7 @@ from bokstaever.models import (
     Page,
     Settings
 )
+
 from bokstaever.views import DatabaseAwareCacheMixin
 
 
@@ -27,39 +28,18 @@ class BlogView(DatabaseAwareCacheMixin, ListView):
         return 'layouts/{0}/blog.html'.format(theme)
 
 
-class IndexSiteView(DatabaseAwareCacheMixin, TemplateView):
+class IndexView(DatabaseAwareCacheMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context['posts'] = Post.objects.filter(draft=False).order_by('-pk')[:4]
+        # TODO: Specify context on a per template basis
+        # context['posts'] = Post.objects.filter(draft=False).order_by('-pk')[:4]
 
         return context
 
     def get_template_names(self):
         theme = Settings.load().theme
         return 'layouts/{0}/index.html'.format(theme)
-
-
-class IndexBlogView(BlogView):
-    pass
-
-
-def index(request):
-    settings = Settings.load()
-    behaviors = {
-        'site': IndexSiteView.as_view(),
-        'blog': IndexBlogView.as_view()
-    }
-    return behaviors[settings.behavior](request)
-
-
-def blog(request):
-    settings = Settings.load()
-    if settings.behavior == 'site':
-        return BlogView.as_view()(request)
-    else:
-        return redirect('index')
 
 
 class PostView(DatabaseAwareCacheMixin, DetailView):

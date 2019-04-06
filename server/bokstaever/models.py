@@ -120,11 +120,6 @@ THEME_CHOICES = (
     ('frimarke', 'frimärke')
 )
 
-BEHAVIOR_CHOICES = (
-    ('blog', 'Blog'),
-    ('site', 'Site')
-)
-
 
 class Settings(SingletonModel):
     name = models.CharField(max_length=200, default='My nice page')
@@ -147,12 +142,6 @@ class Settings(SingletonModel):
         max_length=50,
         choices=THEME_CHOICES,
         default='brevlada'
-    )
-
-    behavior = models.CharField(
-        max_length=20,
-        choices=BEHAVIOR_CHOICES,
-        default='site'
     )
 
     # Default page size for paginated views in the frontend part

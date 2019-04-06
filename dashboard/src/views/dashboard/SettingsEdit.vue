@@ -31,15 +31,6 @@ export default {
             component: 'text'
           },
           {
-            name: 'Behavior',
-            identifier: 'behavior',
-            component: 'select',
-            extra: [
-              ['site', 'Site'],
-              ['blog', 'Blog']
-            ]
-          },
-          {
             name: 'Theme',
             identifier: 'theme',
             component: 'select',
