@@ -14,21 +14,27 @@ from bokstaever.models import (
 
 from bokstaever.views import DatabaseAwareCacheMixin
 
+class BundleMixin():
+    def get_template_names(self) -> str:
+        bundle = Settings.load().bundle
+        try:
+            return 'bundles/{0}/{1}'.format(bundle.slug, self.template)
+        except NameError:
+            raise Exception("You have to define a template name.")
 
-class BlogView(DatabaseAwareCacheMixin, ListView):
+
+class BlogView(DatabaseAwareCacheMixin, BundleMixin, ListView):
     model = Post
     context_object_name = 'posts'
     queryset = Post.objects.filter(draft=False)
+    template = 'blog.html'
 
-    def get_paginate_by(self, queryset):
+    def get_paginate_by(self, queryset) -> int:
         return Settings.load().pagesize
 
-    def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/blog.html'.format(theme)
 
-
-class IndexView(DatabaseAwareCacheMixin, TemplateView):
+class IndexView(DatabaseAwareCacheMixin, BundleMixin, TemplateView):
+    template = 'index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,25 +43,14 @@ class IndexView(DatabaseAwareCacheMixin, TemplateView):
 
         return context
 
-    def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/index.html'.format(theme)
 
-
-class PostView(DatabaseAwareCacheMixin, DetailView):
+class PostView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
     queryset = Post.objects.filter(draft=False)
     template_name_field = 'post'
-
-    def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/post.html'.format(theme)
+    template = 'post.html'
 
 
-class PageView(DatabaseAwareCacheMixin, DetailView):
+class PageView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
     model = Page
-    template_name = 'frontend/page.html'
+    template = 'page.html'
     template_name_field = 'page'
-
-    def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/page.html'.format(theme)

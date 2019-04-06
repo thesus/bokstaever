@@ -22,6 +22,7 @@ class SingletonModel(models.Model):
 
 
 class Image(models.Model):
+    """Contains in a scaled down version and a thumbnail."""
     title = models.CharField(
         max_length=200,
         unique=True
@@ -55,6 +56,7 @@ class Image(models.Model):
 
 
 class Gallery(models.Model):
+    """Includes one or more images and a unique name."""
     name = models.CharField(max_length=50, unique=True)
 
     images = models.ManyToManyField(
@@ -71,6 +73,8 @@ TEXT_CHOICES = (
 
 
 class SiteModel(models.Model):
+    """Abstract model for all posts and pages."""
+
     headline = models.CharField(max_length=200)
     image = models.ForeignKey(
         Image,
@@ -86,15 +90,8 @@ class SiteModel(models.Model):
     )
     draft = models.BooleanField(default=False)
 
-    slug = models.SlugField(max_length=200)
-
     def __str__(self):
         return '{0.headline}'.format(self)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.headline)
-        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -108,20 +105,46 @@ class Post(SiteModel):
         ordering = ['-published', '-pk']
 
 
-class Page(SiteModel):
-    slug = models.SlugField(max_length=200, unique=True)
+class PageModel(models.Model):
+    """Abstract model of a page containing a slug field."""
+    slug = models.SlugField(max_length=200)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.headline)
+        super().save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+        unique_together = ('slug', )
+
+
+class BundlePage(PageModel):
+    """Page that is loaded from a file without database interaction."""
+    path = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+
+
+class Page(SiteModel, PageModel):
+    """Normal page that get's the content from the database."""
     class Meta:
         ordering = ['-pk']
 
 
-THEME_CHOICES = (
-    ('brevlada', 'brevlåda'),
-    ('frimarke', 'frimärke')
-)
+class Bundle(models.Model):
+    name = models.CharField(
+        max_length=200
+    )
+    slug = models.SlugField(
+        unique=True,
+        max_length=200
+    )
+
+    pages = models.ManyToManyField(BundlePage)
 
 
 class Settings(SingletonModel):
+    """Model with only one instance. Stores application wide settings."""
     name = models.CharField(max_length=200, default='My nice page')
     email = models.EmailField(blank=True)
 
@@ -138,10 +161,9 @@ class Settings(SingletonModel):
         null=True
     )
 
-    theme = models.CharField(
-        max_length=50,
-        choices=THEME_CHOICES,
-        default='brevlada'
+    bundle = models.ForeignKey(
+        Bundle,
+        on_delete=models.CASCADE
     )
 
     # Default page size for paginated views in the frontend part
