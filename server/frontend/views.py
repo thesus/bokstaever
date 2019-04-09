@@ -16,9 +16,8 @@ from bokstaever.views import DatabaseAwareCacheMixin
 
 class BundleMixin():
     def get_template_names(self) -> str:
-        bundle = Settings.load().bundle
         try:
-            return 'bundles/{0}/{1}'.format(bundle.slug, self.template)
+            return 'default/{0}'.format(self.template)
         except NameError:
             raise Exception("You have to define a template name.")
 

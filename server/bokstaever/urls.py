@@ -21,6 +21,12 @@ urlpatterns = [
 if settings.DEBUG:
     from django.views.generic import TemplateView  # noqa
 
+    urlpatterns += static(
+        settings.STATIC_URL,
+        document_root=settings.STATIC_ROOT
+    )
+
+
     urlpatterns += [
         path(
             'dashboard/',
