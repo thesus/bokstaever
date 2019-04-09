@@ -125,6 +125,9 @@ class PageModel(models.Model):
     def natural_key(self):
         return (self.slug,)
 
+    def __str__(self):
+        return '{0.headline}'.format(self)
+
     class Meta:
         unique_together = ('slug', )
         ordering = ['-pk']

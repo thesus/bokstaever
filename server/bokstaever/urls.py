@@ -26,7 +26,6 @@ if settings.DEBUG:
         document_root=settings.STATIC_ROOT
     )
 
-
     urlpatterns += [
         path(
             'dashboard/',
