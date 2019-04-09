@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.http import Http404
 
 from django.views.generic import (
     TemplateView,
@@ -8,11 +8,13 @@ from django.views.generic import (
 
 from bokstaever.models import (
     Post,
-    Page,
+    FilePage,
+    DatabasePage,
     Settings
 )
 
 from bokstaever.views import DatabaseAwareCacheMixin
+
 
 class BundleMixin():
     def get_template_names(self) -> str:
@@ -38,7 +40,7 @@ class IndexView(DatabaseAwareCacheMixin, BundleMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # TODO: Specify context on a per template basis
-        # context['posts'] = Post.objects.filter(draft=False).order_by('-pk')[:4]
+        context['posts'] = Post.objects.filter(draft=False).order_by('-pk')[:4]
 
         return context
 
@@ -50,6 +52,24 @@ class PostView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
 
 
 class PageView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
-    model = Page
     template = 'page.html'
-    template_name_field = 'page'
+    context_object_name = 'page'
+
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get(self.slug_url_kwarg)
+        obj = None
+        try:
+            obj = DatabasePage.objects.filter(slug=slug).get()
+        except DatabasePage.DoesNotExist:
+            try:
+                obj = FilePage.objects.filter(slug=slug).get()
+            except FilePage.DoesNotExist:
+                raise Http404("The page you're looking for does not exist.")
+
+        return obj
+
+    def get_template_names(self):
+        if isinstance(self.object, FilePage):
+            return self.object.path
+        else:
+            return super().get_template_names()

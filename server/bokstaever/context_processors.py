@@ -1,13 +1,13 @@
 from bokstaever.models import (
     Settings,
-    Page
+    PageModel
 )
 
 
 def info(request):
     return {
         'settings': Settings.load(),
-        'sitemap': Page.objects.order_by('headline').values_list(
+        'sitemap': PageModel.objects.order_by('headline').values_list(
             'headline',
             'slug'
         )

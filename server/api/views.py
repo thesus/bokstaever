@@ -8,7 +8,7 @@ from datetime import datetime
 from bokstaever.models import (
     Post,
     Image,
-    Page,
+    DatabasePage,
     Gallery,
 
     Settings
@@ -30,7 +30,7 @@ from api.serializers import (
     GalleryListSerializer
 )
 
-from api.viewsets import (MultiSerializerViewSet)
+from api.viewsets import MultiSerializerViewSet
 
 from rest_framework.permissions import (
     IsAuthenticated,
@@ -82,7 +82,7 @@ class SettingsUpdateView(RetrieveAPIView,
 
 
 class PageViewSet(MultiSerializerViewSet):
-    queryset = Page.objects.all()
+    queryset = DatabasePage.objects.all()
     serializer_class = PageSerializer
     serializer_action_classes = {
         'list': PageListSerializer
