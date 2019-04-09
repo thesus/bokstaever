@@ -75,7 +75,6 @@ TEXT_CHOICES = (
 class SiteModel(models.Model):
     """Abstract model for all posts and pages."""
 
-    headline = models.CharField(max_length=200)
     image = models.ForeignKey(
         Image,
         on_delete=models.CASCADE,
@@ -100,14 +99,16 @@ class SiteModel(models.Model):
 class Post(SiteModel):
     published = models.DateField(auto_now_add=True)
     editors = models.ManyToManyField(User)
+    headline = models.CharField(max_length=200)
 
     class Meta:
         ordering = ['-published', '-pk']
 
 
 class PageModel(models.Model):
-    """Abstract model of a page containing a slug field."""
+    """Wrapper around page types."""
     slug = models.SlugField(max_length=200)
+    headline = models.CharField(max_length=200)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -115,32 +116,18 @@ class PageModel(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        abstract = True
         unique_together = ('slug', )
-
-
-class BundlePage(PageModel):
-    """Page that is loaded from a file without database interaction."""
-    path = models.CharField(max_length=200)
-    title = models.CharField(max_length=200)
-
-
-class Page(SiteModel, PageModel):
-    """Normal page that get's the content from the database."""
-    class Meta:
         ordering = ['-pk']
 
 
-class Bundle(models.Model):
-    name = models.CharField(
-        max_length=200
-    )
-    slug = models.SlugField(
-        unique=True,
-        max_length=200
-    )
+class FilePage(PageModel):
+    """Page that is loaded from a file without database interaction."""
+    path = models.CharField(max_length=200)
 
-    pages = models.ManyToManyField(BundlePage)
+
+class DatabasePage(PageModel, SiteModel):
+     """Normal page that get's the content from the database."""
+     pass
 
 
 class Settings(SingletonModel):
@@ -159,11 +146,6 @@ class Settings(SingletonModel):
         on_delete=models.CASCADE,
         blank=True,
         null=True
-    )
-
-    bundle = models.ForeignKey(
-        Bundle,
-        on_delete=models.CASCADE
     )
 
     # Default page size for paginated views in the frontend part
