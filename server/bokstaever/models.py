@@ -105,8 +105,15 @@ class Post(SiteModel):
         ordering = ['-published', '-pk']
 
 
+class PageManager(models.Manager):
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
+
 class PageModel(models.Model):
     """Wrapper around page types."""
+    objects = PageManager()
+
     slug = models.SlugField(max_length=200)
     headline = models.CharField(max_length=200)
 
@@ -114,6 +121,9 @@ class PageModel(models.Model):
         if not self.slug:
             self.slug = slugify(self.headline)
         super().save(*args, **kwargs)
+
+    def natural_key(self):
+        return (self.slug,)
 
     class Meta:
         unique_together = ('slug', )
@@ -126,8 +136,8 @@ class FilePage(PageModel):
 
 
 class DatabasePage(PageModel, SiteModel):
-     """Normal page that get's the content from the database."""
-     pass
+    """Normal page that get's the content from the database."""
+    pass
 
 
 class Settings(SingletonModel):
