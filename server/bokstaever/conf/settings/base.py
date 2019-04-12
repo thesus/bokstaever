@@ -130,11 +130,6 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-
-STATICFILES_DIRS = [
-    str(APPS_DIR.path('dist/static/'))
-]
-
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
