@@ -48,5 +48,8 @@ testing:
     - python -V
     - pip install -r requirements/testing.txt
     - cd server
+    - wget -O bundle.zip https://dev.cryptec.at/root/brevlada/-/jobs/artifacts/master/download?job=build
+    - unzip bundle.zip
+    - cp dist bundle
   script:
     - pytest --cov-report term
