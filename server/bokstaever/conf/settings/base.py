@@ -63,7 +63,9 @@ ROOT_URLCONF = 'bokstaever.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            ROOT_DIR.path('bundle/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,7 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATICFILES_DIRS = [
-    str(APPS_DIR.path('bokstaever/static'))
+    str(APPS_DIR.path('dist/static/'))
 ]
 
 STATIC_ROOT = 'static'

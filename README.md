@@ -32,11 +32,7 @@ and start the development server.
 yarn build --mode development --watch --dest ../server/contrib
 ````
 
-To compile the Frontend-Sass files use `sass`:
-````bash
-# in server/bokstaever/static/css
-sass --watch brevlada.scss:brevlada.css style.scss:style.scss
-````
+The templates for django are split into different repositories. Download a bundle that suits you and include it in `server/bokstaever/bundles`.
 
 Migrate the database. By default it expects a postgresql database. If you're in a
 hurry use a sqlite database with ``export DATABASE_URL=sqlite:////tmp/bokstaever.sqlite``.

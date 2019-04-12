@@ -5,6 +5,7 @@ services:
     image: dev.cryptec.at:5000/root/bokstaever:latest
     volumes:
       - "media:/src/bokstaever/media"
+      - "./bundle:/src/bokstaever/bundle"
     environment:
       DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
       ALLOWED_HOSTS: "example.com"
@@ -17,6 +18,7 @@ services:
     image: dev.cryptec.at:5000/root/bokstaever/caddy:latest
     volumes:
       - "media:/srv/media"
+      - "./bundle:/srv/bundle"
     ports:
       - "80:80"
       - "8080:8080"
@@ -36,3 +38,4 @@ services:
 volumes:
   db: {}
   media: {}
+  bundle: {}
