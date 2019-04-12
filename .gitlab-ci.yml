@@ -50,6 +50,6 @@ testing:
     - cd server
     - wget -O bundle.zip https://dev.cryptec.at/root/brevlada/-/jobs/artifacts/master/download?job=build
     - unzip bundle.zip
-    - cp dist bundle
+    - cp -r dist/* bundle
   script:
     - pytest --cov-report term

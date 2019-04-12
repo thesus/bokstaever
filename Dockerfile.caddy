@@ -9,6 +9,7 @@ RUN pip install -r /requirements/base.txt
 COPY server/ /src
 
 WORKDIR /src
+RUN mkdir -p bundle/static/
 RUN python manage.py collectstatic --noinput
 
 # VUE BUILDER #
