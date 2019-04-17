@@ -24,25 +24,14 @@ class BundleMixin():
             raise Exception("You have to define a template name.")
 
 
-class BlogView(DatabaseAwareCacheMixin, BundleMixin, ListView):
+class IndexView(DatabaseAwareCacheMixin, BundleMixin, ListView):
     model = Post
     context_object_name = 'posts'
     queryset = Post.objects.filter(draft=False)
-    template = 'blog.html'
+    template = 'index.html'
 
     def get_paginate_by(self, queryset) -> int:
         return Settings.load().pagesize
-
-
-class IndexView(DatabaseAwareCacheMixin, BundleMixin, TemplateView):
-    template = 'index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # TODO: Specify context on a per template basis
-        context['posts'] = Post.objects.filter(draft=False).order_by('-pk')[:4]
-
-        return context
 
 
 class PostView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
