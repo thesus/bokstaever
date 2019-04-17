@@ -26,32 +26,9 @@ export default {
             component: 'text'
           },
           {
-            name: 'Description for the Startpage',
-            identifier: 'description',
-            component: 'text'
-          },
-          {
-            name: 'Theme',
-            identifier: 'theme',
-            component: 'select',
-            extra: [
-              ['brevlada', 'brevlåda'],
-              ['frimarke', 'frimärke']
-            ]
-          },
-          {
             name: 'E-Mail',
             identifier: 'email',
             component: 'email'
-          },
-          {
-            name: 'Image',
-            identifier: 'image',
-            component: 'image',
-            extra: {
-              multiple: false,
-              required: false
-            }
           },
           {
             name: 'Pagesize',
