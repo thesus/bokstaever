@@ -8,6 +8,7 @@ from bokstaever.images import resize
 
 
 class SingletonModel(models.Model):
+    """Ensures that only one instance of a Model exists."""
     class Meta:
         abstract = True
 
@@ -81,6 +82,7 @@ class SiteModel(models.Model):
         blank=True,
         null=True
     )
+
     text = models.TextField()
     type = models.CharField(
         max_length=6,
@@ -151,17 +153,7 @@ class Settings(SingletonModel):
     # Short info used in footer
     info = models.TextField(blank=True)
 
-    # Longer information featured on the index page.
-    description = models.TextField(blank=True)
-
-    image = models.ForeignKey(
-        Image,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True
-    )
-
-    # Default page size for paginated views in the frontend part
+    # Default page size for paginatated index page
     pagesize = models.PositiveSmallIntegerField(
         default=4
     )

@@ -63,9 +63,6 @@ class LatestPostsFeed(Feed):
     def title(self):
         return self._settings().name
 
-    def description(self):
-        return self._settings().info
-
     def items(self):
         return Post.objects.filter(draft=False).order_by('-published')[:5]
 
