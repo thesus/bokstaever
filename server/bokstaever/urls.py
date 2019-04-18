@@ -21,7 +21,10 @@ urlpatterns = [
 if settings.DEBUG:
     from django.views.generic import TemplateView  # noqa
 
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
 
     urlpatterns += [
         path(
