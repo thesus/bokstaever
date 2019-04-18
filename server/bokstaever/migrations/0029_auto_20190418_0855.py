@@ -33,7 +33,7 @@ def forwards(apps, schema_editor):
         pk += 1
 
 
-    Image.objects.filter(files=0).delete()
+    Image.objects.filter(files__isnull).delete()
 
 class Migration(migrations.Migration):
 
