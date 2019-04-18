@@ -1,1 +1,1 @@
-<img alt="{{ image.title }}" src="{{ image.files.first.image_file.url }}" srcset="{% for i in image.files.all %}{{i.image_file.url}} {{i.width}}w,{% endfor %}">
+<img alt="{{ image.title }}" src="{{ image.files.last.image_file.url }}" srcset="{% for i in image.files.all %}{{i.image_file.url}} {{i.width}}w,{% endfor %}">

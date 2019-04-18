@@ -87,7 +87,7 @@ def process(classes, pk, filename):
             pk,
             filename,
             'thumbnail',
-            {'h': 200, 'w': 200},
+            {'h': 400, 'w': 400},
             classes[1]
         ),
         thumbnail=True
