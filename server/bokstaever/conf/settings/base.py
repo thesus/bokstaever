@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_rq',
+
     'rest_framework',
-    'rest_framework_jwt'
+    'rest_framework_jwt',
 ]
 
 # Own applications
@@ -45,7 +47,8 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'bokstaever',
     'api',
-    'frontend'
+    'frontend',
+    'images',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +66,7 @@ ROOT_URLCONF = 'bokstaever.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # This is used to include templates from packaged bundles
         'DIRS': [
             ROOT_DIR.path('bundle/templates'),
         ],
@@ -80,6 +84,7 @@ TEMPLATES = [
 ]
 
 # Only use contrib as template dir in development
+# The vue dashboard is served from there.
 if DEBUG:
     TEMPLATES[0]['DIRS'] += ['contrib']
 
@@ -88,14 +93,12 @@ WSGI_APPLICATION = 'bokstaever.wsgi.application'
 
 
 # Database
-
 DATABASES = {
     'default': env.db('DATABASE_URL')
 }
 
 
 # Password validation
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.'
@@ -117,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -143,9 +145,26 @@ MEDIA_ROOT = str(APPS_DIR.path('bokstaever/media'))
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
+IMAGE_ROOT = env('IMAGE_ROOT', default=str(APPS_DIR.path('bokstaever/images')))
+
+# Image configuration
+IMAGE_SIZES = {
+    's': {
+        'w': 400
+    },
+    'm': {
+        'w': 800
+    },
+    'l': {
+        'w': 1200
+    },
+    'xl': {
+        'w': 1800
+    }
+}
+
 
 # REST Framework
-
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
@@ -167,8 +186,15 @@ CACHES = {
     'default': env.cache('CACHE_URL', 'dummycache://'),
 }
 
-# Security
+# RQ
+RQ_QUEUES = {
+    'default': {
+        'URL': env.str('DJANGO_REDIS_QUEUE', 'redis://localhost:6379/0')
+    }
+}
 
+
+# Security
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

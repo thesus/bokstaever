@@ -3,19 +3,21 @@ from rest_framework import serializers
 
 from bokstaever.models import (
     Post,
-    Image,
     Settings,
     DatabasePage,
     PageModel,
     Gallery
 )
 
+from images.models import (
+    Image
+)
 
-class ImageField(serializers.ReadOnlyField):
 
+class ImageListingField(serializers.RelatedField):
     def to_representation(self, obj):
         try:
-            return obj.url
+            return obj.image_file.url
         except AttributeError:
             return ''
 
@@ -49,11 +51,22 @@ class PostListSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.ImageField(use_url=True, read_only=True)
+    files = ImageListingField(many=True, read_only=True)
+    thumbnail = ImageListingField(read_only=True)
 
     class Meta:
         model = Image
-        fields = ('id', 'title', 'image', 'thumbnail')
+        fields = (
+            'id',
+            'title',
+            'files',
+            'thumbnail'
+        )
+
+
+class ImageCreateSerializer(serializers.Serializer):
+    image = serializers.ImageField()
+    title = serializers.CharField(max_length=200)
 
 
 class SettingsSerializer(serializers.ModelSerializer):

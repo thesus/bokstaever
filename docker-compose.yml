@@ -5,6 +5,7 @@ services:
     image: dev.cryptec.at:5000/root/bokstaever:latest
     volumes:
       - "media:/src/bokstaever/media"
+      - "images:/src/bokstaever/images"
       - "./bundle:/src/bundle"
     environment:
       DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
@@ -12,6 +13,7 @@ services:
       CORS_ORIGIN_WHITELIST: "example.com"
       DJANGO_DEBUG: "True"
       DJANGO_SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
+      DJANGO_REDIS_QUEUE: "redis://localhost:6379/0"
     restart: always
 
   caddy:
@@ -34,8 +36,15 @@ services:
       POSTGRES_DB: bokstaever
     restart: always
 
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+    restart: always
 
 volumes:
   db: {}
   media: {}
+  images: {}
   bundle: {}
+  redis-data: {}

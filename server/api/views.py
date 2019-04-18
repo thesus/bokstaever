@@ -7,11 +7,14 @@ from datetime import datetime
 
 from bokstaever.models import (
     Post,
-    Image,
     DatabasePage,
     Gallery,
 
     Settings
+)
+
+from images.models import (
+    Image
 )
 
 from api.serializers import (
@@ -19,6 +22,7 @@ from api.serializers import (
     PostListSerializer,
 
     ImageSerializer,
+    ImageCreateSerializer,
 
     SettingsSerializer,
     StatisticsSerializer,
@@ -42,8 +46,8 @@ from rest_framework.generics import (
     UpdateAPIView,
 )
 
-from rest_framework.viewsets import (
-    ModelViewSet
+from rest_framework.response import (
+    Response
 )
 
 
@@ -66,10 +70,21 @@ class PostViewSet(MultiSerializerViewSet):
         )
 
 
-class ImageViewSet(ModelViewSet):
+class ImageViewSet(MultiSerializerViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+    serializer_action_classes = {
+        'create': ImageCreateSerializer
+    }
     permission_classes = (IsAuthenticated,)
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        instance = Image()
+        instance.save(**serializer.validated_data)
+
+        return Response({'id': instance.pk})
 
 
 class SettingsUpdateView(RetrieveAPIView,

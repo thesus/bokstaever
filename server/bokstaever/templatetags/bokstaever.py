@@ -7,7 +7,7 @@ import os
 from django.conf import settings
 from django.utils.safestring import mark_safe
 
-from .extensions import EscapeHTMLExtension, GalleryExtension
+from .extensions import EscapeHTMLExtension, GalleryExtension, ImageExtension
 
 
 register = template.Library()
@@ -18,7 +18,8 @@ def markdownify(text, html_escape=True):
     extensions = [
         'markdown.extensions.extra',
         'markdown.extensions.nl2br',
-        GalleryExtension()
+        GalleryExtension(),
+        ImageExtension()
     ]
 
     extensions += [EscapeHTMLExtension(), ] if html_escape else []
