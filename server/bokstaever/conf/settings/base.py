@@ -145,6 +145,28 @@ MEDIA_ROOT = str(APPS_DIR.path('bokstaever/media'))
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
+IMAGE_ROOT = env('IMAGE_ROOT', default=str(APPS_DIR.path('bokstaever/images')))
+
+# Image configuration
+IMAGE_SIZES = {
+    'thumbnail': {
+        'w': 200,
+        'h': 200,
+    },
+    's': {
+        'w': 400
+    },
+    'm': {
+        'w': 800
+    },
+    'l': {
+        'w': 1200
+    },
+    'xl': {
+        'w': 1800
+    }
+}
+
 
 # REST Framework
 REST_FRAMEWORK = {

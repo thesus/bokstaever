@@ -52,10 +52,14 @@ class PostListSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Image
         fields = ('id', 'title', 'files')
+
+
+class ImageCreateSerializer(serializers.Serializer):
+    image = serializers.ImageField()
+    title = serializers.CharField(max_length=200)
 
 
 class SettingsSerializer(serializers.ModelSerializer):

@@ -22,10 +22,12 @@ class Image(models.Model):
     files = models.ManyToManyField(ImageFile)
 
     def save(self, *args, **kwargs):
-        print(kwargs)
         image = kwargs.pop('image', None)
+        title = kwargs.pop('title', None)
+        if title:
+            self.title = title
 
-        # super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
         if image:
             self.store(image)
 

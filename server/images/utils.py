@@ -14,7 +14,7 @@ def resize(pk, filename, name, dimensions, image_class, file_class):
     fullpath = os.path.join(settings.IMAGE_ROOT, filename)
     image = PIL.Image.open(fullpath)
 
-    orig_wdith, orig_height = image.size
+    orig_width, orig_height = image.size
 
     fit = False
     if ('w' in dimensions) and ('h' in dimensions):
