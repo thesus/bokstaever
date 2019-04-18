@@ -2,22 +2,35 @@ version: '3.5'
 
 services:
   web:
-    image: dev.cryptec.at:5000/root/bokstaever:latest
+    image: dev.cryptec.at:5000/root/bokstaever:develop
     volumes:
       - "media:/src/bokstaever/media"
       - "images:/src/bokstaever/images"
       - "./bundle:/src/bundle"
     environment:
       DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
-      ALLOWED_HOSTS: "example.com"
+      ALLOWED_HOSTS: "10.0.97.210"
       CORS_ORIGIN_WHITELIST: "example.com"
       DJANGO_DEBUG: "True"
       DJANGO_SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
-      DJANGO_REDIS_QUEUE: "redis://localhost:6379/0"
+      DJANGO_REDIS_QUEUE: "redis://redis:6379/0"
     restart: always
 
+  worker:
+    image: dev.cryptec.at:5000/root/bokstaever:develop
+    volumes:
+      - "media:/src/bokstaever/media"
+      - "images:/src/bokstaever/images"
+    environment:
+      DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
+      DJANGO_DEBUG: "False"
+      DJANGO_SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
+      DJANGO_REDIS_QUEUE: "redis://redis:6379/0"
+    restart: always
+    command: python manage.py rqworker
+
   caddy:
-    image: dev.cryptec.at:5000/root/bokstaever/caddy:latest
+    image: dev.cryptec.at:5000/root/bokstaever/caddy:develop
     volumes:
       - "media:/srv/media"
       - "./bundle:/srv/bundle"

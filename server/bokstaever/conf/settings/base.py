@@ -192,9 +192,3 @@ RQ_QUEUES = {
         'URL': env.str('DJANGO_REDIS_QUEUE', 'redis://localhost:6379/0')
     }
 }
-
-
-# Security
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

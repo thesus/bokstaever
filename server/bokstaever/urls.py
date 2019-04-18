@@ -16,10 +16,12 @@ urlpatterns = [
     path('feed/', LatestPostsFeed(), name='feed'),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls', namespace='api')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
 if settings.DEBUG:
     from django.views.generic import TemplateView  # noqa
+
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
     urlpatterns += [
         path(
