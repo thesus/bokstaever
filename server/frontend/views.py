@@ -1,81 +1,63 @@
-from django.shortcuts import redirect
+from django.http import Http404
 
 from django.views.generic import (
-    TemplateView,
     DetailView,
     ListView
 )
 
 from bokstaever.models import (
     Post,
-    Page,
+    FilePage,
+    DatabasePage,
     Settings
 )
+
 from bokstaever.views import DatabaseAwareCacheMixin
 
 
-class BlogView(DatabaseAwareCacheMixin, ListView):
+class BundleMixin():
+    def get_template_names(self) -> str:
+        try:
+            return 'default/{0}'.format(self.template)
+        except NameError:
+            raise Exception("You have to define a template name.")
+
+
+class IndexView(DatabaseAwareCacheMixin, BundleMixin, ListView):
     model = Post
     context_object_name = 'posts'
     queryset = Post.objects.filter(draft=False)
+    template = 'index.html'
 
-    def get_paginate_by(self, queryset):
+    def get_paginate_by(self, queryset) -> int:
         return Settings.load().pagesize
 
-    def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/blog.html'.format(theme)
 
-
-class IndexSiteView(DatabaseAwareCacheMixin, TemplateView):
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        context['posts'] = Post.objects.filter(draft=False).order_by('-pk')[:4]
-
-        return context
-
-    def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/index.html'.format(theme)
-
-
-class IndexBlogView(BlogView):
-    pass
-
-
-def index(request):
-    settings = Settings.load()
-    behaviors = {
-        'site': IndexSiteView.as_view(),
-        'blog': IndexBlogView.as_view()
-    }
-    return behaviors[settings.behavior](request)
-
-
-def blog(request):
-    settings = Settings.load()
-    if settings.behavior == 'site':
-        return BlogView.as_view()(request)
-    else:
-        return redirect('index')
-
-
-class PostView(DatabaseAwareCacheMixin, DetailView):
+class PostView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
     queryset = Post.objects.filter(draft=False)
     template_name_field = 'post'
+    template = 'post.html'
+
+
+class PageView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
+    template = 'page.html'
+    context_object_name = 'page'
+
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get(self.slug_url_kwarg)
+        obj = None
+        try:
+            obj = DatabasePage.objects.filter(slug=slug).get()
+        except DatabasePage.DoesNotExist:
+            try:
+                obj = FilePage.objects.filter(slug=slug).get()
+            except FilePage.DoesNotExist:
+                raise Http404("The page you're looking for does not exist.")
+
+        return obj
 
     def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/post.html'.format(theme)
-
-
-class PageView(DatabaseAwareCacheMixin, DetailView):
-    model = Page
-    template_name = 'frontend/page.html'
-    template_name_field = 'page'
-
-    def get_template_names(self):
-        theme = Settings.load().theme
-        return 'layouts/{0}/page.html'.format(theme)
+        if isinstance(self.object, FilePage):
+            return self.object.path
+        else:
+            return super().get_template_names()

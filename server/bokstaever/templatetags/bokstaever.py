@@ -2,7 +2,9 @@ from django import template
 
 import markdown
 import math
+import os
 
+from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from .extensions import EscapeHTMLExtension, GalleryExtension
@@ -35,3 +37,21 @@ def readtime(text):
 @register.filter()
 def get_range(value):
     return range(value)
+
+
+@register.simple_tag()
+def svg(filename):
+    for directory in settings.STATICFILES_DIRS:
+        path = os.path.join(directory, filename)
+        if os.path.isfile(path):
+            break
+        else:
+            path = None
+
+    if not path:
+        return mark_safe("svg {} not found!".format(filename))
+
+    path = os.path.join(settings.STATICFILES_DIRS[0], filename)
+    with open(path) as f:
+        svg = mark_safe(f.read())
+    return svg

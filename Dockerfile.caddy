@@ -8,24 +8,9 @@ RUN pip install -r /requirements/base.txt
 # Copy source code.
 COPY server/ /src
 
-COPY utils/download_theme_dependencies.sh /
-
-ENV DESTINATION=/src/bokstaever/static/
-
-RUN bash download_theme_dependencies.sh
-
 WORKDIR /src
-
+RUN mkdir -p bundle/static/
 RUN python manage.py collectstatic --noinput
-
-WORKDIR /
-RUN wget https://github.com/sass/dart-sass/releases/download/1.10.1/dart-sass-1.10.1-linux-x64.tar.gz
-RUN tar -xvf dart-sass-1.10.1-linux-x64.tar.gz
-
-WORKDIR /src/static/css
-RUN /dart-sass/sass style.scss:style.css brevlada.scss:brevlada.css frimarke.scss:frimarke.css --style compressed
-RUN rm *.scss
-
 
 # VUE BUILDER #
 FROM alpine:latest as vue_builder

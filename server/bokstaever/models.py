@@ -8,6 +8,7 @@ from bokstaever.images import resize
 
 
 class SingletonModel(models.Model):
+    """Ensures that only one instance of a Model exists."""
     class Meta:
         abstract = True
 
@@ -22,6 +23,7 @@ class SingletonModel(models.Model):
 
 
 class Image(models.Model):
+    """Contains in a scaled down version and a thumbnail."""
     title = models.CharField(
         max_length=200,
         unique=True
@@ -55,6 +57,7 @@ class Image(models.Model):
 
 
 class Gallery(models.Model):
+    """Includes one or more images and a unique name."""
     name = models.CharField(max_length=50, unique=True)
 
     images = models.ManyToManyField(
@@ -71,13 +74,15 @@ TEXT_CHOICES = (
 
 
 class SiteModel(models.Model):
-    headline = models.CharField(max_length=200)
+    """Abstract model for all posts and pages."""
+
     image = models.ForeignKey(
         Image,
         on_delete=models.CASCADE,
         blank=True,
         null=True
     )
+
     text = models.TextField()
     type = models.CharField(
         max_length=6,
@@ -86,15 +91,8 @@ class SiteModel(models.Model):
     )
     draft = models.BooleanField(default=False)
 
-    slug = models.SlugField(max_length=200)
-
     def __str__(self):
         return '{0.headline}'.format(self)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.headline)
-        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -103,59 +101,59 @@ class SiteModel(models.Model):
 class Post(SiteModel):
     published = models.DateField(auto_now_add=True)
     editors = models.ManyToManyField(User)
+    headline = models.CharField(max_length=200)
 
     class Meta:
         ordering = ['-published', '-pk']
 
 
-class Page(SiteModel):
-    slug = models.SlugField(max_length=200, unique=True)
+class PageManager(models.Manager):
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
+
+class PageModel(models.Model):
+    """Wrapper around page types."""
+    objects = PageManager()
+
+    slug = models.SlugField(max_length=200)
+    headline = models.CharField(max_length=200)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.headline)
+        super().save(*args, **kwargs)
+
+    def natural_key(self):
+        return (self.slug,)
+
+    def __str__(self):
+        return '{0.headline}'.format(self)
 
     class Meta:
+        unique_together = ('slug', )
         ordering = ['-pk']
 
 
-THEME_CHOICES = (
-    ('brevlada', 'brevlåda'),
-    ('frimarke', 'frimärke')
-)
+class FilePage(PageModel):
+    """Page that is loaded from a file without database interaction."""
+    path = models.CharField(max_length=200)
 
-BEHAVIOR_CHOICES = (
-    ('blog', 'Blog'),
-    ('site', 'Site')
-)
+
+class DatabasePage(PageModel, SiteModel):
+    """Normal page that get's the content from the database."""
+    pass
 
 
 class Settings(SingletonModel):
+    """Model with only one instance. Stores application wide settings."""
     name = models.CharField(max_length=200, default='My nice page')
     email = models.EmailField(blank=True)
 
     # Short info used in footer
     info = models.TextField(blank=True)
 
-    # Longer information featured on the index page.
-    description = models.TextField(blank=True)
-
-    image = models.ForeignKey(
-        Image,
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True
-    )
-
-    theme = models.CharField(
-        max_length=50,
-        choices=THEME_CHOICES,
-        default='brevlada'
-    )
-
-    behavior = models.CharField(
-        max_length=20,
-        choices=BEHAVIOR_CHOICES,
-        default='site'
-    )
-
-    # Default page size for paginated views in the frontend part
+    # Default page size for paginatated index page
     pagesize = models.PositiveSmallIntegerField(
         default=4
     )

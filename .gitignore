@@ -17,6 +17,7 @@ __pycache__
 node_modules
 /dashboard/dist
 /server/contrib
+/server/bundle
 
 # Log files
 *.log

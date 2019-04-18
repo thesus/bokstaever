@@ -5,7 +5,8 @@ from bokstaever.models import (
     Post,
     Image,
     Settings,
-    Page,
+    DatabasePage,
+    PageModel,
     Gallery
 )
 
@@ -44,7 +45,6 @@ class PostListSerializer(serializers.ModelSerializer):
             'id',
             'headline',
             'published',
-            'slug'
         )
 
 
@@ -64,10 +64,6 @@ class SettingsSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'info',
-            'description',
-            'image',
-            'theme',
-            'behavior',
             'pagesize'
         )
 
@@ -75,7 +71,7 @@ class SettingsSerializer(serializers.ModelSerializer):
 class PageSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Page
+        model = DatabasePage
         fields = (
             'headline',
             'slug',
@@ -93,7 +89,7 @@ class PageSerializer(serializers.ModelSerializer):
 class PageListSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Page
+        model = PageModel
         fields = ('headline', 'slug')
 
 

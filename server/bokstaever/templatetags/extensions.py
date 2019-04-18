@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from markdown.inlinepatterns import Pattern
+from markdown.inlinepatterns import InlineProcessor
 from markdown.extensions import Extension
 
 from markdown.util import etree
@@ -14,9 +14,9 @@ class EscapeHTMLExtension(Extension):
         del md.inlinePatterns['html']
 
 
-class GalleryPattern(Pattern):
-    def handleMatch(self, m):
-        pk = m.groups()[1]
+class GalleryPattern(InlineProcessor):
+    def handleMatch(self, m, data):
+        pk = m.group(1)
 
         try:
             gallery = Gallery.objects.get(pk=pk)
@@ -24,7 +24,7 @@ class GalleryPattern(Pattern):
             el = etree.Element('span')
             el.set('class', 'danger')
             el.text = "Gallery {} doesn't exist!".format(pk)
-            return el
+            return el, m.start(0), m.end(0)
 
         root_element = etree.Element('div')
         root_element.set('class', 'gallery')
@@ -41,15 +41,16 @@ class GalleryPattern(Pattern):
             image_element = etree.SubElement(thumbnail_element, "img")
             image_element.set('src', image.thumbnail.url)
 
-        return root_element
+        return root_element, m.start(0), m.end(0)
 
 
 class GalleryExtension(Extension):
     def extendMarkdown(self, md):
-        md.registerExtension(self)
         self.parser = md.parser
 
         GALLERY_PATTERN = r'\!\((\d+)\)'
 
-        md.inlinePatterns.register('gallery', GalleryPattern(
-            GALLERY_PATTERN, self), '<reference')
+        md.inlinePatterns.register(
+                GalleryPattern(GALLERY_PATTERN),
+                'gallery',
+                1000)

@@ -8,7 +8,7 @@
 }
 
 :80/static/ {
-    root /srv/server
+    root /srv/bundle/static
     log stdout
 }
 
