@@ -8,9 +8,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import ContentFile
 
 
-def resize(pk, filename, name, dimensions, image_class, file_class):
-    container = image_class.objects.get(pk=pk)
-
+def resize(pk, filename, name, dimensions, file_class):
     fullpath = os.path.join(settings.IMAGE_ROOT, filename)
     image = PIL.Image.open(fullpath)
 
@@ -32,7 +30,7 @@ def resize(pk, filename, name, dimensions, image_class, file_class):
 
     h = int(h)
     w = int(w)
-
+    instance = None
     with BytesIO() as f:
         instance = file_class()
         instance.height = h
@@ -56,15 +54,48 @@ def resize(pk, filename, name, dimensions, image_class, file_class):
         image.save(f, format='jpeg')
 
         instance.image_file.save(
-            '{0}_{1}.jpg'.format(container.pk, name),
+            '{0}_{1}.jpg'.format(pk, name),
             ContentFile(f.getvalue()),
             save=False,
         )
 
         instance.save()
-        container.files.add(instance)
+
+    return instance
+
+
+def save_on_container(
+        image_class,
+        pk,
+        instance,
+        thumbnail=False
+        ):
+    container = image_class.objects.get(pk=pk)
+    if thumbnail:
+        container.thumbnail = instance
+        container.save()
+    else:
+       container.files.add(instance)
 
 
 def process(classes, pk, filename):
+    # Generate thumbnail
+    save_on_container(
+        classes[0],
+        pk,
+        resize(
+            pk,
+            filename,
+            'thumbnail',
+            {'h': 200, 'w': 200},
+            classes[1]
+        ),
+        thumbnail=True
+    )
+
     for (k, v) in settings.IMAGE_SIZES.items():
-        resize(pk, filename, k, v, classes[0], classes[1])
+        save_on_container(
+            classes[0],
+            pk,
+            resize(pk, filename, k, v, classes[1])
+        )

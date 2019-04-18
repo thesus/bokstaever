@@ -20,6 +20,13 @@ class Image(models.Model):
     """Stores multiple versions of a image in different sizes."""
     title = models.CharField(max_length=200)
     files = models.ManyToManyField(ImageFile)
+    thumbnail = models.ForeignKey(
+        ImageFile,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='container'
+    )
 
     def save(self, *args, **kwargs):
         image = kwargs.pop('image', None)

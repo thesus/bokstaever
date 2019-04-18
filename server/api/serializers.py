@@ -14,14 +14,12 @@ from images.models import (
 )
 
 
-class ImageField(serializers.ReadOnlyField):
-
+class ImageListingField(serializers.RelatedField):
     def to_representation(self, obj):
         try:
-            return obj.url
+            return obj.image_file.url
         except AttributeError:
             return ''
-
 
 class PostSerializer(serializers.ModelSerializer):
 
@@ -52,9 +50,17 @@ class PostListSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    files = ImageListingField(many=True, read_only=True)
+    thumbnail = ImageListingField(read_only=True)
+
     class Meta:
         model = Image
-        fields = ('id', 'title', 'files')
+        fields = (
+            'id',
+            'title',
+            'files',
+            'thumbnail'
+        )
 
 
 class ImageCreateSerializer(serializers.Serializer):

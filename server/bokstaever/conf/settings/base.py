@@ -149,10 +149,6 @@ IMAGE_ROOT = env('IMAGE_ROOT', default=str(APPS_DIR.path('bokstaever/images')))
 
 # Image configuration
 IMAGE_SIZES = {
-    'thumbnail': {
-        'w': 200,
-        'h': 200,
-    },
     's': {
         'w': 400
     },

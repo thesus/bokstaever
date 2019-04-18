@@ -25,20 +25,27 @@ def forwards(apps, schema_editor):
             width=image.image.width
         )
 
+        thumbnail = ImageFile.objects.create(
+            image_file=image.thumbnail,
+            height=image.thumbnail.height,
+            width=image.thumbnail.width
+        )
+
         img = Image.objects.create(
             title=image.title,
+            thumbnail=thumbnail
         )
 
         img.files.add(f)
         pk += 1
 
 
-    Image.objects.filter(files__isnull).delete()
+    Image.objects.filter(files__isnull=True).delete()
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('images', '0001_initial'),
+        ('images', '0002_image_thumbnail'),
         ('bokstaever', '0028_auto_20190417_1629'),
     ]
 
