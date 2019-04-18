@@ -27,6 +27,7 @@ def forwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('images', '0001_initial'),
         ('bokstaever', '0028_auto_20190417_1629'),
     ]
 
