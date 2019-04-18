@@ -82,6 +82,7 @@ class PageModel(models.Model):
 
     slug = models.SlugField(max_length=200)
     headline = models.CharField(max_length=200)
+    show_menu = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

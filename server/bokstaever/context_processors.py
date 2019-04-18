@@ -7,7 +7,8 @@ from bokstaever.models import (
 def info(request):
     return {
         'settings': Settings.load(),
-        'sitemap': PageModel.objects.order_by('headline').values_list(
+        'sitemap': PageModel.objects.filter(show_menu=True)
+        .order_by('headline').values_list(
             'headline',
             'slug'
         )
