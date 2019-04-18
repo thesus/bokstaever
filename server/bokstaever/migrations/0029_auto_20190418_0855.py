@@ -10,7 +10,15 @@ def forwards(apps, schema_editor):
     Image = apps.get_model('images', 'Image')
     ImageFile = apps.get_model('images', 'ImageFile')
 
-    for image in OldImage.objects.all():
+    pk = 1
+    for image in OldImage.objects.all().order_by('pk'):
+        while pk != image.pk:
+            Image.objects.create(
+                title=''
+            )
+            pk += 1
+
+
         f = ImageFile.objects.create(
             image_file=image.image,
             height=image.image.height,
@@ -18,11 +26,14 @@ def forwards(apps, schema_editor):
         )
 
         img = Image.objects.create(
-            pk=image.pk,
             title=image.title,
         )
 
         img.files.add(f)
+        pk += 1
+
+
+    Image.objects.filter(files=0).delete()
 
 class Migration(migrations.Migration):
 
