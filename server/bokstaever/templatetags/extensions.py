@@ -70,7 +70,7 @@ class GalleryPattern(InlineProcessor):
         wrapper_element.set('class', 'thumbnails')
         for image in gallery.images.all():
             link_element = etree.SubElement(wrapper_element, "a")
-            link_element.set('href', image.thumbnail.image_file.url())
+            link_element.set('href', image.thumbnail.image_file.url)
 
             thumbnail_element = etree.SubElement(link_element, "div")
             thumbnail_element.set('class', 'thumbnail')
