@@ -1,6 +1,6 @@
 -r base.txt
 
-pytest==4.4.0
+pytest==4.4.1
 pytest-cov==2.6.1
 pytest-django==3.4.8
 pytest-flakes==4.0.0
