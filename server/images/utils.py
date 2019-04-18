@@ -75,7 +75,7 @@ def save_on_container(
         container.thumbnail = instance
         container.save()
     else:
-       container.files.add(instance)
+        container.files.add(instance)
 
 
 def process(classes, pk, filename):

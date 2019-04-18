@@ -21,6 +21,7 @@ class ImageListingField(serializers.RelatedField):
         except AttributeError:
             return ''
 
+
 class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
