@@ -1,12 +1,12 @@
 import os.path
 import PIL.Image
 import PIL.ImageOps
-import django_rq
 
 from io import BytesIO
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import ContentFile
+
 
 def resize(pk, filename, name, dimensions, image_class, file_class):
     container = image_class.objects.get(pk=pk)

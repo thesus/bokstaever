@@ -46,13 +46,10 @@ from rest_framework.generics import (
     UpdateAPIView,
 )
 
-from rest_framework.viewsets import (
-    ModelViewSet
-)
-
 from rest_framework.response import (
     Response
 )
+
 
 class PostViewSet(MultiSerializerViewSet):
     queryset = Post.objects.all()
@@ -88,6 +85,7 @@ class ImageViewSet(MultiSerializerViewSet):
         instance.save(**serializer.validated_data)
 
         return Response({'id': instance.pk})
+
 
 class SettingsUpdateView(RetrieveAPIView,
                          UpdateAPIView):

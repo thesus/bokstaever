@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from images.models import Image
 
+
 class SingletonModel(models.Model):
     """Ensures that only one instance of a Model exists."""
     class Meta:

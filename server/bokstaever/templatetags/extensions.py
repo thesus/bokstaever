@@ -8,6 +8,7 @@ from markdown.util import etree
 from bokstaever.models import Gallery
 from images.models import Image
 
+
 class EscapeHTMLExtension(Extension):
     def extendMarkdown(self, md):
         del md.preprocessors['html_block']
@@ -28,7 +29,7 @@ class ImagePattern(InlineProcessor):
         try:
             image = Image.objects.get(pk=pk)
         except ObjectDoesNotExist:
-           return error_el('Image', pk), m.start(0), m.end(0)
+            return error_el('Image', pk), m.start(0), m.end(0)
 
         root_element = etree.Element('img')
         srcset = ''
