@@ -7,11 +7,14 @@ from datetime import datetime
 
 from bokstaever.models import (
     Post,
-    Image,
     DatabasePage,
     Gallery,
 
     Settings
+)
+
+from images.models import (
+    Image
 )
 
 from api.serializers import (

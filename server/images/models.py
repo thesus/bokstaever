@@ -18,11 +18,14 @@ class ImageFile(models.Model):
 
 class Image(models.Model):
     """Stores multiple versions of a image in different sizes."""
+    title = models.CharField(max_length=200)
     files = models.ManyToManyField(ImageFile)
 
     def save(self, *args, **kwargs):
+        print(kwargs)
         image = kwargs.pop('image', None)
-        super().save(*args, **kwargs)
+
+        # super().save(*args, **kwargs)
         if image:
             self.store(image)
 

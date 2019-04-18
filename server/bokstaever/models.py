@@ -1,11 +1,8 @@
 from django.db import models
-
 from django.utils.text import slugify
-
 from django.contrib.auth.models import User
 
-from bokstaever.images import resize
-
+from images.models import Image
 
 class SingletonModel(models.Model):
     """Ensures that only one instance of a Model exists."""
@@ -20,40 +17,6 @@ class SingletonModel(models.Model):
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
-
-
-class Image(models.Model):
-    """Contains in a scaled down version and a thumbnail."""
-    title = models.CharField(
-        max_length=200,
-        unique=True
-    )
-    image = models.ImageField(
-        upload_to='upload',
-    )
-    thumbnail = models.ImageField(
-        upload_to='thumnails',
-    )
-
-    def save(self, *args, **kwargs):
-        if self.image:
-            self.image.save(
-                '{0}.png'.format(self.title),
-                resize(self.image, 1800),
-                save=False
-            )
-            self.thumbnail.save(
-                '{0}.png'.format(self.title),
-                resize(self.image, 500),
-                save=False
-            )
-        super(Image, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return '{0.title}'.format(self)
-
-    class Meta:
-        ordering = ['-pk', ]
 
 
 class Gallery(models.Model):

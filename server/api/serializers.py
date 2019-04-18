@@ -3,11 +3,14 @@ from rest_framework import serializers
 
 from bokstaever.models import (
     Post,
-    Image,
     Settings,
     DatabasePage,
     PageModel,
     Gallery
+)
+
+from images.models import (
+    Image
 )
 
 
@@ -49,11 +52,10 @@ class PostListSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.ImageField(use_url=True, read_only=True)
 
     class Meta:
         model = Image
-        fields = ('id', 'title', 'image', 'thumbnail')
+        fields = ('id', 'title', 'files')
 
 
 class SettingsSerializer(serializers.ModelSerializer):

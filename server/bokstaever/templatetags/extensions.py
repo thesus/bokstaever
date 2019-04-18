@@ -33,13 +33,13 @@ class GalleryPattern(InlineProcessor):
         wrapper_element.set('class', 'thumbnails')
         for image in gallery.images.all():
             link_element = etree.SubElement(wrapper_element, "a")
-            link_element.set('href', image.image.url)
+            link_element.set('href', image.files.first().image_file.url)
 
             thumbnail_element = etree.SubElement(link_element, "div")
             thumbnail_element.set('class', 'thumbnail')
 
             image_element = etree.SubElement(thumbnail_element, "img")
-            image_element.set('src', image.thumbnail.url)
+            image_element.set('src', image.files.first().image_file.url)
 
         return root_element, m.start(0), m.end(0)
 
