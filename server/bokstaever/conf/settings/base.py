@@ -193,7 +193,7 @@ CACHES = {
 # RQ
 RQ_QUEUES = {
     'default': {
-        'URL': env.str('DJANGO_RQ_QUEUE', 'redis://localhost:6379/0')
+        'URL': env.str('DJANGO_REDIS_QUEUE', 'redis://localhost:6379/0')
     }
 }
 
