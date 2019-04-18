@@ -36,6 +36,7 @@ class ImagePattern(InlineProcessor):
             srcset += '{} {}w,'.format(img.image_file.url, img.width)
 
         root_element.set('srcset', srcset)
+        root_element.set('alt', image.title)
         return root_element, m.start(0), m.end(0)
 
 
