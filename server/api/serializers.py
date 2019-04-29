@@ -47,6 +47,7 @@ class PostListSerializer(serializers.ModelSerializer):
             'id',
             'headline',
             'published',
+            'draft',
         )
 
 
