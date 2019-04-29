@@ -48,6 +48,11 @@ export default {
               multiple: false,
               required: false
             }
+          },
+          {
+            name: 'Draft',
+            identifier: 'draft',
+            component: 'checkbox'
           }
         ]
       }

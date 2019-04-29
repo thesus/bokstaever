@@ -18,6 +18,7 @@
 <script>
 import ImageInput from '@/components/inputs/ImageInput'
 import TextInput from '@/components/inputs/TextInput'
+import BooleanInput from '@/components/inputs/BooleanInput'
 import SelectInput from '@/components/inputs/SelectInput'
 
 const components = {
@@ -32,6 +33,9 @@ const components = {
   'email': {
     is: 'input',
     type: 'email'
+  },
+  'checkbox': {
+    is: 'boolean-component'
   },
   'text': {
     is: 'text-component'
@@ -48,7 +52,8 @@ export default {
   components: {
     'image-component': ImageInput,
     'text-component': TextInput,
-    'select-component': SelectInput
+    'select-component': SelectInput,
+    'boolean-component': BooleanInput
   },
   props: {
     instance: {

@@ -33,6 +33,10 @@ export default {
         {
           name: 'Date',
           identifier: 'published'
+        },
+        {
+          name: 'Draft',
+          identifier: 'draft'
         }
       ]
     }
