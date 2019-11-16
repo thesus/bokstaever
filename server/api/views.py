@@ -57,7 +57,14 @@ class PostViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'list': PostListSerializer
     }
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    # Exclude posts marked as drafts for anonymous users
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return self.queryset
+        else:
+            return self.queryset.filter(draft=False)
 
     def perform_update(self, serializer):
         serializer.instance.editors.add(self.request.user.pk)
@@ -76,7 +83,7 @@ class ImageViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'create': ImageCreateSerializer
     }
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -102,7 +109,7 @@ class PageViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'list': PageListSerializer
     }
-    permussion_class = (IsAuthenticated, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
     lookup_field = 'slug'
 
 
@@ -112,7 +119,7 @@ class GalleryViewSet(MultiSerializerViewSet):
     serializer_action_classes = {
         'list': GalleryListSerializer
     }
-    permission_class = (IsAuthenticated, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
 
 class StatisticsView(RetrieveAPIView):
