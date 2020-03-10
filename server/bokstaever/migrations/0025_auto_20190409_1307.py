@@ -7,58 +7,91 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0024_auto_20181117_0847'),
+        ("bokstaever", "0024_auto_20181117_0847"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PageModel',
+            name="PageModel",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.SlugField(max_length=200)),
-                ('headline', models.CharField(max_length=200)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("slug", models.SlugField(max_length=200)),
+                ("headline", models.CharField(max_length=200)),
             ],
-            options={
-                'unique_together': {('slug',)},
-            },
+            options={"unique_together": {("slug",)},},
         ),
-        migrations.RemoveField(
-            model_name='post',
-            name='slug',
-        ),
-        migrations.RemoveField(
-            model_name='settings',
-            name='behavior',
-        ),
-        migrations.RemoveField(
-            model_name='settings',
-            name='theme',
-        ),
+        migrations.RemoveField(model_name="post", name="slug",),
+        migrations.RemoveField(model_name="settings", name="behavior",),
+        migrations.RemoveField(model_name="settings", name="theme",),
         migrations.AlterField(
-            model_name='page',
-            name='slug',
-            field=models.SlugField(max_length=200),
+            model_name="page", name="slug", field=models.SlugField(max_length=200),
         ),
         migrations.CreateModel(
-            name='FilePage',
+            name="FilePage",
             fields=[
-                ('pagemodel_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='bokstaever.PageModel')),
-                ('path', models.CharField(max_length=200)),
+                (
+                    "pagemodel_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="bokstaever.PageModel",
+                    ),
+                ),
+                ("path", models.CharField(max_length=200)),
             ],
-            bases=('bokstaever.pagemodel',),
+            bases=("bokstaever.pagemodel",),
         ),
         migrations.CreateModel(
-            name='DatabasePage',
+            name="DatabasePage",
             fields=[
-                ('pagemodel_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='bokstaever.PageModel')),
-                ('text', models.TextField()),
-                ('type', models.CharField(choices=[('md', 'Markdown'), ('mdhtml', 'Markdown with inline HTML'), ('html', 'HTML'), ('raw', 'Raw, linebreaks are rendered')], default='md', max_length=6)),
-                ('draft', models.BooleanField(default=False)),
-                ('image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bokstaever.Image')),
+                (
+                    "pagemodel_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="bokstaever.PageModel",
+                    ),
+                ),
+                ("text", models.TextField()),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            ("md", "Markdown"),
+                            ("mdhtml", "Markdown with inline HTML"),
+                            ("html", "HTML"),
+                            ("raw", "Raw, linebreaks are rendered"),
+                        ],
+                        default="md",
+                        max_length=6,
+                    ),
+                ),
+                ("draft", models.BooleanField(default=False)),
+                (
+                    "image",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="bokstaever.Image",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
-            bases=('bokstaever.pagemodel', models.Model),
+            options={"abstract": False,},
+            bases=("bokstaever.pagemodel", models.Model),
         ),
     ]

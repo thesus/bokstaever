@@ -7,29 +7,37 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0012_auto_20180726_0901'),
+        ("bokstaever", "0012_auto_20180726_0901"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Page',
+            name="Page",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200)),
-                ('text', models.TextField()),
-                ('slug', models.SlugField(max_length=200, unique=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=200)),
+                ("text", models.TextField()),
+                ("slug", models.SlugField(max_length=200, unique=True)),
             ],
-            options={
-                'ordering': ['-pk'],
-            },
+            options={"ordering": ["-pk"],},
         ),
-        migrations.AlterModelOptions(
-            name='image',
-            options={'ordering': ['-pk']},
-        ),
+        migrations.AlterModelOptions(name="image", options={"ordering": ["-pk"]},),
         migrations.AddField(
-            model_name='page',
-            name='image',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bokstaever.Image'),
+            model_name="page",
+            name="image",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="bokstaever.Image",
+            ),
         ),
     ]

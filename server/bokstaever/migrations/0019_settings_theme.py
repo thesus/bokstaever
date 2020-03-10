@@ -6,13 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0018_auto_20180814_2108'),
+        ("bokstaever", "0018_auto_20180814_2108"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='settings',
-            name='theme',
-            field=models.CharField(choices=[('css/brevlada.css', 'brevlåda'), ('css/frimarke.css', 'frimärke')], default='css/brevlada.css', max_length=50),
+            model_name="settings",
+            name="theme",
+            field=models.CharField(
+                choices=[
+                    ("css/brevlada.css", "brevlåda"),
+                    ("css/frimarke.css", "frimärke"),
+                ],
+                default="css/brevlada.css",
+                max_length=50,
+            ),
         ),
     ]

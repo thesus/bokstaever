@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0031_delete_image'),
+        ("bokstaever", "0031_delete_image"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='pagemodel',
-            name='show_menu',
+            model_name="pagemodel",
+            name="show_menu",
             field=models.BooleanField(default=True),
         ),
     ]

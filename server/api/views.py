@@ -5,58 +5,39 @@ from collections import defaultdict
 
 from datetime import datetime
 
-from bokstaever.models import (
-    Post,
-    DatabasePage,
-    Gallery,
+from bokstaever.models import Post, DatabasePage, Gallery, Settings
 
-    Settings
-)
-
-from images.models import (
-    Image
-)
+from images.models import Image
 
 from api.serializers import (
     PostSerializer,
     PostListSerializer,
-
     ImageSerializer,
     ImageCreateSerializer,
-
     SettingsSerializer,
     StatisticsSerializer,
-
     PageSerializer,
     PageListSerializer,
-
     GallerySerializer,
-    GalleryListSerializer
+    GalleryListSerializer,
 )
 
 from api.viewsets import MultiSerializerViewSet
 
-from rest_framework.permissions import (
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly
-)
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from rest_framework.generics import (
     RetrieveAPIView,
     UpdateAPIView,
 )
 
-from rest_framework.response import (
-    Response
-)
+from rest_framework.response import Response
 
 
 class PostViewSet(MultiSerializerViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    serializer_action_classes = {
-        'list': PostListSerializer
-    }
+    serializer_action_classes = {"list": PostListSerializer}
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     # Exclude posts marked as drafts for anonymous users
@@ -72,17 +53,13 @@ class PostViewSet(MultiSerializerViewSet):
         super(PostViewSet, self).perform_update(serializer)
 
     def perform_create(self, serializer):
-        serializer.save(
-            editors=[self.request.user.pk]
-        )
+        serializer.save(editors=[self.request.user.pk])
 
 
 class ImageViewSet(MultiSerializerViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-    serializer_action_classes = {
-        'create': ImageCreateSerializer
-    }
+    serializer_action_classes = {"create": ImageCreateSerializer}
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def create(self, request):
@@ -91,11 +68,10 @@ class ImageViewSet(MultiSerializerViewSet):
         instance = Image()
         instance.save(**serializer.validated_data)
 
-        return Response({'id': instance.pk})
+        return Response({"id": instance.pk})
 
 
-class SettingsUpdateView(RetrieveAPIView,
-                         UpdateAPIView):
+class SettingsUpdateView(RetrieveAPIView, UpdateAPIView):
     serializer_class = SettingsSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
@@ -106,54 +82,45 @@ class SettingsUpdateView(RetrieveAPIView,
 class PageViewSet(MultiSerializerViewSet):
     queryset = DatabasePage.objects.all()
     serializer_class = PageSerializer
-    serializer_action_classes = {
-        'list': PageListSerializer
-    }
-    permission_classes = (IsAuthenticatedOrReadOnly, )
-    lookup_field = 'slug'
+    serializer_action_classes = {"list": PageListSerializer}
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    lookup_field = "slug"
 
 
 class GalleryViewSet(MultiSerializerViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
-    serializer_action_classes = {
-        'list': GalleryListSerializer
-    }
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    serializer_action_classes = {"list": GalleryListSerializer}
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class StatisticsView(RetrieveAPIView):
     serializer_class = StatisticsSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self):
         post_count = Post.objects.all().count()
-        ppm = Post.objects.filter(
-        ).annotate(
-            m=TruncMonth('published')
-        ).values('m').annotate(c=Count('id')).order_by()
+        ppm = (
+            Post.objects.filter()
+            .annotate(m=TruncMonth("published"))
+            .values("m")
+            .annotate(c=Count("id"))
+            .order_by()
+        )
 
         today = datetime.today()
         data = {}
 
         activities = defaultdict(dict)
         for a in ppm:
-            activities[a['m'].year][a['m'].month] = a['c']
+            activities[a["m"].year][a["m"].month] = a["c"]
 
         for i in range(0, 3):
             year = today.year - i
             data[year] = []
             for month in range(1, 13):
                 try:
-                    data[year].append(
-                        (
-                            month,
-                            activities[year][month]
-                        )
-                    )
+                    data[year].append((month, activities[year][month]))
                 except KeyError:
                     data[year].append((month, 0))
-        return {
-            'post_count': post_count,
-            'activity': data
-        }
+        return {"post_count": post_count, "activity": data}

@@ -6,15 +6,10 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0011_auto_20180726_0900'),
+        ("bokstaever", "0011_auto_20180726_0900"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='file',
-            name='image',
-        ),
-        migrations.DeleteModel(
-            name='File',
-        ),
+        migrations.RemoveField(model_name="file", name="image",),
+        migrations.DeleteModel(name="File",),
     ]

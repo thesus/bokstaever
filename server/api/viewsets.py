@@ -8,13 +8,10 @@ class MultiSerializerViewSet(viewsets.ModelViewSet):
         try:
             return self.serializer_action_classes[self.action]
         except (KeyError, AttributeError):
-            return super(
-                MultiSerializerViewSet,
-                self
-            ).get_serializer_class()
+            return super(MultiSerializerViewSet, self).get_serializer_class()
 
 
-class ConditionalAuthenticationMixin():
+class ConditionalAuthenticationMixin:
     def get_permissions(self):
         if self.action in self.unauthenticated_actions:
             permission_classes = []

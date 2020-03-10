@@ -2,11 +2,12 @@
 
 from django.db import migrations
 
+
 def forwards(apps, schema_editor):
-    if schema_editor.connection.alias != 'default':
+    if schema_editor.connection.alias != "default":
         return
-    Page = apps.get_model('bokstaever', 'Page')
-    DatabasePage = apps.get_model('bokstaever', 'DatabasePage')
+    Page = apps.get_model("bokstaever", "Page")
+    DatabasePage = apps.get_model("bokstaever", "DatabasePage")
 
     for page in Page.objects.all():
         DatabasePage.objects.create(
@@ -16,14 +17,14 @@ def forwards(apps, schema_editor):
             image=page.image,
             text=page.text,
             type=page.type,
-            draft=page.draft
+            draft=page.draft,
         )
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0025_auto_20190409_1307'),
+        ("bokstaever", "0025_auto_20190409_1307"),
     ]
 
     operations = [

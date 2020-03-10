@@ -7,22 +7,23 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0003_auto_20180501_1757'),
+        ("bokstaever", "0003_auto_20180501_1757"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='post',
-            options={'ordering': ['-published', '-pk']},
+            name="post", options={"ordering": ["-published", "-pk"]},
         ),
         migrations.RenameField(
-            model_name='post',
-            old_name='url_slug',
-            new_name='slug',
+            model_name="post", old_name="url_slug", new_name="slug",
         ),
         migrations.AlterField(
-            model_name='file',
-            name='image',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='files', to='bokstaever.Image'),
+            model_name="file",
+            name="image",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="files",
+                to="bokstaever.Image",
+            ),
         ),
     ]

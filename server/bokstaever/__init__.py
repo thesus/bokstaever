@@ -1,1 +1,1 @@
-default_app_config = 'bokstaever.apps.BokstaeverConfig'
+default_app_config = "bokstaever.apps.BokstaeverConfig"

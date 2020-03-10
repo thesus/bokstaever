@@ -6,8 +6,8 @@ from django.shortcuts import reverse
 from bokstaever.models import Post, Settings
 
 
-MAIN_CACHE_VERSION_KEY = 'version'
-CACHE_NAME = 'default'
+MAIN_CACHE_VERSION_KEY = "version"
+CACHE_NAME = "default"
 
 
 class DatabaseAwareCacheMixin:
@@ -22,12 +22,12 @@ class DatabaseAwareCacheMixin:
     """
 
     def dispatch(self, request, *args, **kwargs):
-        if request.method not in ('HEAD', 'GET'):
+        if request.method not in ("HEAD", "GET"):
             # Don't bother checking cache.
             return super().dispatch(request, *args, **kwargs)
 
         url = request.build_absolute_uri()
-        url_version_key = 'ver/0' + url
+        url_version_key = "ver/0" + url
         url_version = self.cache.get(url_version_key, -1)
         if url_version is not None:
             try:
@@ -36,7 +36,7 @@ class DatabaseAwareCacheMixin:
                 self.cache.delete(url_version_key)
                 url_version = -1
         version = self.cache.get(MAIN_CACHE_VERSION_KEY, 0)
-        url_cache_key = 'data/0' + url
+        url_cache_key = "data/0" + url
         response = None
         if version <= url_version:
             response = self.cache.get(url_cache_key)
@@ -64,7 +64,7 @@ class LatestPostsFeed(Feed):
         return self._settings().name
 
     def items(self):
-        return Post.objects.filter(draft=False).order_by('-published')[:5]
+        return Post.objects.filter(draft=False).order_by("-published")[:5]
 
     def item_title(self, item):
         return item.headline
@@ -74,4 +74,4 @@ class LatestPostsFeed(Feed):
 
     # fixme add `get_absolute_url` in models
     def item_link(self, item):
-        return reverse('frontend:post-detail', args=[item.pk])
+        return reverse("frontend:post-detail", args=[item.pk])

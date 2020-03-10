@@ -1,33 +1,25 @@
 from django.http import Http404
 
-from django.views.generic import (
-    DetailView,
-    ListView
-)
+from django.views.generic import DetailView, ListView
 
-from bokstaever.models import (
-    Post,
-    FilePage,
-    DatabasePage,
-    Settings
-)
+from bokstaever.models import Post, FilePage, DatabasePage, Settings
 
 from bokstaever.views import DatabaseAwareCacheMixin
 
 
-class BundleMixin():
+class BundleMixin:
     def get_template_names(self) -> str:
         try:
-            return 'default/{0}'.format(self.template)
+            return "default/{0}".format(self.template)
         except NameError:
             raise Exception("You have to define a template name.")
 
 
 class IndexView(DatabaseAwareCacheMixin, BundleMixin, ListView):
     model = Post
-    context_object_name = 'posts'
+    context_object_name = "posts"
     queryset = Post.objects.filter(draft=False)
-    template = 'index.html'
+    template = "index.html"
 
     def get_paginate_by(self, queryset) -> int:
         return Settings.load().pagesize
@@ -35,13 +27,13 @@ class IndexView(DatabaseAwareCacheMixin, BundleMixin, ListView):
 
 class PostView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
     queryset = Post.objects.filter(draft=False)
-    template_name_field = 'post'
-    template = 'post.html'
+    template_name_field = "post"
+    template = "post.html"
 
 
 class PageView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
-    template = 'page.html'
-    context_object_name = 'page'
+    template = "page.html"
+    context_object_name = "page"
 
     def get_object(self, queryset=None):
         slug = self.kwargs.get(self.slug_url_kwarg)

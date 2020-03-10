@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0021_auto_20180817_0900'),
+        ("bokstaever", "0021_auto_20180817_0900"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='settings',
-            name='pagesize',
+            model_name="settings",
+            name="pagesize",
             field=models.PositiveSmallIntegerField(default=4),
         ),
     ]

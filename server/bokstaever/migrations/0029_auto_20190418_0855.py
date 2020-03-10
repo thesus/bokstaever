@@ -2,51 +2,44 @@
 
 from django.db import migrations
 
+
 def forwards(apps, schema_editor):
-    if schema_editor.connection.alias != 'default':
+    if schema_editor.connection.alias != "default":
         return
 
-    OldImage = apps.get_model('bokstaever', 'Image')
-    Image = apps.get_model('images', 'Image')
-    ImageFile = apps.get_model('images', 'ImageFile')
+    OldImage = apps.get_model("bokstaever", "Image")
+    Image = apps.get_model("images", "Image")
+    ImageFile = apps.get_model("images", "ImageFile")
 
     pk = 1
-    for image in OldImage.objects.all().order_by('pk'):
+    for image in OldImage.objects.all().order_by("pk"):
         while pk != image.pk:
-            Image.objects.create(
-                title=''
-            )
+            Image.objects.create(title="")
             pk += 1
 
-
         f = ImageFile.objects.create(
-            image_file=image.image,
-            height=image.image.height,
-            width=image.image.width
+            image_file=image.image, height=image.image.height, width=image.image.width
         )
 
         thumbnail = ImageFile.objects.create(
             image_file=image.thumbnail,
             height=image.thumbnail.height,
-            width=image.thumbnail.width
+            width=image.thumbnail.width,
         )
 
-        img = Image.objects.create(
-            title=image.title,
-            thumbnail=thumbnail
-        )
+        img = Image.objects.create(title=image.title, thumbnail=thumbnail)
 
         img.files.add(f)
         pk += 1
 
-
     Image.objects.filter(files__isnull=True).delete()
+
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('images', '0002_image_thumbnail'),
-        ('bokstaever', '0028_auto_20190417_1629'),
+        ("images", "0002_image_thumbnail"),
+        ("bokstaever", "0028_auto_20190417_1629"),
     ]
 
     operations = [

@@ -7,26 +7,44 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0019_settings_theme'),
+        ("bokstaever", "0019_settings_theme"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Gallery',
+            name="Gallery",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('images', models.ManyToManyField(to='bokstaever.Image')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, unique=True)),
+                ("images", models.ManyToManyField(to="bokstaever.Image")),
             ],
         ),
         migrations.AddField(
-            model_name='page',
-            name='gallery',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bokstaever.Gallery'),
+            model_name="page",
+            name="gallery",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="bokstaever.Gallery",
+            ),
         ),
         migrations.AddField(
-            model_name='post',
-            name='gallery',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bokstaever.Gallery'),
+            model_name="post",
+            name="gallery",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="bokstaever.Gallery",
+            ),
         ),
     ]

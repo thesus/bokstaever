@@ -6,23 +6,45 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0017_auto_20180814_1254'),
+        ("bokstaever", "0017_auto_20180814_1254"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='settings',
-            name='behavior',
-            field=models.CharField(choices=[('blog', 'Blog'), ('site', 'Site')], default='site', max_length=20),
+            model_name="settings",
+            name="behavior",
+            field=models.CharField(
+                choices=[("blog", "Blog"), ("site", "Site")],
+                default="site",
+                max_length=20,
+            ),
         ),
         migrations.AlterField(
-            model_name='page',
-            name='type',
-            field=models.CharField(choices=[('md', 'Markdown'), ('mdhtml', 'Markdown with inline HTML'), ('html', 'HTML'), ('raw', 'Raw, linebreaks are rendered')], default='md', max_length=6),
+            model_name="page",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("md", "Markdown"),
+                    ("mdhtml", "Markdown with inline HTML"),
+                    ("html", "HTML"),
+                    ("raw", "Raw, linebreaks are rendered"),
+                ],
+                default="md",
+                max_length=6,
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='type',
-            field=models.CharField(choices=[('md', 'Markdown'), ('mdhtml', 'Markdown with inline HTML'), ('html', 'HTML'), ('raw', 'Raw, linebreaks are rendered')], default='md', max_length=6),
+            model_name="post",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("md", "Markdown"),
+                    ("mdhtml", "Markdown with inline HTML"),
+                    ("html", "HTML"),
+                    ("raw", "Raw, linebreaks are rendered"),
+                ],
+                default="md",
+                max_length=6,
+            ),
         ),
     ]

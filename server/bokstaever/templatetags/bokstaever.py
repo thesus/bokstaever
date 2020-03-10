@@ -16,13 +16,13 @@ register = template.Library()
 @register.filter()
 def markdownify(text, html_escape=True):
     extensions = [
-        'markdown.extensions.extra',
-        'markdown.extensions.nl2br',
+        "markdown.extensions.extra",
+        "markdown.extensions.nl2br",
         GalleryExtension(),
-        ImageExtension()
+        ImageExtension(),
     ]
 
-    extensions += [EscapeHTMLExtension(), ] if html_escape else []
+    extensions += [EscapeHTMLExtension(),] if html_escape else []
 
     html = markdown.markdown(text, extensions=extensions)
     return mark_safe(html)

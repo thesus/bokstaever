@@ -7,10 +7,10 @@ from frontend.views import (
 )
 
 
-app_name = 'frontend'
+app_name = "frontend"
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
-    path('posts/<int:pk>', PostView.as_view(), name='post-detail'),
-    path('<slug:slug>', PageView.as_view(), name='page-detail')
+    path("", IndexView.as_view(), name="index"),
+    path("posts/<int:pk>", PostView.as_view(), name="post-detail"),
+    path("<slug:slug>", PageView.as_view(), name="page-detail"),
 ]

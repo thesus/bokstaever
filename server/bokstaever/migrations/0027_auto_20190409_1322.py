@@ -6,15 +6,10 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0026_auto_20190409_1308'),
+        ("bokstaever", "0026_auto_20190409_1308"),
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='pagemodel',
-            options={'ordering': ['-pk']},
-        ),
-        migrations.DeleteModel(
-            name='Page',
-        ),
+        migrations.AlterModelOptions(name="pagemodel", options={"ordering": ["-pk"]},),
+        migrations.DeleteModel(name="Page",),
     ]

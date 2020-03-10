@@ -1,17 +1,9 @@
 from rest_framework import serializers
 
 
-from bokstaever.models import (
-    Post,
-    Settings,
-    DatabasePage,
-    PageModel,
-    Gallery
-)
+from bokstaever.models import Post, Settings, DatabasePage, PageModel, Gallery
 
-from images.models import (
-    Image
-)
+from images.models import Image
 
 
 class ImageListingField(serializers.RelatedField):
@@ -19,35 +11,33 @@ class ImageListingField(serializers.RelatedField):
         try:
             return obj.image_file.url
         except AttributeError:
-            return ''
+            return ""
 
 
 class PostSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Post
         fields = (
-            'id',
-            'headline',
-            'text',
-            'type',
-            'draft',
-            'image',
-            'editors',
-            'published',
+            "id",
+            "headline",
+            "text",
+            "type",
+            "draft",
+            "image",
+            "editors",
+            "published",
         )
-        read_only_fields = ('editors', 'published')
+        read_only_fields = ("editors", "published")
 
 
 class PostListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Post
         fields = (
-            'id',
-            'headline',
-            'published',
-            'draft',
+            "id",
+            "headline",
+            "published",
+            "draft",
         )
 
 
@@ -57,12 +47,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = (
-            'id',
-            'title',
-            'files',
-            'thumbnail'
-        )
+        fields = ("id", "title", "files", "thumbnail")
 
 
 class ImageCreateSerializer(serializers.Serializer):
@@ -71,54 +56,36 @@ class ImageCreateSerializer(serializers.Serializer):
 
 
 class SettingsSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Settings
-        fields = (
-            'name',
-            'email',
-            'info',
-            'pagesize'
-        )
+        fields = ("name", "email", "info", "pagesize")
 
 
 class PageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = DatabasePage
-        fields = (
-            'headline',
-            'slug',
-            'text',
-            'type',
-            'image'
-        )
-        lookup_field = 'slug'
-        read_only_fields = ('slug', )
-        extra_kwargs = {
-            'url': {'lookup_field': 'slug'}
-        }
+        fields = ("headline", "slug", "text", "type", "image")
+        lookup_field = "slug"
+        read_only_fields = ("slug",)
+        extra_kwargs = {"url": {"lookup_field": "slug"}}
 
 
 class PageListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = PageModel
-        fields = ('headline', 'slug')
+        fields = ("headline", "slug")
 
 
 class GalleryListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Gallery
-        fields = ('id', 'name')
+        fields = ("id", "name")
 
 
 class GallerySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Gallery
-        fields = ('id', 'name', 'images')
+        fields = ("id", "name", "images")
 
 
 class StatisticsSerializer(serializers.Serializer):

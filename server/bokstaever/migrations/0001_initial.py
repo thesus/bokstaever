@@ -8,29 +8,51 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='File',
+            name="File",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('height', models.PositiveIntegerField()),
-                ('width', models.PositiveIntegerField()),
-                ('path', models.ImageField(height_field='height', upload_to='upload', width_field='width')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("height", models.PositiveIntegerField()),
+                ("width", models.PositiveIntegerField()),
+                (
+                    "path",
+                    models.ImageField(
+                        height_field="height", upload_to="upload", width_field="width"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Image',
+            name="Image",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200, unique=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=200, unique=True)),
             ],
         ),
         migrations.AddField(
-            model_name='file',
-            name='image',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bokstaever.Image'),
+            model_name="file",
+            name="image",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="bokstaever.Image"
+            ),
         ),
     ]

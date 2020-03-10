@@ -4,7 +4,7 @@ from django.db import migrations
 
 
 def forward(apps, schema_editor):
-    images = apps.get_model('bokstaever', 'Image')
+    images = apps.get_model("bokstaever", "Image")
     for image in images.objects.all():
         image.image = image.files.first().path
         image.thumbnail = image.files.last().path
@@ -18,9 +18,7 @@ def backward(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0009_auto_20180726_0849'),
+        ("bokstaever", "0009_auto_20180726_0849"),
     ]
 
-    operations = [
-        migrations.RunPython(forward, backward)
-    ]
+    operations = [migrations.RunPython(forward, backward)]

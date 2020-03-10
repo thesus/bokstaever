@@ -15,15 +15,15 @@ def resize(pk, filename, name, dimensions, file_class):
     orig_width, orig_height = image.size
 
     fit = False
-    if ('w' in dimensions) and ('h' in dimensions):
-        h = dimensions['h']
-        w = dimensions['w']
+    if ("w" in dimensions) and ("h" in dimensions):
+        h = dimensions["h"]
+        w = dimensions["w"]
         fit = True
-    elif ('w' in dimensions):
-        w = dimensions['w']
+    elif "w" in dimensions:
+        w = dimensions["w"]
         h = (float(w) / orig_width) * orig_height
-    elif ('h' in dimensions):
-        h = dimensions['h']
+    elif "h" in dimensions:
+        h = dimensions["h"]
         w = (float(h) / orig_height) * orig_width
     else:
         raise ImproperlyConfigured("IMAGE_SIZES contains wrong keys")
@@ -44,19 +44,14 @@ def resize(pk, filename, name, dimensions, file_class):
                 centering=(0.5, 0.5),
             )
         else:
-            image = image.resize(
-                (w, h),
-                PIL.Image.LANCZOS,
-            )
+            image = image.resize((w, h), PIL.Image.LANCZOS,)
 
         # Convert to remove possible alpha channel
         image = image.convert("RGB")
-        image.save(f, format='jpeg')
+        image.save(f, format="jpeg")
 
         instance.image_file.save(
-            '{0}_{1}.jpg'.format(pk, name),
-            ContentFile(f.getvalue()),
-            save=False,
+            "{0}_{1}.jpg".format(pk, name), ContentFile(f.getvalue()), save=False,
         )
 
         instance.save()
@@ -64,12 +59,7 @@ def resize(pk, filename, name, dimensions, file_class):
     return instance
 
 
-def save_on_container(
-        image_class,
-        pk,
-        instance,
-        thumbnail=False
-        ):
+def save_on_container(image_class, pk, instance, thumbnail=False):
     container = image_class.objects.get(pk=pk)
     if thumbnail:
         container.thumbnail = instance
@@ -83,19 +73,9 @@ def process(classes, pk, filename):
     save_on_container(
         classes[0],
         pk,
-        resize(
-            pk,
-            filename,
-            'thumbnail',
-            {'h': 400, 'w': 400},
-            classes[1]
-        ),
-        thumbnail=True
+        resize(pk, filename, "thumbnail", {"h": 400, "w": 400}, classes[1]),
+        thumbnail=True,
     )
 
     for (k, v) in settings.IMAGE_SIZES.items():
-        save_on_container(
-            classes[0],
-            pk,
-            resize(pk, filename, k, v, classes[1])
-        )
+        save_on_container(classes[0], pk, resize(pk, filename, k, v, classes[1]))

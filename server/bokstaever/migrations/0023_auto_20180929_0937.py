@@ -5,16 +5,16 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 def forward(apps, schema_editor):
-    Settings = apps.get_model('bokstaever', 'Settings')
+    Settings = apps.get_model("bokstaever", "Settings")
 
     try:
         settings = Settings.objects.get(pk=1)
 
         # Rename themes to name instead css files
-        if settings.theme == 'css/brevlada.css':
-            settings.theme = 'brevlada'
-        if settings.theme == 'css/frimarke.css':
-            settings.theme = 'frimarke'
+        if settings.theme == "css/brevlada.css":
+            settings.theme = "brevlada"
+        if settings.theme == "css/frimarke.css":
+            settings.theme = "frimarke"
 
         settings.save()
     except ObjectDoesNotExist:
@@ -28,9 +28,7 @@ def backward(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0022_settings_pagesize'),
+        ("bokstaever", "0022_settings_pagesize"),
     ]
 
-    operations = [
-        migrations.RunPython(forward, backward)
-    ]
+    operations = [migrations.RunPython(forward, backward)]
