@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from bokstaever.models import Post, DatabasePage, FilePage, Settings
+from bokstaever.models import Post, DatabasePage, FilePage
 
 from images.models import Image
 
@@ -13,4 +13,3 @@ admin.site.register(Image)
 admin.site.register(FilePage, FilePageAdmin)
 admin.site.register(DatabasePage)
 admin.site.register(Post)
-admin.site.register(Settings)

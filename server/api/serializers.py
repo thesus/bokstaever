@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from bokstaever.models import Post, Settings, DatabasePage, PageModel, Gallery
+from bokstaever.models import Post, DatabasePage, PageModel, Gallery
 
 from images.models import Image
 
@@ -53,12 +53,6 @@ class ImageSerializer(serializers.ModelSerializer):
 class ImageCreateSerializer(serializers.Serializer):
     image = serializers.ImageField()
     title = serializers.CharField(max_length=200)
-
-
-class SettingsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Settings
-        fields = ("name", "email", "info", "pagesize")
 
 
 class PageSerializer(serializers.ModelSerializer):

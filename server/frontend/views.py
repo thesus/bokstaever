@@ -1,8 +1,9 @@
 from django.http import Http404
 
 from django.views.generic import DetailView, ListView
+from django.conf import settings
 
-from bokstaever.models import Post, FilePage, DatabasePage, Settings
+from bokstaever.models import Post, FilePage, DatabasePage
 
 from bokstaever.views import DatabaseAwareCacheMixin
 
@@ -22,7 +23,7 @@ class IndexView(DatabaseAwareCacheMixin, BundleMixin, ListView):
     template = "index.html"
 
     def get_paginate_by(self, queryset) -> int:
-        return Settings.load().pagesize
+        return settings.PAGE_SIZE
 
 
 class PostView(DatabaseAwareCacheMixin, BundleMixin, DetailView):

@@ -5,7 +5,7 @@ from collections import defaultdict
 
 from datetime import datetime
 
-from bokstaever.models import Post, DatabasePage, Gallery, Settings
+from bokstaever.models import Post, DatabasePage, Gallery
 
 from images.models import Image
 
@@ -14,7 +14,6 @@ from api.serializers import (
     PostListSerializer,
     ImageSerializer,
     ImageCreateSerializer,
-    SettingsSerializer,
     StatisticsSerializer,
     PageSerializer,
     PageListSerializer,
@@ -69,14 +68,6 @@ class ImageViewSet(MultiSerializerViewSet):
         instance.save(**serializer.validated_data)
 
         return Response({"id": instance.pk})
-
-
-class SettingsUpdateView(RetrieveAPIView, UpdateAPIView):
-    serializer_class = SettingsSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-    def get_object(self):
-        return Settings.load()
 
 
 class PageViewSet(MultiSerializerViewSet):

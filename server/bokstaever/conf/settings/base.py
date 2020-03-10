@@ -14,6 +14,13 @@ environ.Env.read_env(str(ROOT_DIR.path(env.str("ENVIRONMENT_FILE", ".env"))))
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 
+### Application settings ###
+APPLICATION_TITLE = env("DJANGO_APPLICATION_TITLE", default="bokstaever")
+PAGE_SIZE = 4
+
+### End Application settings ###
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DJANGO_DEBUG", default=False)
 

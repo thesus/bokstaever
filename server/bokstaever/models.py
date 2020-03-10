@@ -5,22 +5,6 @@ from django.contrib.auth.models import User
 from images.models import Image
 
 
-class SingletonModel(models.Model):
-    """Ensures that only one instance of a Model exists."""
-
-    class Meta:
-        abstract = True
-
-    def save(self, *args, **kwargs):
-        self.pk = 1
-        super(SingletonModel, self).save(*args, **kwargs)
-
-    @classmethod
-    def load(cls):
-        obj, created = cls.objects.get_or_create(pk=1)
-        return obj
-
-
 class Gallery(models.Model):
     """Includes one or more images and a unique name."""
 
@@ -102,16 +86,3 @@ class DatabasePage(PageModel, SiteModel):
     """Normal page that get's the content from the database."""
 
     pass
-
-
-class Settings(SingletonModel):
-    """Model with only one instance. Stores application wide settings."""
-
-    name = models.CharField(max_length=200, default="My nice page")
-    email = models.EmailField(blank=True)
-
-    # Short info used in footer
-    info = models.TextField(blank=True)
-
-    # Default page size for paginatated index page
-    pagesize = models.PositiveSmallIntegerField(default=4)

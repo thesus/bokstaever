@@ -3,8 +3,9 @@ from django.core.cache import caches
 from django.contrib.syndication.views import Feed
 
 from django.shortcuts import reverse
-from bokstaever.models import Post, Settings
+from bokstaever.models import Post
 
+from django.conf import settings
 
 MAIN_CACHE_VERSION_KEY = "version"
 CACHE_NAME = "default"
@@ -57,11 +58,8 @@ class DatabaseAwareCacheMixin:
 class LatestPostsFeed(Feed):
     link = "/"
 
-    def _settings(self):
-        return Settings.load()
-
     def title(self):
-        return self._settings().name
+        return settings.APPLICATION_TITLE
 
     def items(self):
         return Post.objects.filter(draft=False).order_by("-published")[:5]
