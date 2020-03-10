@@ -16,8 +16,6 @@ import GalleryEdit from '../views/dashboard/GalleryEdit'
 import ImageList from '../views/dashboard/ImageList'
 import ImageUpload from '../views/dashboard/ImageUpload'
 
-import SettingsEdit from '../views/dashboard/SettingsEdit'
-
 import Login from '../views/auth/Login'
 import Logout from '../views/auth/Logout'
 
@@ -116,12 +114,6 @@ const router = new VueRouter({
           component: GalleryEdit,
           beforeEnter: loginRequired
         },
-        {
-          path: 'settings/',
-          name: 'settings-edit',
-          component: SettingsEdit,
-          beforeEnter: loginRequired
-        }
       ]
     },
     {
