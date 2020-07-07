@@ -22,6 +22,9 @@ class Image(models.Model):
 
     title = models.CharField(max_length=200)
     files = models.ManyToManyField(ImageFile)
+    # Blank true is implicitly set via auto_now_add but needed for existing objects
+    creation_date = models.DateTimeField(auto_now_add=True)
+
     thumbnail = models.ForeignKey(
         ImageFile,
         blank=True,

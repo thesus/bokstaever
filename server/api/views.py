@@ -23,6 +23,8 @@ from api.serializers import (
 
 from api.viewsets import MultiSerializerViewSet
 
+from rest_framework import filters
+
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from rest_framework.generics import (
@@ -60,6 +62,8 @@ class ImageViewSet(MultiSerializerViewSet):
     serializer_class = ImageSerializer
     serializer_action_classes = {"create": ImageCreateSerializer}
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    filter_backends = [filters.OrderingFilter]
+    ordering = ["-creation_date"]
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
