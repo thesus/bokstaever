@@ -1,0 +1,33 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+  <h1>Pages</h1>
+  {% if object_list %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Headline</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for page in object_list %}
+        {{ page.text }}
+        {% if "text" in page %}
+          uaiuiae
+        {% endif %}
+          <tr>
+            <td>{{ page.pk }}</td>
+            <td>{{ page.headline }}</td>
+            <td><a href="{% url "dashboard:page-edit" page.pk %}">Edit</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    No pages
+  {% endif %}
+
+  {% include 'dashboard/pagination.html' %}
+{% endblock content %}

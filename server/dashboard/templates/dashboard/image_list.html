@@ -1,0 +1,17 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+  <h1>Images</h1>
+
+  <a href="{% url "dashboard:image-create" %}">Create Image</a>
+
+  {% if object_list %}
+    {% for image in object_list %}
+      <span>{{ image.pk }}</span>
+    {% endfor %}
+  {% else %}
+    No images.
+  {% endif %}
+
+  {% include 'dashboard/pagination.html' %}
+{% endblock content %}
