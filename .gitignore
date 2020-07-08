@@ -9,7 +9,6 @@ __pycache__
 
 # Backend related stuff
 /server/bokstaever/media
-*.css
 *.css.map
 *.min.js
 
