@@ -43,6 +43,10 @@ class Image(models.Model):
         if image:
             self.store(image)
 
+
+    def get_thumbnail_url(self):
+        self.thumbnail.image_file.url
+
     def store(self, image):
         # Take filename from last dot and name it after an id
         name = "{0}.{1}".format(uuid.uuid4(), image.name.split(".")[-1])

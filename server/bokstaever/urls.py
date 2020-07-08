@@ -15,14 +15,8 @@ urlpatterns = [
     path("", include("frontend.urls", namespace="frontend")),
     path("feed/", LatestPostsFeed(), name="feed"),
     path("admin/", admin.site.urls),
-    path("api/", include("api.urls", namespace="api")),
+    path("dashboard/", include("dashboard.urls", namespace="dashboard")),
 ]
 
 if settings.DEBUG:
-    from django.views.generic import TemplateView  # noqa
-
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-    urlpatterns += [
-        path("dashboard/", TemplateView.as_view(template_name="index.html")),
-    ] + static("/dashboard/", document_root=str(settings.ROOT_DIR.path("contrib")))

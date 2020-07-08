@@ -45,9 +45,10 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     "bokstaever",
-    "api",
+    "dashboard",
     "frontend",
     "images",
+    "django.forms",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "bokstaever.urls"
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 TEMPLATES = [
     {
@@ -118,7 +121,10 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-STATICFILES_DIRS = [str(APPS_DIR.path("bundle/static/"))]
+STATICFILES_DIRS = [
+    str(APPS_DIR.path("bundle/static/")),
+    str(APPS_DIR.path("dashboard/static/"))
+]
 
 STATIC_ROOT = "static"
 STATIC_URL = "/static/"

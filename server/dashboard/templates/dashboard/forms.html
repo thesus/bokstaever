@@ -1,0 +1,21 @@
+<form method="post">
+  {% csrf_token %}
+
+  {% for field in form %}
+    <div class="mb-3">
+      <label for="{{ field.auto_id }}" class="form-label">{{ field.label }}</label>
+
+    {% if field.errors %}
+        {{ field.errors }}
+    {% endif %}
+    {{ field }}
+    {% if field.help_text %}
+      <div class="form-text">
+        {{ field.help_text|safe }}
+      </div>
+    {% endif %}
+    </div>
+  {% endfor %}
+  </table>
+  <input class="btn btn-primary" type="submit" value="Update">
+</form>
