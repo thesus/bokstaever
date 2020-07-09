@@ -8,7 +8,7 @@ from bokstaever.models import (
 from dashboard.fields import ImageChoiceField
 
 class PostForm(forms.ModelForm):
-    image = ImageChoiceField()
+    image = ImageChoiceField(required=False)
 
     class Meta:
         model = Post
@@ -16,7 +16,7 @@ class PostForm(forms.ModelForm):
 
 
 class PageForm(forms.ModelForm):
-    image = ImageChoiceField()
+    image = ImageChoiceField(required=False)
 
     class Meta:
         model = DatabasePage

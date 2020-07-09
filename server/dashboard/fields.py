@@ -11,10 +11,15 @@ class ImageChoiceField(Field):
         super().__init__(**kwargs)
 
     def clean(self, value):
+        if not value and not self.required:
+            return None
+        elif not value:
+            raise ValidationError(_("The image is required."))
+
         try:
             return Image.objects.get(pk=value)
         except ObjectDoesNotExist:
-            if self.is_required:
+            if self.required:
                 raise ValidationError(_("The given image does not exist."))
             else:
                 return None

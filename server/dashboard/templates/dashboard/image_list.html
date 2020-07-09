@@ -6,9 +6,15 @@
   <a href="{% url "dashboard:image-create" %}">Create Image</a>
 
   {% if object_list %}
-    {% for image in object_list %}
-      <span>{{ image.pk }}</span>
-    {% endfor %}
+    <div class="images">
+      <div class="row">
+        {% for image in object_list %}
+          <div class="col-sm-3">
+            <img class="img-thumbnail fixed-size" src="{{ image.thumbnail.image_file.url }}">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   {% else %}
     No images.
   {% endif %}

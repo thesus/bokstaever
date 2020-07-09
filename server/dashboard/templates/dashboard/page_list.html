@@ -2,6 +2,8 @@
 
 {% block content %}
   <h1>Pages</h1>
+  <a href="{% url "dashboard:page-create" %}">Create new page</a>
+
   {% if object_list %}
     <table class="table">
       <thead>
@@ -13,15 +15,11 @@
       </thead>
       <tbody>
         {% for page in object_list %}
-        {{ page.text }}
-        {% if "text" in page %}
-          uaiuiae
-        {% endif %}
-          <tr>
-            <td>{{ page.pk }}</td>
-            <td>{{ page.headline }}</td>
-            <td><a href="{% url "dashboard:page-edit" page.pk %}">Edit</a></td>
-          </tr>
+        <tr>
+          <td>{{ page.pk }}</td>
+          <td>{{ page.headline }}</td>
+          <td><a href="{% url "dashboard:page-edit" page.pk %}">Edit</a></td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
@@ -30,4 +28,33 @@
   {% endif %}
 
   {% include 'dashboard/pagination.html' %}
+
+  <a class="btn btn-primary float-right" data-toggle="collapse" href="#filePages" role="button" aria-expended="false" aria-controls="filePages">
+    File pages
+  </a>
+
+  <div class="collapse filepages" id="filePages">
+    <div class="card card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Headline</th>
+              <th scope="col">In sidebar</th>
+              <th scope="col">Link</th>
+            <tr>
+          </thead>
+          <tbody>
+            {% for page in file_pages %}
+            <tr>
+              <td>{{ page.pk }}</td>
+              <td>{{ page.headline }}</td>
+              <td>{{ page.show_menu }}</td>
+              <td><a href="{% url "frontend:page-detail" page.slug %}">Link</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  </div>
 {% endblock content %}

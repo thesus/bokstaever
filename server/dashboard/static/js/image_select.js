@@ -41,7 +41,7 @@ class ImageSelectWidget {
   async getImages() {
     this.anchor.textContent = ""
 
-    const response = await fetch(`/dashboard/images/simple?page=${this.page}`)
+    const response = await fetch(`/api/images/?page=${this.page}`)
     const data = await response.json()
 
     // Update max count

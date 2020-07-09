@@ -4,10 +4,7 @@ from django.views.generic.base import TemplateView
 
 from django.http import JsonResponse
 
-from bokstaever.models import (
-    Post,
-    DatabasePage,
-)
+from bokstaever.models import Post, DatabasePage, FilePage
 
 from images.models import Image
 
@@ -15,7 +12,7 @@ from dashboard.forms import PostForm, PageForm
 
 
 class DashboardListView(ListView):
-    paginate_by = 6
+    paginate_by = 16
 
 
 class PostList(DashboardListView):
@@ -42,6 +39,15 @@ class PageList(DashboardListView):
     template_name = "dashboard/page_list.html"
     model = DatabasePage
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Insert all filepages
+        # Since we don't expect that many there's no pagination
+        context["file_pages"] = FilePage.objects.all()
+
+        return context
+
 
 class PageEdit:
     template_name = "dashboard/page_edit.html"
@@ -60,6 +66,7 @@ class PageCreate(PageEdit, CreateView):
 
 class ImageList(DashboardListView):
     template_name = "dashboard/image_list.html"
+    ordering = ["-creation_date"]
     model = Image
 
 
