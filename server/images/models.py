@@ -36,6 +36,7 @@ class Image(models.Model):
     def save(self, *args, **kwargs):
         image = kwargs.pop("image", None)
         title = kwargs.pop("title", None)
+
         if title:
             self.title = title
 

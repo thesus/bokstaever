@@ -10,6 +10,7 @@ from dashboard.views import (
     ImageListSimple,
     ImageList,
     ImageCreate,
+    image_upload
 )
 
 app_name = "dashboard"
@@ -25,4 +26,5 @@ urlpatterns = [
     path("images/", ImageList.as_view(), name="image-list"),
     path("images/create", ImageCreate.as_view(), name="image-create"),
     path("images/simple/", ImageListSimple.as_view()),
+    path("images/upload/", image_upload),
 ]

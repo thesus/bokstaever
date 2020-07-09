@@ -1,21 +1,20 @@
 from django.views.generic import ListView
-from django.views.generic.edit import UpdateView, CreateView
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.utils.translation import gettext_lazy as _
-from django.core import serializers
+from django.views.generic.edit import UpdateView, CreateView, FormView
+from django.views.generic.base import TemplateView
+from django.views.decorators.http import require_POST
+
 from django.http import JsonResponse
 
 from bokstaever.models import (
     Post,
     DatabasePage,
-    FilePage,
-    PageModel
 )
+
+import random
+
 from images.models import Image
 
-from django import forms
-
-from dashboard.fields import ImageChoiceField
+from dashboard.forms import PostForm, PageForm, ImageForm
 
 
 class DashboardListView(ListView):
@@ -25,14 +24,6 @@ class DashboardListView(ListView):
 class PostList(DashboardListView):
     model = Post
     template_name = "dashboard/post_list.html"
-
-
-class PostForm(forms.ModelForm):
-    image = ImageChoiceField()
-
-    class Meta:
-        model = Post
-        fields = ["headline", "draft", "text", "type", "image"]
 
 
 class PostEdit:
@@ -53,14 +44,6 @@ class PostCreate(PostEdit, CreateView):
 class PageList(DashboardListView):
     template_name = "dashboard/page_list.html"
     model = DatabasePage
-
-
-class PageForm(forms.ModelForm):
-    image = ImageChoiceField()
-
-    class Meta:
-        model = DatabasePage
-        fields = ["headline", "show_menu", "text", "type", "draft", "image"]
 
 
 class PageEdit:
@@ -100,8 +83,27 @@ class ImageListSimple(DashboardListView):
             status=200,
         )
 
+
 class ImageList(DashboardListView):
     template_name = "dashboard/image_list.html"
     model = Image
 
-class ImageCreate()
+
+class ImageCreate(TemplateView):
+    template_name = "dashboard/image_create.html"
+
+@require_POST
+def image_upload(request):
+    form = ImageForm(request.POST, request.FILES)
+
+    if form.is_valid():
+        instance = Image()
+        instance.save(
+            image=request.FILES["image"], title=form.cleaned_data["title"]
+        )
+
+        r = random.randint(0, 10)
+        print(r)
+        if r > 5:
+            return JsonResponse({"detail": instance.pk }, status=200)
+    return JsonResponse({"detail": form.errors }, status=400)
