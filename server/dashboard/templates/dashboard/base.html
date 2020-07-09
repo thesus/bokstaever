@@ -7,6 +7,9 @@
 
     <script src="{% static 'extern/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/image_select.js' %}"></script>
+
+    {% block header %}
+    {% endblock header %}
   </head>
 
   <body>
@@ -29,6 +32,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url "dashboard:page-list" %}">Pages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "dashboard:image-list" %}">Images</a>
             </li>
           </ul>
         </div>

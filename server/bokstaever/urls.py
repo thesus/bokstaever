@@ -16,6 +16,7 @@ urlpatterns = [
     path("feed/", LatestPostsFeed(), name="feed"),
     path("admin/", admin.site.urls),
     path("dashboard/", include("dashboard.urls", namespace="dashboard")),
+    path("api/", include("api.urls", namespace="api"))
 ]
 
 if settings.DEBUG:

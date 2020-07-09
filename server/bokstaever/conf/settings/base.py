@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     "bokstaever",
+    "api",
     "dashboard",
     "frontend",
     "images",

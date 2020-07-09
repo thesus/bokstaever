@@ -21,7 +21,3 @@ class PageForm(forms.ModelForm):
     class Meta:
         model = DatabasePage
         fields = ["headline", "show_menu", "text", "type", "draft", "image"]
-
-class ImageForm(forms.Form):
-    image = forms.FileField()
-    title = forms.CharField()
