@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView, FormView
 from django.views.generic.base import TemplateView
+from django.db.models import Value, CharField
 
 from django.http import JsonResponse
 
@@ -37,16 +38,24 @@ class PostCreate(PostEdit, CreateView):
 
 class PageList(DashboardListView):
     template_name = "dashboard/page_list.html"
-    model = DatabasePage
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_queryset(self):
+        values = ["pk", "headline", "show_menu", "slug", "t"]
 
-        # Insert all filepages
-        # Since we don't expect that many there's no pagination
-        context["file_pages"] = FilePage.objects.all()
+        db_page = (
+            DatabasePage.objects.all()
+            .annotate(t=Value("db", CharField()))
+            .values(*values)
+        )
 
-        return context
+        file_page = (
+            FilePage.objects.all()
+            .annotate(t=Value("file", CharField()))
+            .values(*values)
+        )
+
+        data = db_page.union(file_page).order_by("t")
+        return data
 
 
 class PageEdit:

@@ -28,7 +28,6 @@ class SiteModel(models.Model):
 
     text = models.TextField()
     type = models.CharField(max_length=6, choices=TEXT_CHOICES, default="md")
-    draft = models.BooleanField(default=False)
 
     def __str__(self):
         return "{0.headline}".format(self)
@@ -41,6 +40,7 @@ class Post(SiteModel):
     published = models.DateField(auto_now_add=True)
     editors = models.ManyToManyField(User)
     headline = models.CharField(max_length=200)
+    draft = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-published", "-pk"]

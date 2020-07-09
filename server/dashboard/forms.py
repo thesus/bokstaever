@@ -20,4 +20,4 @@ class PageForm(forms.ModelForm):
 
     class Meta:
         model = DatabasePage
-        fields = ["headline", "show_menu", "text", "type", "draft", "image"]
+        fields = ["headline", "show_menu", "text", "type", "image"]
