@@ -1,6 +1,7 @@
 from django.urls import path
 
 from dashboard.views import (
+    Dashboard,
     PostList,
     PostUpdate,
     PostCreate,
@@ -17,7 +18,7 @@ from dashboard.views import (
 app_name = "dashboard"
 
 urlpatterns = [
-    # path("", )
+    path("", Dashboard.as_view(), name="home"),
     path("posts/", PostList.as_view(), name="post-list"),
     path("posts/<int:pk>/", PostUpdate.as_view(), name="post-edit"),
     path("posts/create", PostCreate.as_view(), name="post-create"),

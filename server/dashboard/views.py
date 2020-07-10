@@ -1,7 +1,13 @@
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView, FormView
 from django.views.generic.base import TemplateView
-from django.db.models import Value, CharField
+
+from django.db.models import Value, CharField, Count
+from django.db.models.functions import TruncMonth
+
+from collections import defaultdict
+
+from datetime import datetime
 
 from django.http import JsonResponse
 
@@ -10,6 +16,54 @@ from bokstaever.models import Post, DatabasePage, FilePage, Gallery
 from images.models import Image
 
 from dashboard.forms import PostForm, PageForm, GalleryForm
+
+
+class Dashboard(TemplateView):
+    template_name = "dashboard/home.html"
+
+    def count_posts():
+        def scale(value):
+            if value == 1:
+                return 0.4
+            elif value < 3:
+                return 0.7
+            else:
+                return 1
+
+        post_count = Post.objects.all().count()
+
+        ppm = (
+            Post.objects.filter()
+            .annotate(m=TruncMonth("published"))
+            .values("m")
+            .annotate(c=Count("id"))
+            .order_by()
+        )
+
+        today = datetime.today()
+        data = {}
+
+        activities = defaultdict(dict)
+        for a in ppm:
+            activities[a["m"].year][a["m"].month] = scale(a["c"])
+
+        for i in range(0, 3):
+            year = today.year - i
+            data[year] = []
+            for month in range(1, 13):
+                try:
+                    data[year].append((month, activities[year][month]))
+                except KeyError:
+                    data[year].append((month, 0.1))
+
+        return data
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["statistics"] = {}
+        context["statistics"]["activity"] = Dashboard.count_posts()
+        return context
 
 
 class DashboardListView(ListView):
@@ -97,8 +151,10 @@ class GalleryEdit:
     form_class = GalleryForm
     model = Gallery
 
+
 class GalleryCreate(GalleryEdit, CreateView):
     pass
+
 
 class GalleryUpdate(GalleryEdit, UpdateView):
     pass

@@ -17,7 +17,6 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Dashboard</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,9 +25,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/dashboard">Dashboard</a>
-            </li>
+            {% include "dashboard/navigation.html" with name="dashboard:home" title="Dashboard" %}
             {% include "dashboard/navigation.html" with name="dashboard:post-list" title="Posts" %}
             {% include "dashboard/navigation.html" with name="dashboard:page-list" title="Pages" %}
             {% include "dashboard/navigation.html" with name="dashboard:image-list" title="Images" %}
