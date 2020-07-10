@@ -5,6 +5,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'extern/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
+    <title>Dashboard - {% block title %}{% endblock title %}</title>
+
     <script src="{% static 'extern/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/image_select.js' %}"></script>
 
@@ -27,15 +29,10 @@
             <li class="nav-item">
               <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url "dashboard:post-list" %}">Posts</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url "dashboard:page-list" %}">Pages</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url "dashboard:image-list" %}">Images</a>
-            </li>
+            {% include "dashboard/navigation.html" with name="dashboard:post-list" title="Posts" %}
+            {% include "dashboard/navigation.html" with name="dashboard:page-list" title="Pages" %}
+            {% include "dashboard/navigation.html" with name="dashboard:image-list" title="Images" %}
+            {% include "dashboard/navigation.html" with name="dashboard:gallery-list" title="Galleries" %}
           </ul>
         </div>
       </div>

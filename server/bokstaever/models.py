@@ -9,7 +9,6 @@ class Gallery(models.Model):
     """Includes one or more images and a unique name."""
 
     name = models.CharField(max_length=50, unique=True)
-
     images = models.ManyToManyField(Image)
 
 

@@ -9,6 +9,9 @@ from dashboard.views import (
     PageCreate,
     ImageList,
     ImageCreate,
+    GalleryList,
+    GalleryUpdate,
+    GalleryCreate
 )
 
 app_name = "dashboard"
@@ -23,4 +26,7 @@ urlpatterns = [
     path("pages/create", PageCreate.as_view(), name="page-create"),
     path("images/", ImageList.as_view(), name="image-list"),
     path("images/create", ImageCreate.as_view(), name="image-create"),
+    path("galleries/", GalleryList.as_view(), name="gallery-list"),
+    path("galleries/<int:pk>/", GalleryUpdate.as_view(), name="gallery-edit"),
+    path("galleries/create", GalleryCreate.as_view(), name="gallery-create"),
 ]

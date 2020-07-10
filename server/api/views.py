@@ -16,7 +16,9 @@ class ImageList(ListView):
         )
         result = []
         for entry in queryset:
-            result.append((entry.id, entry.thumbnail.image_file.url))
+            result.append(
+                (entry.id, entry.thumbnail.image_file.url if entry.thumbnail else "")
+            )
 
         return JsonResponse(
             {

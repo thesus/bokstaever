@@ -5,11 +5,11 @@ from django.db.models import Value, CharField
 
 from django.http import JsonResponse
 
-from bokstaever.models import Post, DatabasePage, FilePage
+from bokstaever.models import Post, DatabasePage, FilePage, Gallery
 
 from images.models import Image
 
-from dashboard.forms import PostForm, PageForm
+from dashboard.forms import PostForm, PageForm, GalleryForm
 
 
 class DashboardListView(ListView):
@@ -74,6 +74,8 @@ class PageCreate(PageEdit, CreateView):
 
 
 class ImageList(DashboardListView):
+    paginate_by = 36
+
     template_name = "dashboard/image_list.html"
     ordering = ["-creation_date"]
     model = Image
@@ -81,3 +83,22 @@ class ImageList(DashboardListView):
 
 class ImageCreate(TemplateView):
     template_name = "dashboard/image_create.html"
+
+
+class GalleryList(DashboardListView):
+    template_name = "dashboard/gallery_list.html"
+    ordering = ["-id"]
+    model = Gallery
+
+
+class GalleryEdit:
+    template_name = "dashboard/gallery_edit.html"
+    success_url = "/dashboard/galleries"
+    form_class = GalleryForm
+    model = Gallery
+
+class GalleryCreate(GalleryEdit, CreateView):
+    pass
+
+class GalleryUpdate(GalleryEdit, UpdateView):
+    pass

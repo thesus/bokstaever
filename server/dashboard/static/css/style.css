@@ -2,10 +2,14 @@
   margin-bottom: 20px;
 }
 
-.images > .row > .col-sm-3 {
+.images > .row > .col-sm-2 {
     margin-bottom: 20px;
 }
 
 .hidden {
    display: none;
+}
+
+.selected {
+    border-width: 3px;
 }

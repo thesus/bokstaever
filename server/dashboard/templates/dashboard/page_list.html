@@ -1,5 +1,7 @@
 {% extends "dashboard/base.html" %}
 
+{% block title %}Pages{% endblock title %}
+
 {% block content %}
   <h1>Pages</h1>
   <a href="{% url "dashboard:page-create" %}">Create new page</a>

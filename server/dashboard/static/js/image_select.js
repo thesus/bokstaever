@@ -1,6 +1,9 @@
 class ImageSelectWidget {
-  constructor(idPrefix) {
+  constructor(idPrefix, multiple, images) {
     this.idPrefix = idPrefix
+
+    this.multiple = multiple
+    this.images = images
 
     this.page = 1
     this.max = null
@@ -27,14 +30,34 @@ class ImageSelectWidget {
   }
 
   selectFunction(image) {
-    return function () {
-      const selected = document.getElementById(this.idPrefix + 'Selected')
-      selected.className = "img-thumbnail"
-
+    return function (event) {
       const hiddenInput = document.getElementById("id_" + this.idPrefix)
+      const selected = document.getElementById(this.idPrefix + 'Selected').firstChild
 
-      selected.src = image[1]
-      hiddenInput.value = image[0]
+      if (this.multiple) {
+        if (this.images.has(image[0])) {
+          this.images.delete(image[0])
+
+          event.target.className = "img-thumbnail"
+        } else {
+          this.images.add(
+            image[0]
+          )
+
+          event.target.className = "img-thumbnail border-primary selected"
+        }
+
+        // Set the input to a list of images
+        hiddenInput.value = Array.from(this.images).join(",")
+        selected.textContent = `${this.images.size} Images selected`
+      } else {
+        selected.className = "img-thumbnail"
+
+        selected.src = image[1]
+
+        // Set the input to a single image
+        hiddenInput.value = image[0]
+      }
     }
   }
 
@@ -69,9 +92,9 @@ class ImageSelectWidget {
       this.anchor.appendChild(element)
     }
 
-
     let index = 0;
     let row;
+
     for (let image of data.result) {
       // group in rows of three
       if (index % 3 === 0) {
@@ -87,11 +110,22 @@ class ImageSelectWidget {
 
       let element = document.createElement("img")
       element.src = image[1]
-      element.className = "img-thumbnail"
+
+      let classes = "img-thumbnail"
+
+      if (this.multiple && this.images.has(image[0])) {
+        classes += " border-primary selected"
+      }
+
+      element.className = classes
       element.id = this.idPrefix + "Image" + image[0]
 
-      // If a thumbnail is clicked, close the modal
-      element.setAttribute('data-dismiss','modal')
+
+      // If a thumbnail is clicked, close the modal on single mode
+      if (!this.multiple) {
+        element.setAttribute('data-dismiss','modal')
+      }
+
       element.addEventListener("click", this.selectFunction(image).bind(this))
 
       col.appendChild(element)

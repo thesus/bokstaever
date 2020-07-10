@@ -1,5 +1,7 @@
 {% extends "dashboard/base.html" %}
 
+{% block title %}Posts{% endblock title %}
+
 {% block content %}
   <h1>Posts</h1>
   <a href="{% url "dashboard:post-create" %}">Create new post</a>
