@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView, FormView
 from django.views.generic.base import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.db.models import Value, CharField, Count
 from django.db.models.functions import TruncMonth
@@ -17,8 +18,7 @@ from images.models import Image
 
 from dashboard.forms import PostForm, PageForm, GalleryForm
 
-
-class Dashboard(TemplateView):
+class Dashboard(LoginRequiredMixin, TemplateView):
     template_name = "dashboard/home.html"
 
     def count_posts():
@@ -66,7 +66,7 @@ class Dashboard(TemplateView):
         return context
 
 
-class DashboardListView(ListView):
+class DashboardListView(LoginRequiredMixin, ListView):
     paginate_by = 16
 
 
@@ -75,7 +75,7 @@ class PostList(DashboardListView):
     template_name = "dashboard/post_list.html"
 
 
-class PostEdit:
+class PostEdit(LoginRequiredMixin):
     template_name = "dashboard/post_edit.html"
     success_url = "/dashboard/posts"
     form_class = PostForm
@@ -112,7 +112,7 @@ class PageList(DashboardListView):
         return data
 
 
-class PageEdit:
+class PageEdit(LoginRequiredMixin):
     template_name = "dashboard/page_edit.html"
     success_url = "/dashboard/pages"
     form_class = PageForm
@@ -135,7 +135,7 @@ class ImageList(DashboardListView):
     model = Image
 
 
-class ImageCreate(TemplateView):
+class ImageCreate(LoginRequiredMixin, TemplateView):
     template_name = "dashboard/image_create.html"
 
 
@@ -145,7 +145,7 @@ class GalleryList(DashboardListView):
     model = Gallery
 
 
-class GalleryEdit:
+class GalleryEdit(LoginRequiredMixin):
     template_name = "dashboard/gallery_edit.html"
     success_url = "/dashboard/galleries"
     form_class = GalleryForm

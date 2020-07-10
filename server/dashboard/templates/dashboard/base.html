@@ -31,11 +31,19 @@
             {% include "dashboard/navigation.html" with name="dashboard:image-list" title="Images" %}
             {% include "dashboard/navigation.html" with name="dashboard:gallery-list" title="Galleries" %}
           </ul>
+
+          {% if request.user.is_authenticated %}
+            <ul class="navbar-nav d-flex">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url "dashboard:logout" %}">Hello, {% firstof request.user.first_name request.user.username %} (logout)</a>
+              </li>
+            </ul>
+          {% endif %}
         </div>
       </div>
     </nav>
 
-    <div class="container">
+    <div class="content container">
       {% block content %}
       {% endblock content %}
     </div>

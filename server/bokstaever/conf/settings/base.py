@@ -37,8 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_rq",
-    "rest_framework",
-    "rest_framework_jwt",
 ]
 
 # Own applications
@@ -133,30 +131,14 @@ STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = str(APPS_DIR.path("bokstaever/media"))
 
-LOGIN_REDIRECT_URL = "/dashboard/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "dashboard:home"
+LOGIN_URL = "dashboard:login"
+LOGOUT_REDIRECT_URL = "dashboard:login"
 
 IMAGE_ROOT = env("IMAGE_ROOT", default=str(APPS_DIR.path("bokstaever/images")))
 
 # Image configuration
 IMAGE_SIZES = {"s": {"w": 400}, "m": {"w": 800}, "l": {"w": 1200}, "xl": {"w": 1800}}
-
-
-# REST Framework
-REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 5,
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ],
-}
-
-JWT_AUTH = {
-    "JWT_ALLOW_REFRESH": True,
-    "JWT_EXPIRATION_DELTA": datetime.timedelta(hours=6),
-    "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7),
-}
 
 # Caching
 CACHES = {

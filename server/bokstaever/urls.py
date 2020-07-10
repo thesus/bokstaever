@@ -9,7 +9,6 @@ from bokstaever.views import LatestPostsFeed
 
 
 app_name = "bokstaever"
-template = "registration/form.html"
 
 urlpatterns = [
     path("", include("frontend.urls", namespace="frontend")),

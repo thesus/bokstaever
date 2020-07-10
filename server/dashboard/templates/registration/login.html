@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title">Login</h5>
+        {% if form.errors %}
+          <div class="alert alert-danger" role="alert">
+            Username and password didn't match.
+          </div>
+        {% endif %}
+
+        {% include "dashboard/forms.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
