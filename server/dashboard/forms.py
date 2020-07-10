@@ -3,6 +3,7 @@ from django import forms
 from bokstaever.models import (
         Post,
         DatabasePage,
+        Image,
         Gallery,
 )
 
@@ -15,6 +16,10 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ["headline", "draft", "text", "type", "image"]
 
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ["title"]
 
 class PageForm(forms.ModelForm):
     image = ImageChoiceField(required=False)

@@ -16,7 +16,8 @@ from bokstaever.models import Post, DatabasePage, FilePage, Gallery
 
 from images.models import Image
 
-from dashboard.forms import PostForm, PageForm, GalleryForm
+from dashboard.forms import PostForm, PageForm, ImageForm, GalleryForm
+
 
 class Dashboard(LoginRequiredMixin, TemplateView):
     template_name = "dashboard/home.html"
@@ -133,6 +134,13 @@ class ImageList(DashboardListView):
     template_name = "dashboard/image_list.html"
     ordering = ["-creation_date"]
     model = Image
+
+
+class ImageUpdate(LoginRequiredMixin, UpdateView):
+    template_name = "dashboard/image_edit.html"
+    success_url = "/dashboard/images"
+    model = Image
+    form_class = ImageForm
 
 
 class ImageCreate(LoginRequiredMixin, TemplateView):

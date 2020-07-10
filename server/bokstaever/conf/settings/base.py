@@ -149,3 +149,5 @@ CACHES = {
 RQ_QUEUES = {
     "default": {"URL": env.str("DJANGO_REDIS_QUEUE", "redis://localhost:6379/0")}
 }
+
+APPEND_SLASH = True
