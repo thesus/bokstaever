@@ -38,13 +38,13 @@ class ImageSelectWidget {
         if (this.images.has(image[0])) {
           this.images.delete(image[0])
 
-          event.target.className = "img-thumbnail"
+          event.target.className = "img-thumbnail selectable"
         } else {
           this.images.add(
             image[0]
           )
 
-          event.target.className = "img-thumbnail border-primary selected"
+          event.target.className = "img-thumbnail border-primary selected selectable"
         }
 
         // Set the input to a list of images
@@ -111,7 +111,7 @@ class ImageSelectWidget {
       let element = document.createElement("img")
       element.src = image[1]
 
-      let classes = "img-thumbnail"
+      let classes = "img-thumbnail selectable"
 
       if (this.multiple && this.images.has(image[0])) {
         classes += " border-primary selected"

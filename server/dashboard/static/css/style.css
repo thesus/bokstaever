@@ -17,3 +17,7 @@
 .selected {
     border-width: 3px;
 }
+
+.selectable {
+    cursor: pointer;
+}
