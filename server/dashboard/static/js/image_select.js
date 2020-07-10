@@ -27,11 +27,21 @@ class ImageSelectWidget {
         this.getImages()
       }
     }.bind(this))
+
+    if (this.multiple) {
+      this.updateInputMultiple()
+    }
+  }
+
+  updateInputMultiple() {
+    const hiddenInput = document.getElementById("id_" + this.idPrefix)
+
+    // Set the input to a list of images
+    hiddenInput.value = Array.from(this.images).join(",")
   }
 
   selectFunction(image) {
     return function (event) {
-      const hiddenInput = document.getElementById("id_" + this.idPrefix)
       const selected = document.getElementById(this.idPrefix + 'Selected').firstChild
 
       if (this.multiple) {
@@ -47,10 +57,11 @@ class ImageSelectWidget {
           event.target.className = "img-thumbnail border-primary selected selectable"
         }
 
-        // Set the input to a list of images
-        hiddenInput.value = Array.from(this.images).join(",")
+        this.updateInputMultiple()
         selected.textContent = `${this.images.size} Images selected`
       } else {
+        const hiddenInput = document.getElementById("id_" + this.idPrefix)
+
         selected.className = "img-thumbnail"
 
         selected.src = image[1]
@@ -92,21 +103,10 @@ class ImageSelectWidget {
       this.anchor.appendChild(element)
     }
 
-    let index = 0;
-    let row;
-
     for (let image of data.result) {
-      // group in rows of three
-      if (index % 3 === 0) {
-        row = document.createElement("div")
-        row.className = "row"
-
-        this.anchor.appendChild(row)
-      }
-
       let col = document.createElement("div")
-      col.className = "col-sm-4"
-      row.appendChild(col)
+      col.className = "col-6 col-sm-4 col-lg-3"
+      this.anchor.appendChild(col)
 
       let element = document.createElement("img")
       element.src = image[1]
@@ -129,8 +129,6 @@ class ImageSelectWidget {
       element.addEventListener("click", this.selectFunction(image).bind(this))
 
       col.appendChild(element)
-
-      index++
     }
   }
 }

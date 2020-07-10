@@ -11,8 +11,10 @@
     <div class="images">
       <div class="row">
         {% for image in object_list %}
-          <div class="col-sm-2">
-            <img class="img-thumbnail fixed-size" src="{{ image.thumbnail.image_file.url }}">
+          <div class="col-6 col-sm-4 col-lg-3">
+            <a href="{% url "dashboard:image-edit" image.pk %}">
+              <img class="img-thumbnail fixed-size" src="{{ image.thumbnail.image_file.url }}">
+            </a>
           </div>
         {% endfor %}
       </div>

@@ -129,7 +129,7 @@ class PageCreate(PageEdit, CreateView):
 
 
 class ImageList(DashboardListView):
-    paginate_by = 36
+    paginate_by = 12
 
     template_name = "dashboard/image_list.html"
     ordering = ["-creation_date"]

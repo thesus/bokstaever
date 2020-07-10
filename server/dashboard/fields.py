@@ -1,5 +1,6 @@
 from django.forms import Field
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.utils.translation import gettext as _
 
 from dashboard.widgets import ImageSelect
 from bokstaever.models import Image

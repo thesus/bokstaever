@@ -7,7 +7,7 @@ from images.models import Image
 from api.forms import ImageForm
 
 class ImageList(ListView):
-    paginate_by = 9
+    paginate_by = 12
     model = Image
 
     def get(self, request, *args, **kwargs):

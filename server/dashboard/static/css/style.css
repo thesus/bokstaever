@@ -6,7 +6,7 @@
   margin-bottom: 20px;
 }
 
-.images > .row > .col-sm-2 {
+.images > .row > div {
     margin-bottom: 20px;
 }
 

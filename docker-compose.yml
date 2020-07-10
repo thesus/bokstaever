@@ -9,8 +9,7 @@ services:
       - "./bundle:/src/bundle"
     environment:
       DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
-      ALLOWED_HOSTS: "example.com"
-      CORS_ORIGIN_WHITELIST: "example.com"
+      DJANGO_ALLOWED_HOSTS: "example.com"
       DJANGO_DEBUG: "False"
       DJANGO_SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
       DJANGO_REDIS_QUEUE: "redis://redis:6379/0"
