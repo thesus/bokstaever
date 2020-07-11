@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from markdown.inlinepatterns import InlineProcessor
 from markdown.extensions import Extension
 
-from markdown.util import etree
+import xml.etree.ElementTree as etree
 
 from bokstaever.models import Gallery
 from images.models import Image
