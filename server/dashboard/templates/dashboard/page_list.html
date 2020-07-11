@@ -4,7 +4,9 @@
 
 {% block content %}
   <h1>Pages</h1>
-  <a href="{% url "dashboard:page-create" %}">Create new page</a>
+  <p>
+    <a href="{% url "dashboard:page-create" %}">Create new page</a>
+  </p>
 
   {% if object_list %}
     <table class="table">

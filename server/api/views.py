@@ -8,8 +8,8 @@ from api.forms import ImageForm
 
 class ImageList(ListView):
     paginate_by = 12
-    model = Image
     order_by = ["-creation_date"]
+    queryset = Image.objects.filter(thumbnail__isnull=False)
 
     def get(self, request, *args, **kwargs):
         paginator, page, queryset, _ = self.paginate_queryset(
@@ -18,7 +18,7 @@ class ImageList(ListView):
         result = []
         for entry in queryset:
             result.append(
-                (entry.id, entry.thumbnail.image_file.url if entry.thumbnail else "")
+                (entry.id, entry.thumbnail.image_file.url)
             )
 
         return JsonResponse(

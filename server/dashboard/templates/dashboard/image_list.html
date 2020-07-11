@@ -1,11 +1,21 @@
 {% extends "dashboard/base.html" %}
+{% load i18n %}
 
 {% block title %}List images{% endblock title %}
 
 {% block content %}
-  <h1>Images</h1>
+  {% if is_processing %}
+  <div class="alert alert-warning" role="alert">
+    {% blocktrans with count=processing_count %}
+      {{ count }} images are still processing in the background. They show up once there finished.
+    {% endblocktrans %}
+  </div>
+  {% endif %}
 
-  <a href="{% url "dashboard:image-create" %}">Create Image</a>
+  <h1>Images</h1>
+  <p>
+    <a href="{% url "dashboard:image-create" %}">Create Image</a>
+  </p>
 
   {% if object_list %}
     <div class="images">

@@ -12,6 +12,8 @@ from datetime import datetime
 
 from django.http import JsonResponse
 
+from django_rq import get_queue
+
 from bokstaever.models import Post, DatabasePage, FilePage, Gallery
 
 from images.models import Image
@@ -146,7 +148,18 @@ class ImageList(DashboardListView):
 
     template_name = "dashboard/image_list.html"
     ordering = ["-creation_date"]
-    model = Image
+    queryset = Image.objects.filter(thumbnail__isnull=False)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        queue = get_queue("default")
+        count = len(queue.jobs) + queue.started_job_registry.count
+
+        context["processing_count"] = count
+        context["is_processing"] = count > 0
+
+        return context
 
 
 class ImageUpdate(LoginRequiredMixin, UpdateView):
@@ -154,11 +167,6 @@ class ImageUpdate(LoginRequiredMixin, UpdateView):
     success_url = "/dashboard/images"
     model = Image
     form_class = ImageForm
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-
-        return context
 
 
 class ImageCreate(LoginRequiredMixin, TemplateView):

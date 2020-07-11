@@ -4,7 +4,9 @@
 
 {% block content %}
   <h1>Posts</h1>
-  <a href="{% url "dashboard:post-create" %}">Create new post</a>
+  <p>
+    <a href="{% url "dashboard:post-create" %}">Create new post</a>
+  </p>
 
   {% if object_list %}
     <table class="table">
