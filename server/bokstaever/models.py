@@ -23,7 +23,7 @@ TEXT_CHOICES = (
 class SiteModel(models.Model):
     """Abstract model for all posts and pages."""
 
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ForeignKey(Image, on_delete=models.SET_NULL, blank=True, null=True)
 
     text = models.TextField()
     type = models.CharField(max_length=6, choices=TEXT_CHOICES, default="md")

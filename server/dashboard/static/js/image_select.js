@@ -11,9 +11,10 @@ class ImageSelectWidget {
     this.anchor = document.getElementById(idPrefix + 'Images')
     this.buttonPrevious = document.getElementById(idPrefix + 'ButtonPrevious')
     this.buttonNext = document.getElementById(idPrefix + 'ButtonNext')
-
     this.modal = document.getElementById(idPrefix + 'Modal')
 
+
+    // Navigation inside the modal
     this.buttonPrevious.addEventListener("click", function () {
       if (this.page > 1) {
         this.page--
@@ -28,6 +29,7 @@ class ImageSelectWidget {
       }
     }.bind(this))
 
+    // update the hidden input with the selected images
     if (this.multiple) {
       this.updateInputMultiple()
     }
@@ -48,12 +50,14 @@ class ImageSelectWidget {
         if (this.images.has(image[0])) {
           this.images.delete(image[0])
 
+          // if the image was previously highlighted, remove highlight
           event.target.className = "img-thumbnail selectable"
         } else {
           this.images.add(
             image[0]
           )
 
+          // Highlight images that are selected
           event.target.className = "img-thumbnail border-primary selected selectable"
         }
 
@@ -62,8 +66,7 @@ class ImageSelectWidget {
       } else {
         const hiddenInput = document.getElementById("id_" + this.idPrefix)
 
-        selected.className = "img-thumbnail"
-
+        selected.className = "small-thumbnail img-thumbnail"
         selected.src = image[1]
 
         // Set the input to a single image
@@ -72,6 +75,7 @@ class ImageSelectWidget {
     }
   }
 
+  // Fetches images and creates the thumnails in the modal
   async getImages() {
     this.anchor.textContent = ""
 
@@ -113,6 +117,7 @@ class ImageSelectWidget {
 
       let classes = "img-thumbnail selectable"
 
+      // Highlight the selected images
       if (this.multiple && this.images.has(image[0])) {
         classes += " border-primary selected"
       }

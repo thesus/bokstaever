@@ -1,15 +1,26 @@
 {% extends "dashboard/base.html" %}
+{% load i18n %}
 
 {% block title %}Edit Image{% endblock title %}
 
 {% block content %}
   <h1>Edit Image</h1>
   <div class="row justify-content-center">
-    <div class="col-sm-6">
+    <div class="col-10 col-md-5 col-lg-4 col-xl-3">
       <div class="card">
         <img class="card-img-top" src="{{ image.thumbnail.image_file.url }}">
         <div class="card-body">
-          {% include "dashboard/forms.html" %}
+          {% include "dashboard/forms.html" with simple=True %}
+
+          {% blocktrans with post_count=object.post_set.count page_count=object.databasepage_set.count gallery_count=object.gallery_set.count asvar warning %}
+            You're about to delete this image. It will be removed from all galleries, posts and pages using it. Currently used by:
+            <ul>
+              <li>Posts: {{ post_count }}</li>
+              <li>Pages: {{ page_count }}</li>
+              <li>Galleries: {{ gallery_count }}</li>
+            </ul>
+          {% endblocktrans %}
+          {% include "dashboard/delete_confirm.html" with view="dashboard:image-delete" %}
         </div>
       </div>
     </div>

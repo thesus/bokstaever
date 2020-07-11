@@ -1,3 +1,7 @@
+body {
+    margin-bottom: 20px;
+}
+
 .content {
     margin-top: 20px;
 }
@@ -10,14 +14,19 @@
     margin-bottom: 20px;
 }
 
-.hidden {
-   display: none;
-}
-
 .selected {
     border-width: 3px;
 }
 
 .selectable {
     cursor: pointer;
+}
+
+.delete {
+    margin-right: 10px;
+}
+
+.small-thumbnail {
+    width: 200px;
+    height: 200px;
 }

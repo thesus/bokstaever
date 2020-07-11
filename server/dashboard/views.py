@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from django.views.generic.edit import UpdateView, CreateView, FormView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView, FormView
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -17,6 +17,11 @@ from bokstaever.models import Post, DatabasePage, FilePage, Gallery
 from images.models import Image
 
 from dashboard.forms import PostForm, PageForm, ImageForm, GalleryForm
+
+
+class DeleteView(LoginRequiredMixin, DeleteView):
+    def get(self, request, pk, **kwargs):
+        return JsonResponse({'pk': pk}, status=200)
 
 
 class Dashboard(LoginRequiredMixin, TemplateView):
@@ -91,6 +96,10 @@ class PostCreate(PostEdit, CreateView):
     pass
 
 
+class PostDelete(PostEdit, DeleteView):
+    pass
+
+
 class PageList(DashboardListView):
     template_name = "dashboard/page_list.html"
 
@@ -128,8 +137,12 @@ class PageCreate(PageEdit, CreateView):
     pass
 
 
+class PageDelete(PageEdit, DeleteView):
+    pass
+
+
 class ImageList(DashboardListView):
-    paginate_by = 12
+    paginate_by = 36
 
     template_name = "dashboard/image_list.html"
     ordering = ["-creation_date"]
@@ -142,9 +155,19 @@ class ImageUpdate(LoginRequiredMixin, UpdateView):
     model = Image
     form_class = ImageForm
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        return context
+
 
 class ImageCreate(LoginRequiredMixin, TemplateView):
     template_name = "dashboard/image_create.html"
+
+
+class ImageDelete(DeleteView):
+    success_url = "/dashboard/images"
+    model = Image
 
 
 class GalleryList(DashboardListView):
@@ -163,6 +186,8 @@ class GalleryEdit(LoginRequiredMixin):
 class GalleryCreate(GalleryEdit, CreateView):
     pass
 
+class GalleryDelete(GalleryEdit, DeleteView):
+    pass
 
 class GalleryUpdate(GalleryEdit, UpdateView):
     pass

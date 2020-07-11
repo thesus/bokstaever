@@ -1,8 +1,13 @@
 {% extends "dashboard/base.html" %}
+{% load i18n %}
 
 {% block title %}Edit gallery{% endblock title %}
 
 {% block content %}
   <h1>Edit gallery</h1>
   {% include "dashboard/forms.html" %}
+  {% blocktrans asvar warning %}
+    You're about to delete this gallery. It could be used on some post or page. Please be careful.
+  {% endblocktrans %}
+  {% include "dashboard/delete_confirm.html" with view="dashboard:gallery-delete" %}
 {% endblock content %}

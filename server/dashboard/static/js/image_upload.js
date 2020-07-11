@@ -1,7 +1,6 @@
 function createElement(type, classes) {
   let element = document.createElement(type)
   element.className = classes
-
   return element
 }
 
@@ -166,6 +165,9 @@ class ImageUpload {
       if (this.wasError && this.loading === 0) {
         this.displayError("An error occured. You may try to upload again.")
         this.disableSubmit(false)
+      } else if (this.loading === 0) {
+        // All images loaded successfully. Return to overview
+        document.location.href = "/dashboard/images"
       }
     }
   }

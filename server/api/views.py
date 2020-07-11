@@ -9,6 +9,7 @@ from api.forms import ImageForm
 class ImageList(ListView):
     paginate_by = 12
     model = Image
+    order_by = ["-creation_date"]
 
     def get(self, request, *args, **kwargs):
         paginator, page, queryset, _ = self.paginate_queryset(

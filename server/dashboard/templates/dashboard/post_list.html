@@ -20,7 +20,9 @@
             <tr>
               <td>{{ post.pk }}</td>
               <td>{{ post.headline }}</td>
-              <td><a href="{% url "dashboard:post-edit" post.pk %}">Edit</a></td>
+              <td>
+                <a href="{% url "dashboard:post-edit" post.pk %}">Edit</a>
+              </td>
             </tr>
         {% endfor %}
       </tbody>
