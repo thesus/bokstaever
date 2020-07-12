@@ -1,16 +1,15 @@
 # Bokstaever
-[![pipeline status](https://dev.cryptec.at/root/bokstaever/badges/develop/pipeline.svg)](https://dev.cryptec.at/root/bokstaever/commits/develop)
-[![coverage report](https://dev.cryptec.at/root/bokstaever/badges/develop/coverage.svg)](https://dev.cryptec.at/root/bokstaever/commits/develop)
+[![pipeline status](https://dev.cryptec.at/root/bokstaever/badges/develop/pipeline.svg)](https://dev.cryptec.at/root/bokstaever/commits/develop) [![coverage report](https://dev.cryptec.at/root/bokstaever/badges/develop/coverage.svg)](https://dev.cryptec.at/root/bokstaever/commits/develop)
 
-Host your own website. It's a kind of cms written in Python featuring the
+Host your own website with support for blogging, editing pages and external static content. It's a cms written in Python featuring the
 awesome webframework Django.
 
 Current Features:
 
-- Upload and manage Images
-- Use Galleries to display images in your posts
-- Post your Stories
-- Format Text in markdown
+- formatting of posts and pages via markdown
+- fully customizable templates
+- ability to load static pages with external dependencies
+- Image upload and resizing
 
 # Getting started
 
@@ -21,17 +20,23 @@ and install the requirements.
 pip install -r requirements/base.txt
 ````
 
-The templates for django are split into different repositories. Download a bundle that suits you and include it in `server/bokstaever/bundles`.
+The templates are split into different repositories. Download a bundle that suits you and include it in `src/bokstaever/bundles`.
 
-Migrate the database. By default it expects a postgresql database. If you're in a
-hurry use a sqlite database with ``export DATABASE_URL=sqlite:////tmp/bokstaever.sqlite``.
+Migrate the database. The default is a postgresql database named `bokstaever`  If you're in a hurry use a sqlite database with ``export DATABASE_URL=sqlite:////tmp/bokstaever.sqlite``.
+
 ````bash
-# in server
+# in /src
 python manage.py migrate
+````
+
+The dashboard requires some staticfile dependencies, they can be installed with:
+````bash
+# in /src
+python manage.py install_dependencies ../requirements/static.json
 ````
 
 Start your development server with:
 ````bash
-# in server
+# in /src
 python manage.py runserver
 ````
