@@ -4,20 +4,26 @@
 <!-- Hidden input used by the field -->
 <input id="{{ widget.attrs.id }}" name="{{ widget.name }}" type="hidden" value="{{ widget.value|default:"" }}">
 
-<div class="row align-items-center justify-content-start">
-  <div class="col col-md-4">
-    {% spaceless %}
-    <div id="{{ widget.name }}Selected">{% if multiple %}{{ widget.value|length }} {% trans "Images selected" %}
-      {% else %}
-        <img class="small-thumbnail img-thumbnail {% if not url %}invisible{% endif %}" src="{{ url }}">
-     {% endif %}
+<div class="card" style="width: 220px">
+  <div class="card-body">
+    <div class="row">
+      <div class="col text-center">
+        {% spaceless %}
+        <div id="{{ widget.name }}Selected">{% if multiple %}{{ widget.value|length }} {% trans "Images selected" %}
+          {% else %}
+            <img class="small-thumbnail img-thumbnail {% if not url %}hidden{% endif %}" src="{{ url }}">
+         {% endif %}
+        </div>
+        {% endspaceless %}
+      </div>
     </div>
-    {% endspaceless %}
-  </div>
-  <div class="col-4 col-md-4">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ widget.name }}Modal">
-      {% trans "Select image" %}
-    </button>
+    <div class="row mt-2">
+      <div class="col text-center">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ widget.name }}Modal">
+          {% trans "Select image" %}
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
