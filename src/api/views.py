@@ -6,6 +6,7 @@ from images.models import Image
 
 from api.forms import ImageForm
 
+
 class ImageList(ListView):
     paginate_by = 12
     order_by = ["-creation_date"]
@@ -17,9 +18,7 @@ class ImageList(ListView):
         )
         result = []
         for entry in queryset:
-            result.append(
-                (entry.id, entry.thumbnail.image_file.url)
-            )
+            result.append((entry.id, entry.thumbnail.image_file.url))
 
         return JsonResponse(
             {
@@ -31,15 +30,14 @@ class ImageList(ListView):
             status=200,
         )
 
+
 @require_POST
 def image_upload(request):
     form = ImageForm(request.POST, request.FILES)
 
     if form.is_valid():
         instance = Image()
-        instance.save(
-            image=request.FILES["image"], title=form.cleaned_data["title"]
-        )
+        instance.save(image=request.FILES["image"], title=form.cleaned_data["title"])
 
-        return JsonResponse({"detail": instance.pk }, status=200)
-    return JsonResponse({"detail": form.errors }, status=400)
+        return JsonResponse({"detail": instance.pk}, status=200)
+    return JsonResponse({"detail": form.errors}, status=400)

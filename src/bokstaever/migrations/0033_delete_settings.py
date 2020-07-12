@@ -6,11 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0032_pagemodel_show_menu'),
+        ("bokstaever", "0032_pagemodel_show_menu"),
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='Settings',
-        ),
+        migrations.DeleteModel(name="Settings",),
     ]

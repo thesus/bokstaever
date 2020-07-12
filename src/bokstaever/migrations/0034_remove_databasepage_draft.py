@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bokstaever', '0033_delete_settings'),
+        ("bokstaever", "0033_delete_settings"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='databasepage',
-            name='draft',
-        ),
+        migrations.RemoveField(model_name="databasepage", name="draft",),
     ]

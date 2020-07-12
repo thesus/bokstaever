@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 from dashboard.widgets import ImageSelect
 from bokstaever.models import Image
 
+
 class ImageChoiceField(Field):
     widget = ImageSelect
 
@@ -32,4 +33,3 @@ class ImageChoiceField(Field):
                 raise ValidationError(_("The given image does not exist."))
             else:
                 return None
-

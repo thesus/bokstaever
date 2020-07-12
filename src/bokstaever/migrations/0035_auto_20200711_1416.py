@@ -7,19 +7,29 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('images', '0003_image_creation_date'),
-        ('bokstaever', '0034_remove_databasepage_draft'),
+        ("images", "0003_image_creation_date"),
+        ("bokstaever", "0034_remove_databasepage_draft"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='databasepage',
-            name='image',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='images.Image'),
+            model_name="databasepage",
+            name="image",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="images.Image",
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='image',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='images.Image'),
+            model_name="post",
+            name="image",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="images.Image",
+            ),
         ),
     ]

@@ -62,7 +62,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "bokstaever.urls"
 
-FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 TEMPLATES = [
     {

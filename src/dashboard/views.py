@@ -23,7 +23,7 @@ from dashboard.forms import PostForm, PageForm, ImageForm, GalleryForm
 
 class DeleteView(LoginRequiredMixin, DeleteView):
     def get(self, request, pk, **kwargs):
-        return JsonResponse({'pk': pk}, status=200)
+        return JsonResponse({"pk": pk}, status=200)
 
 
 class Dashboard(LoginRequiredMixin, TemplateView):
@@ -194,8 +194,10 @@ class GalleryEdit(LoginRequiredMixin):
 class GalleryCreate(GalleryEdit, CreateView):
     pass
 
+
 class GalleryDelete(GalleryEdit, DeleteView):
     pass
+
 
 class GalleryUpdate(GalleryEdit, UpdateView):
     pass

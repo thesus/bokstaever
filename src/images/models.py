@@ -44,7 +44,6 @@ class Image(models.Model):
         if image:
             self.store(image)
 
-
     def get_thumbnail_url(self):
         self.thumbnail.image_file.url
 

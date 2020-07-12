@@ -42,7 +42,6 @@ urlpatterns = [
     path("galleries/<int:pk>/edit", GalleryUpdate.as_view(), name="gallery-edit"),
     path("galleries/<int:pk>/delete", GalleryDelete.as_view(), name="gallery-delete"),
     path("galleries/create", GalleryCreate.as_view(), name="gallery-create"),
-
     path("login", LoginView.as_view(), name="login"),
     path("logout", LogoutView.as_view(), name="logout",),
 ]
