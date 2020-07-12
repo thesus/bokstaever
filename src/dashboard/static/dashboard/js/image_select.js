@@ -1,5 +1,7 @@
 class ImageSelectWidget {
-  constructor(idPrefix, multiple, images) {
+  constructor(idPrefix, multiple, images, text) {
+    this.text = text
+
     this.idPrefix = idPrefix
 
     this.multiple = multiple
@@ -62,7 +64,7 @@ class ImageSelectWidget {
         }
 
         this.updateInputMultiple()
-        selected.textContent = `${this.images.size} Images selected`
+        selected.textContent = this.images.size + this.text.count
       } else {
         const hiddenInput = document.getElementById("id_" + this.idPrefix)
 
@@ -103,7 +105,7 @@ class ImageSelectWidget {
 
     if (data.count === 0) {
       let element = document.createElement("span")
-      element.appendChild(document.createTextNode("No images."))
+      element.appendChild(document.createTextNode(this.text.noImages))
       this.anchor.appendChild(element)
     }
 

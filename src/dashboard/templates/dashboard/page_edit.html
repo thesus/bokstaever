@@ -1,10 +1,10 @@
 {% extends "dashboard/base.html" %}
 {% load i18n %}
 
-{% block title %}Edit Page{% endblock title %}
+{% block title %}{% trans "Edit Page" %}{% endblock title %}
 
 {% block content %}
-  <h1>Edit Page</h1>
+  <h1>{% trans "Edit Page" %}</h1>
   {% include "dashboard/snippets/forms.html" %}
 
   {% trans "You're about to delete this page." as warning %}

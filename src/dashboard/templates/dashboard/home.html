@@ -1,7 +1,9 @@
 {% extends "dashboard/base.html" %}
 {% load static %}
+{% load i18n %}
+{% load l10n %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}{% trans "Home" %}{% endblock title %}
 
 {% block header %}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/home.css' %}">
@@ -18,7 +20,7 @@
             class="month"
             height="10"
             width="10"
-            style="opacity: {{ month.1 }}"
+            style="opacity: {{ month.1|unlocalize }}"
           >
             <rect
               x="0"

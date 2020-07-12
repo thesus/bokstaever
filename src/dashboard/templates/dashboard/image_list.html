@@ -1,21 +1,23 @@
 {% extends "dashboard/base.html" %}
 {% load i18n %}
 
-{% block title %}List images{% endblock title %}
+{% block title %}{% trans "Image list" %}{% endblock title %}
 
 {% block content %}
   <!-- Warns if there are unprocessed images -->
   {% if is_processing %}
   <div class="alert alert-warning" role="alert">
-    {% blocktrans with count=processing_count %}
-      {{ count }} images are still processing in the background. They show up once there finished.
+    {% blocktrans count counter=processing_count %}
+      One image is still processing in the background.
+      {% plural %}
+      {{ counter }} images are still processing in the background. They show up once there finished.
     {% endblocktrans %}
   </div>
   {% endif %}
 
-  <h1>Images</h1>
+  <h1>{% trans "Images" %}</h1>
   <p>
-    <a href="{% url "dashboard:image-create" %}">Create Image</a>
+    <a href="{% url "dashboard:image-create" %}">{% trans "Create image" %}</a>
   </p>
 
   {% if object_list %}
@@ -31,7 +33,7 @@
       </div>
     </div>
   {% else %}
-    No images.
+    {% trans "No images." %}
   {% endif %}
 
   {% include "dashboard/snippets/pagination.html" %}

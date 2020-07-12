@@ -19,6 +19,9 @@ __pycache__
 # Log files
 *.log
 
+# Compiled translations
+*.mo
+
 # Editor directories and files
 .idea
 .vscode

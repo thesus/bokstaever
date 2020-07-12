@@ -1,7 +1,8 @@
 {% extends "dashboard/base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Upload images{% endblock title %}
+{% block title %}{% trans "Upload images" %}{% endblock title %}
 
 {% block header %}
     <script src="{% static "dashboard/js/image_upload.js" %}"></script>
@@ -9,26 +10,25 @@
 {% endblock header %}
 
 {% block content %}
-  <h1>Upload images</h1>
+  <h1>{% trans "Upload images" %}</h1>
 
   <!-- Shows alerts on upload errors -->
-
   <div id="alertAnchor"></div>
   <!-- This form is never submitted, upload happens via js -->
   <form id="imageUpload">
     {% csrf_token %}
 
     <div class="form-file">
-      <input autocomplete="off" class="form-file-input" type="file" id="imageInput" multiple>
+      <input autocomplete="off" class="form-file-input" type="file" id="imageInput" accept="image/*" multiple>
       <label class="form-file-label" for="imageInput">
-        <span class="form-file-text">Choose images</span>
-        <span class="form-file-button">Browse</span>
+        <span class="form-file-text">{% trans "Choose images" %}</span>
+        <span class="form-file-button">{% trans "Browse" %}</span>
       </label>
 
     <!-- Used for displaying images selected via the input above -->
     <div id="anchor" class="images"></div>
 
-    <button id="trigger" type="button" class="btn btn-primary float-right">Upload</button>
+    <button id="trigger" type="button" class="btn btn-primary float-right">{% trans "Upload" %}</button>
   </form>
 
   <script>

@@ -7,28 +7,24 @@ ROOT_DIR = environ.Path(__file__) - 4
 APPS_DIR = ROOT_DIR
 
 env = environ.Env()
-
 environ.Env.read_env(str(ROOT_DIR.path(env.str("ENVIRONMENT_FILE", ".env"))))
+
+# Application settings
+APPLICATION_TITLE = env("DJANGO_APPLICATION_TITLE", default="bokstaever")
+PAGE_SIZE = 4
+
 
 # Secret Key, keep this secure in production!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-
-### Application settings ###
-APPLICATION_TITLE = env("DJANGO_APPLICATION_TITLE", default="bokstaever")
-PAGE_SIZE = 4
-
-### End Application settings ###
-
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DJANGO_DEBUG", default=False)
 
+# Alowed hosts
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[])
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -37,11 +33,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_rq",
-]
-
-# Own applications
-
-INSTALLED_APPS += [
     "bokstaever",
     "api",
     "dashboard",
@@ -53,6 +44,7 @@ INSTALLED_APPS += [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -62,6 +54,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "bokstaever.urls"
 
+# Form rendering is done via templates
+# inputs are located in `bokstaever/templates/django/forms`
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 TEMPLATES = [
@@ -76,24 +70,17 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # Include infos about the application in all templates
                 "bokstaever.context_processors.info",
             ],
         },
     },
 ]
 
-# Only use contrib as template dir in development
-# The vue dashboard is served from there.
-if DEBUG:
-    TEMPLATES[0]["DIRS"] += ["contrib"]
-
-
 WSGI_APPLICATION = "bokstaever.wsgi.application"
-
 
 # Database
 DATABASES = {"default": env.db("DATABASE_URL")}
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -106,36 +93,38 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation." "NumericPasswordValidator",},
 ]
 
-
 # Internationalization
-LANGUAGE_CODE = "en-us"
+LANGUAGES = [
+    ("en", "English"),
+    ("de", "Deutsch")
+]
 
-TIME_ZONE = "UTC"
+LANGUAGE_CODE = env.str("DJANGO_LANGUAGE_CODE", "en-us")
+TIME_ZONE = env.str("TIME_ZONE", "UTC")
 
 USE_I18N = True
-
 USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = "dashboard:home"
-LOGIN_URL = "dashboard:login"
-LOGOUT_REDIRECT_URL = "dashboard:login"
-
 # Static files (CSS, JavaScript, Images)
+STATIC_ROOT = "static"
+STATIC_URL = "/static/"
+
+# Used to include external bundle
 STATICFILES_DIRS = [
     str(APPS_DIR.path("bundle/static")),
 ]
 
-STATIC_ROOT = "static"
-STATIC_URL = "/static/"
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = str(APPS_DIR.path("bokstaever/media"))
 
+# Location of the uploaded images
+# At the moment they are not cleared after resizing
 IMAGE_ROOT = env("IMAGE_ROOT", default=str(APPS_DIR.path("bokstaever/images")))
 
 # Image configuration
+# Note that old images are not regenerated if this changes.
 IMAGE_SIZES = {"s": {"w": 400}, "m": {"w": 800}, "l": {"w": 1200}, "xl": {"w": 1800}}
 
 # Caching
@@ -148,4 +137,8 @@ RQ_QUEUES = {
     "default": {"URL": env.str("DJANGO_REDIS_QUEUE", "redis://localhost:6379/0")}
 }
 
-APPEND_SLASH = True
+# Login redirection for the dashboard
+LOGIN_REDIRECT_URL = "dashboard:home"
+LOGIN_URL = "dashboard:login"
+LOGOUT_REDIRECT_URL = "dashboard:login"
+

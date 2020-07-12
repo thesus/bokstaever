@@ -1,10 +1,10 @@
 {% extends "dashboard/base.html" %}
 {% load i18n %}
 
-{% block title %}Edit Image{% endblock title %}
+{% block title %}{% trans "Edit Image" %}{% endblock title %}
 
 {% block content %}
-  <h1>Edit Image</h1>
+  <h1>{% trans "Edit Image" %}</h1>
   <div class="row justify-content-center">
     <div class="col-10 col-md-5 col-lg-4 col-xl-3">
       <div class="card">
@@ -21,6 +21,7 @@
             </ul>
           {% endblocktrans %}
           {% include "dashboard/snippets/delete_confirm.html" with view="dashboard:image-delete" %}
+          <a href="{{ image.files.last.image_file.url }}">{% trans "View" %}</a>
         </div>
       </div>
     </div>

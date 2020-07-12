@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from bokstaever.models import (
     Post,
@@ -11,7 +12,7 @@ from dashboard.fields import ImageChoiceField
 
 
 class PostForm(forms.ModelForm):
-    image = ImageChoiceField(required=False)
+    image = ImageChoiceField(required=False, label=_("Image"))
 
     class Meta:
         model = Post
@@ -25,7 +26,7 @@ class ImageForm(forms.ModelForm):
 
 
 class PageForm(forms.ModelForm):
-    image = ImageChoiceField(required=False)
+    image = ImageChoiceField(required=False, label=_("Image"))
 
     class Meta:
         model = DatabasePage
@@ -33,7 +34,7 @@ class PageForm(forms.ModelForm):
 
 
 class GalleryForm(forms.ModelForm):
-    images = ImageChoiceField(multiple=True)
+    images = ImageChoiceField(multiple=True, label=_("Images"))
 
     class Meta:
         model = Gallery

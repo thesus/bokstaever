@@ -6,24 +6,26 @@ from django.conf import settings
 from django.db import models
 import django_rq
 
+from django.utils.translation import gettext_lazy as _
+
 from images.utils import process
 
 
 class ImageFile(models.Model):
     """Stores an image on a specific location and it's dimensions."""
 
-    image_file = models.FileField()
-    height = models.IntegerField()
-    width = models.IntegerField()
+    image_file = models.FileField(verbose_name=_("Image file"))
+    height = models.IntegerField(verbose_name=_("Height"))
+    width = models.IntegerField(verbose_name=_("Width"))
 
 
 class Image(models.Model):
     """Stores multiple versions of a image in different sizes."""
 
-    title = models.CharField(max_length=200)
-    files = models.ManyToManyField(ImageFile)
+    title = models.CharField(max_length=200, verbose_name=_("Title"))
+    files = models.ManyToManyField(ImageFile, verbose_name=_("Files"))
     # Blank true is implicitly set via auto_now_add but needed for existing objects
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Creation date"))
 
     thumbnail = models.ForeignKey(
         ImageFile,
@@ -31,6 +33,7 @@ class Image(models.Model):
         null=True,
         on_delete=models.CASCADE,
         related_name="container",
+        verbose_name=_("Thumbnail")
     )
 
     def save(self, *args, **kwargs):

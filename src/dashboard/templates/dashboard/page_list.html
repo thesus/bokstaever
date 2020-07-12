@@ -1,21 +1,22 @@
 {% extends "dashboard/base.html" %}
+{% load i18n %}
 
-{% block title %}Pages{% endblock title %}
+{% block title %}{% trans "Pages" %}{% endblock title %}
 
 {% block content %}
-  <h1>Pages</h1>
+  <h1>{% trans "Pages" %}</h1>
   <p>
-    <a href="{% url "dashboard:page-create" %}">Create new page</a>
+    <a href="{% url "dashboard:page-create" %}">{% trans "Create new page" %}</a>
   </p>
 
   {% if object_list %}
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Headline</th>
-          <th scope="col">In menu</th>
-          <th scope="col">Actions</th>
+          <th scope="col">{% trans "ID" %}</th>
+          <th scope="col">{% trans "Headline" %}</th>
+          <th scope="col">{% trans "In menu" %}</th>
+          <th scope="col">{% trans "Actions" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -25,9 +26,9 @@
           <td>{{ page.headline }}</td>
           <td>{{ page.show_menu }}</td>
           <td>
-            <a href="{% url "frontend:page-detail" page.slug %}">Link</a>
+            <a href="{% url "frontend:page-detail" page.slug %}">{% trans "Link" %}</a>
             {% if page.t == "db" %}
-              <a href="{% url "dashboard:page-edit" page.pk %}">Edit</a>
+            <a href="{% url "dashboard:page-edit" page.pk %}">{% trans "Edit" %}</a>
             {% endif %}
           </td>
         </tr>
@@ -35,7 +36,7 @@
       </tbody>
     </table>
   {% else %}
-    No pages
+    {% trans "No pages" %}
   {% endif %}
 
   {% include "dashboard/snippets/pagination.html" %}

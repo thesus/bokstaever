@@ -9,7 +9,6 @@ from django.utils.safestring import mark_safe
 
 from .extensions import EscapeHTMLExtension, GalleryExtension, ImageExtension
 
-
 register = template.Library()
 
 
@@ -50,7 +49,7 @@ def svg(filename):
             path = None
 
     if not path:
-        return mark_safe("svg {} not found!".format(filename))
+        return mark_safe(f"svg {filename} not found!")
 
     path = os.path.join(settings.STATICFILES_DIRS[0], filename)
     with open(path) as f:

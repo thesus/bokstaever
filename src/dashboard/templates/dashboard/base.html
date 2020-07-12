@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <html>
   <head>
@@ -27,17 +28,28 @@
             <li class="nav-item">
               <a class="nav-link" href="/">Home</a>
             </li>
-            {% include "dashboard/snippets/navigation.html" with name="dashboard:home" title="Dashboard" %}
-            {% include "dashboard/snippets/navigation.html" with name="dashboard:post-list" title="Posts" %}
-            {% include "dashboard/snippets/navigation.html" with name="dashboard:page-list" title="Pages" %}
-            {% include "dashboard/snippets/navigation.html" with name="dashboard:image-list" title="Images" %}
-            {% include "dashboard/snippets/navigation.html" with name="dashboard:gallery-list" title="Galleries" %}
+            {% trans "Dashboard" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:home" %}
+            {% trans "Posts" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:post-list" %}
+            {% trans "Pages" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:page-list" %}
+            {% trans "Images" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:image-list" %}
+            {% trans "Galleries" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:gallery-list" %}
           </ul>
 
           {% if request.user.is_authenticated %}
             <ul class="navbar-nav d-flex">
               <li class="nav-item">
-                <a class="nav-link" href="{% url "dashboard:logout" %}">Hello, {% firstof request.user.first_name request.user.username %} (logout)</a>
+                {% spaceless %}
+                <a class="nav-link" href="{% url "dashboard:logout" %}">
+                  {% trans "Hello, " %}
+                  {% firstof request.user.first_name request.user.username %}
+                  {% trans " (logout)" %}
+                </a>
+                {% endspaceless %}
               </li>
             </ul>
           {% endif %}

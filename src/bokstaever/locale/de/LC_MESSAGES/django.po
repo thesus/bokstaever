@@ -1,0 +1,82 @@
+# Translation of the base models
+# Copyright (C) 2020
+# This file is distributed under the same license as the bokstaever package.
+# Till Wesselmann <till@cryptec.at>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: develop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-12 21:47+0000\n"
+"PO-Revision-Date: 2020-07-12 22:00\n"
+"Last-Translator: Till Wesselmann <till@cryptec.at\n"
+"Language: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: bokstaever/models.py:12
+msgid "Name"
+msgstr ""
+
+#: bokstaever/models.py:13
+msgid "Images"
+msgstr "Bilder"
+
+#: bokstaever/models.py:17
+msgid "Markdown"
+msgstr "Markdown"
+
+#: bokstaever/models.py:18
+msgid "Markdown with inline HTML"
+msgstr "Markdown mit inline HTML"
+
+#: bokstaever/models.py:19
+msgid "HTML"
+msgstr "HTML"
+
+#: bokstaever/models.py:20
+msgid "Raw, linebreaks are rendered"
+msgstr "Roh, Zeilenumbrüche werden angezeigt"
+
+#: bokstaever/models.py:28
+msgid "Image"
+msgstr "Bild"
+
+#: bokstaever/models.py:31
+msgid "Text"
+msgstr "Text"
+
+#: bokstaever/models.py:33
+msgid "Typ"
+msgstr "Typ"
+
+#: bokstaever/models.py:46
+msgid "Published"
+msgstr "Veröffentlichungsdatum"
+
+#: bokstaever/models.py:47
+msgid "Editors"
+msgstr "Editoren"
+
+#: bokstaever/models.py:48 bokstaever/models.py:66
+msgid "Headline"
+msgstr "Überschrift"
+
+#: bokstaever/models.py:49
+msgid "Draft"
+msgstr "Entwurf"
+
+#: bokstaever/models.py:65
+msgid "Slug"
+msgstr "Slug"
+
+#: bokstaever/models.py:67
+msgid "Show menu"
+msgstr "Im Menü anzeigen"
+
+#: bokstaever/models.py:88
+msgid "Path"
+msgstr "Pfad"

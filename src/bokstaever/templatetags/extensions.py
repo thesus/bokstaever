@@ -18,7 +18,7 @@ class EscapeHTMLExtension(Extension):
 def error_el(what, pk):
     el = etree.Element("span")
     el.set("class", "danger")
-    el.text = "{} {} does not exist!".format(what, pk)
+    el.text = f"{what} {pk} does not exist!"
     return el
 
 
@@ -34,7 +34,7 @@ class ImagePattern(InlineProcessor):
         root_element = etree.Element("img")
         srcset = ""
         for img in image.files.filter(width__gt=200):
-            srcset += "{} {}w,".format(img.image_file.url, img.width)
+            srcset += f"{img.image_file.url} {img.width}w,"
 
         root_element.set("srcset", srcset)
         root_element.set("alt", image.title)

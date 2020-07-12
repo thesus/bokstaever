@@ -89,6 +89,13 @@ class PostEdit(LoginRequiredMixin):
     form_class = PostForm
     model = Post
 
+    def form_valid(self, form):
+        """Adds the user as an editor of the post and saves the post."""
+
+        self.object = form.save()
+        self.object.editors.add(self.request.user)
+        return super().form_valid(form)
+
 
 class PostUpdate(PostEdit, UpdateView):
     pass

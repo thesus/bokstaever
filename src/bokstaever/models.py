@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 from images.models import Image
 
@@ -8,38 +9,44 @@ from images.models import Image
 class Gallery(models.Model):
     """Includes one or more images and a unique name."""
 
-    name = models.CharField(max_length=50, unique=True)
-    images = models.ManyToManyField(Image)
+    name = models.CharField(max_length=50, unique=True, verbose_name=_("Name"))
+    images = models.ManyToManyField(Image, verbose_name=_("Images"))
 
 
 TEXT_CHOICES = (
-    ("md", "Markdown"),
-    ("mdhtml", "Markdown with inline HTML"),
-    ("html", "HTML"),
-    ("raw", "Raw, linebreaks are rendered"),
+    ("md", _("Markdown")),
+    ("mdhtml", _("Markdown with inline HTML")),
+    ("html", _("HTML")),
+    ("raw", _("Raw, linebreaks are rendered")),
 )
 
 
 class SiteModel(models.Model):
     """Abstract model for all posts and pages."""
 
-    image = models.ForeignKey(Image, on_delete=models.SET_NULL, blank=True, null=True)
+    image = models.ForeignKey(
+        Image, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("Image")
+    )
 
-    text = models.TextField()
-    type = models.CharField(max_length=6, choices=TEXT_CHOICES, default="md")
+    text = models.TextField(verbose_name=_("Text"))
+    type = models.CharField(
+        max_length=6, choices=TEXT_CHOICES, default="md", verbose_name=_("Typ")
+    )
 
     def __str__(self):
-        return "{0.headline}".format(self)
+        return f"{self.headline}"
 
     class Meta:
         abstract = True
 
 
 class Post(SiteModel):
-    published = models.DateField(auto_now_add=True)
-    editors = models.ManyToManyField(User)
-    headline = models.CharField(max_length=200)
-    draft = models.BooleanField(default=False)
+    """Blog style articles with editors and drafts."""
+
+    published = models.DateField(auto_now_add=True, verbose_name=_("Published"))
+    editors = models.ManyToManyField(User, verbose_name=_("Editors"))
+    headline = models.CharField(max_length=200, verbose_name=_("Headline"))
+    draft = models.BooleanField(default=False, verbose_name=_("Draft"))
 
     class Meta:
         ordering = ["-published", "-pk"]
@@ -55,9 +62,9 @@ class PageModel(models.Model):
 
     objects = PageManager()
 
-    slug = models.SlugField(max_length=200)
-    headline = models.CharField(max_length=200)
-    show_menu = models.BooleanField(default=True)
+    slug = models.SlugField(max_length=200, verbose_name=_("Slug"))
+    headline = models.CharField(max_length=200, verbose_name=_("Headline"))
+    show_menu = models.BooleanField(default=True, verbose_name=_("Show menu"))
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -68,7 +75,7 @@ class PageModel(models.Model):
         return (self.slug,)
 
     def __str__(self):
-        return "{0.headline}".format(self)
+        return f"{self.headline}"
 
     class Meta:
         unique_together = ("slug",)
@@ -78,7 +85,7 @@ class PageModel(models.Model):
 class FilePage(PageModel):
     """Page that is loaded from a file without database interaction."""
 
-    path = models.CharField(max_length=200)
+    path = models.CharField(max_length=200, verbose_name=_("Path"))
 
 
 class DatabasePage(PageModel, SiteModel):

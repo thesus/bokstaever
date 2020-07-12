@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <!-- Hidden input used by the field -->
 <input id="{{ widget.attrs.id }}" name="{{ widget.name }}" type="hidden" value="{{ widget.value|default:"" }}">
@@ -6,7 +7,7 @@
 <div class="row align-items-center justify-content-start">
   <div class="col col-md-4">
     {% spaceless %}
-      <div id="{{ widget.name }}Selected">{% if multiple %}{{ widget.value|length }} Images selected
+    <div id="{{ widget.name }}Selected">{% if multiple %}{{ widget.value|length }} {% trans "Images selected" %}
       {% else %}
         <img class="small-thumbnail img-thumbnail {% if not url %}invisible{% endif %}" src="{{ url }}">
      {% endif %}
@@ -15,7 +16,7 @@
   </div>
   <div class="col-4 col-md-4">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ widget.name }}Modal">
-      Select image
+      {% trans "Select image" %}
     </button>
   </div>
 </div>
@@ -25,8 +26,8 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="{{ widget.name }}ModalLabel">Select an image</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="{{ widget.name }}ModalLabel">{% trans "Select an image" %}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="{% trans "Close" %}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -37,8 +38,8 @@
 
         <nav aria-label="Image navigation">
           <ul class="pagination justify-content-center">
-            <li id="{{ widget.name }}ButtonPrevious" class="page-item"><button type="button" class="page-link">Previous</button></li>
-            <li id="{{ widget.name }}ButtonNext" class="page-item"><button type="button" class="page-link">Next</button></li>
+            <li id="{{ widget.name }}ButtonPrevious" class="page-item"><button type="button" class="page-link">{% trans "Previous" %}</button></li>
+            <li id="{{ widget.name }}ButtonNext" class="page-item"><button type="button" class="page-link">{% trans "Next" %}</button></li>
           </ul>
         </nav>
       </div>
@@ -48,8 +49,13 @@
 
 <script src="{% static "dashboard/js/image_select.js" %}"></script>
 <script>
+  const text = {
+    count: "{% trans " Images selected" %}",
+    noImages: "{% trans "No images." %}"
+  }
+
   {% if not multiple %}
-    widget = new ImageSelectWidget("{{ widget.name }}", false, null)
+    widget = new ImageSelectWidget("{{ widget.name }}", false, null, text)
   {% else %}
     widget = new ImageSelectWidget(
       "{{ widget.name }}",
@@ -59,7 +65,8 @@
           {{ image.pk }}
           {% if not forloop.last %},{% endif %}
         {% endfor %}
-      ])
+      ]),
+      text
     )
   {% endif %}
 
