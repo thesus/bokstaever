@@ -10,7 +10,7 @@
       <div class="card">
         <img class="card-img-top" src="{{ image.thumbnail.image_file.url }}">
         <div class="card-body">
-          {% include "dashboard/forms.html" with simple=True %}
+          {% include "dashboard/snippets/forms.html" with simple=True %}
 
           {% blocktrans with post_count=object.post_set.count page_count=object.databasepage_set.count gallery_count=object.gallery_set.count asvar warning %}
             You're about to delete this image. It will be removed from all galleries, posts and pages using it. Currently used by:
@@ -20,7 +20,7 @@
               <li>Galleries: {{ gallery_count }}</li>
             </ul>
           {% endblocktrans %}
-          {% include "dashboard/delete_confirm.html" with view="dashboard:image-delete" %}
+          {% include "dashboard/snippets/delete_confirm.html" with view="dashboard:image-delete" %}
         </div>
       </div>
     </div>

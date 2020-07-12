@@ -9,6 +9,7 @@ __pycache__
 
 # Static files and external dependencies
 /src/bokstaever/media
+/src/bokstaever/images
 /src/bundle
 /src/dashboard/static/dashboard/extern
 /src/static

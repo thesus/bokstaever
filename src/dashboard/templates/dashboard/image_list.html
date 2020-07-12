@@ -4,6 +4,7 @@
 {% block title %}List images{% endblock title %}
 
 {% block content %}
+  <!-- Warns if there are unprocessed images -->
   {% if is_processing %}
   <div class="alert alert-warning" role="alert">
     {% blocktrans with count=processing_count %}
@@ -33,5 +34,5 @@
     No images.
   {% endif %}
 
-  {% include 'dashboard/pagination.html' %}
+  {% include "dashboard/snippets/pagination.html" %}
 {% endblock content %}

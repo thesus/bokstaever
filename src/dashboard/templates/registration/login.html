@@ -10,8 +10,7 @@
             Username and password didn't match.
           </div>
         {% endif %}
-
-        {% include "dashboard/forms.html" %}
+        {% include "dashboard/snippets/forms.html" with simple=True %}
       </div>
     </div>
   </div>
