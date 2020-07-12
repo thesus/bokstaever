@@ -1,23 +1,31 @@
 :80 {
     proxy / http://web/ {
-        except /static /media /dashboard
+        except /static /media
+
         transparent
         websocket
     }
     log stdout
 }
 
+# Statifiles from collectstatic are from the django admin and the dashboard
+:80/static/admin/ {
+    root /srv/static/admin/
+    log stdout
+}
+
+:80/static/dashboard/ {
+    root /srv/static/dashboard/
+    log stdout
+}
+
+# Staticfiles from the bundle, usually not gathered via collectstatic
 :80/static/ {
-    root /srv/bundle/static
+    root /srv/bundle
     log stdout
 }
 
 :80/media/ {
     root /srv/media/
     log stdout
-}
-
-:80/dashboard/ {
-  root /srv/dashboard
-  log stdout
 }

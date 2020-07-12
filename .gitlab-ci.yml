@@ -47,7 +47,7 @@ testing:
   before_script:
     - python -V
     - pip install -r requirements/testing.txt
-    - cd server
+    - cd src
     - wget -O bundle.zip https://dev.cryptec.at/root/brevlada/-/jobs/artifacts/master/download?job=build
     - unzip bundle.zip
     - mkdir bundle

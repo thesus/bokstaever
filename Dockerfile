@@ -1,11 +1,10 @@
-FROM python:3.6
+FROM python:3.8
 
-COPY requirements/ /requirements
+COPY requirements /requirements
+COPY src /src/
 
 RUN pip install greenlet gevent gunicorn psycopg2
 RUN pip install -r requirements/base.txt
-
-COPY server/ /src
 
 WORKDIR /src
 ENV DJANGO_SETTINGS_MODULE=bokstaever.conf.settings.base

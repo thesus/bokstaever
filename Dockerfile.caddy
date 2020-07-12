@@ -1,21 +1,23 @@
-# DJANGO BUILDER #
-FROM python:3.6 as django_builder
+# DJANGO BUILDER
+FROM python:3.8 as django_builder
+
+COPY requirements/ /requirements
+COPY src/ /src
 
 # Install requirements.
-COPY requirements/ /requirements
 RUN pip install -r /requirements/base.txt
 
-# Copy source code.
-COPY server/ /src
-
+# Collect static files
 WORKDIR /src
+# Mock external template/static folder
 RUN mkdir -p bundle/static/
 RUN python manage.py collectstatic --noinput
 
-# CADDY IMAGE #
+# CADDY IMAGE
 FROM abiosoft/caddy:no-stats
 
 # Copy django's static files
-COPY --from=django_builder /src/static /srv/server
+# Only /srv/static/admin and /srv/static/dashboard are used
+COPY --from=django_builder /src/static /srv/static
 
 COPY Caddyfile /etc/Caddyfile
