@@ -7,17 +7,12 @@
 __pycache__
 *.pyc
 
-# Backend related stuff
-/server/bokstaever/media
+# Static files and external dependencies
+/src/bokstaever/media
+/src/bundle
+/src/dashboard/static/dashboard/extern
 *.css.map
 *.min.js
-
-# Frontend related stuff
-node_modules
-/dashboard/dist
-/server/contrib
-/server/bundle
-/server/dashboard/static/dashboard/extern
 
 # Log files
 *.log
