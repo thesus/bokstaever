@@ -17,7 +17,7 @@ node_modules
 /dashboard/dist
 /server/contrib
 /server/bundle
-/server/dashboard/static/extern
+/server/dashboard/static/dashboard/extern
 
 # Log files
 *.log

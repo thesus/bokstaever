@@ -19,17 +19,6 @@ and install the requirements.
 
 ````bash
 pip install -r requirements/base.txt
-
-# in dashboard
-yarn
-````
-
-After installing the requirements, compile your javascript, migrate the database
-and start the development server.
-
-````bash
-# in dashboard
-yarn build --mode development --watch --dest ../server/contrib
 ````
 
 The templates for django are split into different repositories. Download a bundle that suits you and include it in `server/bokstaever/bundles`.

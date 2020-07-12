@@ -12,27 +12,10 @@ WORKDIR /src
 RUN mkdir -p bundle/static/
 RUN python manage.py collectstatic --noinput
 
-# VUE BUILDER #
-FROM alpine:latest as vue_builder
-
-COPY dashboard/ /src
-
-# Install yarn to compile dashboard
-RUN apk update && apk add --no-cache yarn
-
-WORKDIR /src
-
-RUN yarn && \
-    yarn build
-
-
 # CADDY IMAGE #
 FROM abiosoft/caddy:no-stats
 
 # Copy django's static files
 COPY --from=django_builder /src/static /srv/server
-
-# Copy vue's static files
-COPY --from=vue_builder  /src/dist /srv/dashboard
 
 COPY Caddyfile /etc/Caddyfile

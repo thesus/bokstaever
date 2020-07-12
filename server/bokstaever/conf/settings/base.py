@@ -118,11 +118,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = "dashboard:home"
+LOGIN_URL = "dashboard:login"
+LOGOUT_REDIRECT_URL = "dashboard:login"
 
 # Static files (CSS, JavaScript, Images)
 STATICFILES_DIRS = [
-    str(APPS_DIR.path("bundle/static/")),
-    str(APPS_DIR.path("dashboard/static/"))
+    str(APPS_DIR.path("bundle/static")),
 ]
 
 STATIC_ROOT = "static"
@@ -130,10 +132,6 @@ STATIC_URL = "/static/"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = str(APPS_DIR.path("bokstaever/media"))
-
-LOGIN_REDIRECT_URL = "dashboard:home"
-LOGIN_URL = "dashboard:login"
-LOGOUT_REDIRECT_URL = "dashboard:login"
 
 IMAGE_ROOT = env("IMAGE_ROOT", default=str(APPS_DIR.path("bokstaever/images")))
 
