@@ -1,38 +1,29 @@
-# DJANGO BUILDER #
-FROM python:3.6 as django_builder
+# DJANGO BUILDER
+FROM python:3.8 as django_builder
+
+COPY requirements/ /requirements
+COPY src/ /src
 
 # Install requirements.
-COPY requirements/ /requirements
 RUN pip install -r /requirements/base.txt
 
-# Copy source code.
-COPY server/ /src
-
+# Collect static files
 WORKDIR /src
+
+# Mock external template/static folder
 RUN mkdir -p bundle/static/
+
+# Download static dependencies
+RUN python manage.py install_dependencies ../requirements/static.json
+
+# Collectstatic
 RUN python manage.py collectstatic --noinput
 
-# VUE BUILDER #
-FROM alpine:latest as vue_builder
-
-COPY dashboard/ /src
-
-# Install yarn to compile dashboard
-RUN apk update && apk add --no-cache yarn
-
-WORKDIR /src
-
-RUN yarn && \
-    yarn build
-
-
-# CADDY IMAGE #
+# CADDY IMAGE
 FROM abiosoft/caddy:no-stats
 
 # Copy django's static files
-COPY --from=django_builder /src/static /srv/server
-
-# Copy vue's static files
-COPY --from=vue_builder  /src/dist /srv/dashboard
+# Only /srv/static/admin and /srv/static/dashboard are used
+COPY --from=django_builder /src/static /srv/static
 
 COPY Caddyfile /etc/Caddyfile

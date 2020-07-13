@@ -1,0 +1,22 @@
+.card-img-top {
+  height: 178px;
+  width: 178px;
+
+  object-fit: cover;
+}
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-bottom: 10px;
+}
+
+.card {
+  min-width: unset;
+  margin: 10px;
+}
+
+.progress {
+  margin-top: 5px;
+}

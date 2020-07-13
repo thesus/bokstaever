@@ -1,13 +1,11 @@
-# Javascript hell
-/dashboard/node_modules
-
-# distilled Javascript
-/dashboard/dist
-/server/contrib
-
-# Downloaded dependencies
-/server/bokstaever/static/js/*.min.js
+# Static files
+/src/bundle
+/src/bokstaever/images
+/src/bokstaever/media
+/src/dashboard/static/dashboard/extern
+/src/static
 
 # Caches, virtual environment, etc.
+.git
 .pytest_cache
 /venv

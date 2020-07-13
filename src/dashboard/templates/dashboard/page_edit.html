@@ -1,0 +1,12 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Edit Page" %}{% endblock title %}
+
+{% block content %}
+  <h1>{% trans "Edit Page" %}</h1>
+  {% include "dashboard/snippets/forms.html" %}
+
+  {% trans "You're about to delete this page." as warning %}
+  {% include "dashboard/snippets/delete_confirm.html" with view="dashboard:page-delete" %}
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Edit Post" %}{% endblock title %}
+
+{% block content %}
+  <h1>{% trans "Edit Post" %}</h1>
+  {% include "dashboard/snippets/forms.html" %}
+  {% trans "You're about to delete this post." as warning %}
+  {% include "dashboard/snippets/delete_confirm.html" with view="dashboard:post-delete" %}
+{% endblock content %}

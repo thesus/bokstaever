@@ -1,0 +1,38 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+
+{% block title %}{% trans "Home" %}{% endblock title %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/home.css' %}">
+{% endblock header %}
+
+{% block content %}
+<div class="row justify-content-center">
+  {% for year, months in statistics.activity.items reversed %}
+    <div class="year">
+      <div class="description">{{ year }}</div>
+      <div class="months">
+      {% for month in months %}
+          <svg
+            class="month"
+            height="10"
+            width="10"
+            style="opacity: {{ month.1|unlocalize }}"
+          >
+            <rect
+              x="0"
+              y="0"
+              width="10"
+              height="10"
+              style="fill: {% if month.1 != 0.1 %}green{% else %}black{% endif %}"
+            />
+          </svg>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock content %}

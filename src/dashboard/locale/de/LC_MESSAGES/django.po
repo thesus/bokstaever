@@ -1,0 +1,313 @@
+# Translation of the dashboard.
+# Copyright (C) 2020
+# This file is distributed under the same license as the bokstaever package.
+# Till Wesselmann <till@cryptec.at>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: develop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-13 20:16+0000\n"
+"PO-Revision-Date: 2020-07-12 22:00\n"
+"Last-Translator: Till Wesselmann <till@cryptec.at\n"
+"Language: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: dashboard/fields.py:22
+msgid "The field is required."
+msgstr "Dieses Feld wird benötigt."
+
+#: dashboard/fields.py:33
+msgid "The given image does not exist."
+msgstr "Das Bild existiert nicht."
+
+#: dashboard/forms.py:15 dashboard/forms.py:29
+msgid "Image"
+msgstr "Bild"
+
+#: dashboard/forms.py:37 dashboard/templates/dashboard/base.html:37
+#: dashboard/templates/dashboard/image_list.html:18
+msgid "Images"
+msgstr "Bilder"
+
+#: dashboard/templates/dashboard/base.html:31
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: dashboard/templates/dashboard/base.html:33
+#: dashboard/templates/dashboard/post_list.html:4
+#: dashboard/templates/dashboard/post_list.html:7
+msgid "Posts"
+msgstr "Beiträge"
+
+#: dashboard/templates/dashboard/base.html:35
+#: dashboard/templates/dashboard/page_list.html:4
+#: dashboard/templates/dashboard/page_list.html:7
+msgid "Pages"
+msgstr "Seiten"
+
+#: dashboard/templates/dashboard/base.html:39
+#: dashboard/templates/dashboard/gallery_list.html:4
+#: dashboard/templates/dashboard/gallery_list.html:7
+msgid "Galleries"
+msgstr "Gallerien"
+
+#: dashboard/templates/dashboard/base.html:48
+msgid "Hello, "
+msgstr "Hallo, "
+
+#: dashboard/templates/dashboard/base.html:50
+msgid " (logout)"
+msgstr " (ausloggen)"
+
+#: dashboard/templates/dashboard/gallery_edit.html:4
+#: dashboard/templates/dashboard/gallery_edit.html:7
+msgid "Edit gallery"
+msgstr "Gallerie bearbeiten"
+
+#: dashboard/templates/dashboard/gallery_edit.html:9
+msgid ""
+"\n"
+"    You're about to delete this gallery. It could be used on some post or "
+"page. Please be careful.\n"
+"  "
+msgstr ""
+"\n"
+"    Du bist dabei die Gallerie zu löschen. Sie könnte in Beiträgen oder auf "
+"Seiten genutzt werden. Bitte sei vorsichtig.\n"
+"  "
+
+#: dashboard/templates/dashboard/gallery_list.html:8
+msgid "Create new gallery"
+msgstr "Neue Gallerie erstellen"
+
+#: dashboard/templates/dashboard/gallery_list.html:14
+#: dashboard/templates/dashboard/page_list.html:16
+#: dashboard/templates/dashboard/post_list.html:17
+msgid "ID"
+msgstr "ID"
+
+#: dashboard/templates/dashboard/gallery_list.html:15
+msgid "Name"
+msgstr "Name"
+
+#: dashboard/templates/dashboard/gallery_list.html:16
+#: dashboard/templates/dashboard/page_list.html:19
+#: dashboard/templates/dashboard/post_list.html:21
+msgid "Actions"
+msgstr "Aktionen"
+
+#: dashboard/templates/dashboard/gallery_list.html:24
+#: dashboard/templates/dashboard/page_list.html:31
+#: dashboard/templates/dashboard/post_list.html:39
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: dashboard/templates/dashboard/gallery_list.html:30
+#: dashboard/templates/dashboard/page_list.html:39
+msgid "No pages"
+msgstr "Keine Seiten verfügbar."
+
+#: dashboard/templates/dashboard/home.html:6
+msgid "Home"
+msgstr "Startseite"
+
+#: dashboard/templates/dashboard/image_create.html:5
+#: dashboard/templates/dashboard/image_create.html:13
+msgid "Upload images"
+msgstr "Bilder hochladen"
+
+#: dashboard/templates/dashboard/image_create.html:24
+msgid "Choose images"
+msgstr "Bilder auswählen"
+
+#: dashboard/templates/dashboard/image_create.html:25
+msgid "Browse"
+msgstr "Durchsuchen"
+
+#: dashboard/templates/dashboard/image_create.html:31
+msgid "Upload"
+msgstr "Hochladen"
+
+#: dashboard/templates/dashboard/image_edit.html:4
+#: dashboard/templates/dashboard/image_edit.html:7
+msgid "Edit Image"
+msgstr "Bild bearbeiten"
+
+#: dashboard/templates/dashboard/image_edit.html:15
+#, python-format
+msgid ""
+"\n"
+"            You're about to delete this image. It will be removed from all "
+"galleries, posts and pages using it. Currently used by:\n"
+"            <ul>\n"
+"              <li>Posts: %(post_count)s</li>\n"
+"              <li>Pages: %(page_count)s</li>\n"
+"              <li>Galleries: %(gallery_count)s</li>\n"
+"            </ul>\n"
+"          "
+msgstr ""
+"\n"
+"            Du bist dabei das Bild zu löschen. Es wird von allen Gallerien, "
+"Beiträgen und Seiten entfernt. Momentan wird es genutzt von:\n"
+"            <ul>\n"
+"              <li>Beiträge: %(post_count)s</li>\n"
+"              <li>Seiten: %(page_count)s</li>\n"
+"              <li>Gallerien: %(gallery_count)s</li>\n"
+"            </ul>\n"
+"          "
+
+#: dashboard/templates/dashboard/image_edit.html:24
+msgid "View"
+msgstr "Ansehen"
+
+#: dashboard/templates/dashboard/image_list.html:4
+msgid "Image list"
+msgstr "Bilder"
+
+#: dashboard/templates/dashboard/image_list.html:10
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "      One image is still processing in the background.\n"
+#| "      "
+#| msgid_plural ""
+#| "\n"
+#| "      {counter}s images are still processing in the background. They show "
+#| "up once there finished.\n"
+#| "    "
+msgid ""
+"\n"
+"      One image is still processing in the background.\n"
+"      "
+msgid_plural ""
+"\n"
+"      %(counter)s images are still processing in the background. They show "
+"up once there finished.\n"
+"    "
+msgstr[0] ""
+"\n"
+"      Ein Bild wird noch verarbeitet.\n"
+"      "
+msgstr[1] ""
+"\n"
+"      {counter} Bilder werden noch verarbeitet.\n"
+"    "
+
+#: dashboard/templates/dashboard/image_list.html:20
+msgid "Create image"
+msgstr "Bilder hochladen"
+
+#: dashboard/templates/dashboard/image_list.html:36
+#: dashboard/templates/dashboard/widgets/image_select.html:60
+msgid "No images."
+msgstr "Keine Bilder"
+
+#: dashboard/templates/dashboard/page_edit.html:4
+#: dashboard/templates/dashboard/page_edit.html:7
+msgid "Edit Page"
+msgstr "Seite bearbeiten"
+
+#: dashboard/templates/dashboard/page_edit.html:10
+msgid "You're about to delete this page."
+msgstr "Du bist dabei die Seite zu löschen."
+
+#: dashboard/templates/dashboard/page_list.html:9
+msgid "Create new page"
+msgstr "Neue Seite erstellen"
+
+#: dashboard/templates/dashboard/page_list.html:17
+#: dashboard/templates/dashboard/post_list.html:18
+msgid "Headline"
+msgstr "Überschrift"
+
+#: dashboard/templates/dashboard/page_list.html:18
+msgid "In menu"
+msgstr "Im Menü sichtbar"
+
+#: dashboard/templates/dashboard/page_list.html:29
+msgid "Link"
+msgstr "Link"
+
+#: dashboard/templates/dashboard/post_edit.html:4
+#: dashboard/templates/dashboard/post_edit.html:7
+msgid "Edit Post"
+msgstr "Beitrag bearbeiten"
+
+#: dashboard/templates/dashboard/post_edit.html:9
+msgid "You're about to delete this post."
+msgstr "Du bist dabei den Beitrag zu löschen."
+
+#: dashboard/templates/dashboard/post_list.html:9
+msgid "Create new post"
+msgstr "Neuen Post erstellen"
+
+#: dashboard/templates/dashboard/post_list.html:19
+msgid "Authors"
+msgstr "Autoren"
+
+#: dashboard/templates/dashboard/post_list.html:20
+msgid "Creation date"
+msgstr "Erstellungsdatum"
+
+#: dashboard/templates/dashboard/post_list.html:47
+msgid "No posts"
+msgstr "Keine Beiträge verfügbar"
+
+#: dashboard/templates/dashboard/snippets/delete_confirm.html:5
+#: dashboard/templates/dashboard/snippets/delete_confirm.html:24
+msgid "Delete"
+msgstr "Löschen"
+
+#: dashboard/templates/dashboard/snippets/delete_confirm.html:12
+msgid "Confirmation required"
+msgstr "Bestätigung erforderlich"
+
+#: dashboard/templates/dashboard/snippets/delete_confirm.html:13
+#: dashboard/templates/dashboard/snippets/delete_confirm.html:21
+#: dashboard/templates/dashboard/widgets/image_select.html:36
+msgid "Close"
+msgstr "Schließen"
+
+#: dashboard/templates/dashboard/snippets/delete_confirm.html:18
+msgid "Are you sure you want to continue?"
+msgstr "Möchtest du wirklich fortfahren?"
+
+#: dashboard/templates/dashboard/snippets/pagination.html:7
+#: dashboard/templates/dashboard/snippets/pagination.html:10
+#: dashboard/templates/dashboard/widgets/image_select.html:47
+msgid "Previous"
+msgstr "Vorherige Seite"
+
+#: dashboard/templates/dashboard/snippets/pagination.html:26
+#: dashboard/templates/dashboard/snippets/pagination.html:29
+#: dashboard/templates/dashboard/widgets/image_select.html:48
+msgid "Next"
+msgstr "Nächste Seite"
+
+#: dashboard/templates/dashboard/widgets/image_select.html:12
+msgid "Images selected"
+msgstr "Bilder ausgewählt"
+
+#: dashboard/templates/dashboard/widgets/image_select.html:23
+msgid "Select image"
+msgstr "Bild auswählen"
+
+#: dashboard/templates/dashboard/widgets/image_select.html:35
+msgid "Select an image"
+msgstr "Bild auswählen"
+
+#: dashboard/templates/dashboard/widgets/image_select.html:59
+msgid " Images selected"
+msgstr " Bilder ausgewählt"
+
+#: dashboard/templates/registration/login.html:11
+msgid "Username and password didn't match."
+msgstr "Username und Passwort passen nicht zusammen."
+
+#~ msgid "List images"
+#~ msgstr "Bildliste"

@@ -1,0 +1,65 @@
+{% load static %}
+{% load i18n %}
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/extern/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+
+    <title>Dashboard - {% block title %}bokstaever{% endblock title %}</title>
+
+    <script src="{% static 'dashboard/extern/js/bootstrap.min.js' %}"></script>
+
+    {% block header %}
+    {% endblock header %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            {% trans "Dashboard" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:home" %}
+            {% trans "Posts" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:post-list" %}
+            {% trans "Pages" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:page-list" %}
+            {% trans "Images" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:image-list" %}
+            {% trans "Galleries" as title %}
+            {% include "dashboard/snippets/navigation.html" with name="dashboard:gallery-list" %}
+          </ul>
+
+          {% if request.user.is_authenticated %}
+            <ul class="navbar-nav d-flex">
+              <li class="nav-item">
+                {% spaceless %}
+                <a class="nav-link" href="{% url "dashboard:logout" %}">
+                  {% trans "Hello, " %}
+                  {% firstof request.user.first_name request.user.username %}
+                  {% trans " (logout)" %}
+                </a>
+                {% endspaceless %}
+              </li>
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="content container mb-2 mt-2 clearfix">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </body>
+</html>

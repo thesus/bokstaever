@@ -1,0 +1,6 @@
+{% url name as path %}
+
+<li class="nav-item">
+  <a class="nav-link {% if request.path == path %}active{% endif %}" href="{{ path }}">{{ title }}</a>
+</li>
+

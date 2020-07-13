@@ -1,0 +1,40 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Image list" %}{% endblock title %}
+
+{% block content %}
+  <!-- Warns if there are unprocessed images -->
+  {% if is_processing %}
+  <div class="alert alert-warning" role="alert">
+    {% blocktrans count counter=processing_count %}
+      One image is still processing in the background.
+      {% plural %}
+      {{ counter }} images are still processing in the background. They show up once there finished.
+    {% endblocktrans %}
+  </div>
+  {% endif %}
+
+  <h1>{% trans "Images" %}</h1>
+  <p>
+    <a href="{% url "dashboard:image-create" %}">{% trans "Create image" %}</a>
+  </p>
+
+  {% if object_list %}
+    <div class="images">
+      <div class="row">
+        {% for image in object_list %}
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <a href="{% url "dashboard:image-edit" image.pk %}">
+              <img class="img-thumbnail fixed-size" src="{{ image.thumbnail.image_file.url }}">
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    {% trans "No images." %}
+  {% endif %}
+
+  {% include "dashboard/snippets/pagination.html" %}
+{% endblock content %}

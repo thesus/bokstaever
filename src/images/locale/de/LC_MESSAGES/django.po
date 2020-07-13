@@ -1,0 +1,50 @@
+# Translation of the image models
+# Copyright (C) 2020
+# This file is distributed under the same license as the bokstaever package.
+# Till Wesselmann <till@cryptec.at>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: develop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-13 20:16+0000\n"
+"PO-Revision-Date: 2020-07-12 22:00\n"
+"Last-Translator: Till Wesselmann <till@cryptec.at\n"
+"Language: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: images/models.py:17
+msgid "Image file"
+msgstr "Bild-Datei"
+
+#: images/models.py:18
+msgid "Height"
+msgstr "Höhe"
+
+#: images/models.py:19
+msgid "Width"
+msgstr "Breite"
+
+#: images/models.py:25
+msgid "Title"
+msgstr "Titel"
+
+#: images/models.py:26
+msgid "Files"
+msgstr "Dateien"
+
+#: images/models.py:29
+msgid "Creation date"
+msgstr "Erstellungsdatum"
+
+#: images/models.py:32
+msgid "In feed"
+msgstr "Im Feed"
+
+#: images/models.py:40
+msgid "Thumbnail"
+msgstr "Miniaturansicht"

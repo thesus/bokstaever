@@ -1,0 +1,28 @@
+.images > .row {
+  margin-bottom: 20px;
+}
+
+.images > .row > div {
+    margin-bottom: 20px;
+}
+
+.selected {
+    border-width: 3px;
+}
+
+.selectable {
+    cursor: pointer;
+}
+
+.delete {
+    margin-right: 10px;
+}
+
+.small-thumbnail {
+    width: 200px;
+    height: 200px;
+}
+
+.hidden {
+    display: none;
+}
