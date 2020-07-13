@@ -21,7 +21,7 @@
 
 # Staticfiles from the bundle, usually not gathered via collectstatic
 :80/static/ {
-    root /srv/bundle
+    root /srv/bundle/static/
     log stdout
 }
 
