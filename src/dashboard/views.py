@@ -169,7 +169,7 @@ class ImageList(DashboardListView):
         context = super().get_context_data(*args, **kwargs)
 
         queue = get_queue("default")
-        count = len(queue.jobs) + queue.started_job_registry.count
+        count = len(queue.jobs)
 
         context["processing_count"] = count
         context["is_processing"] = count > 0
