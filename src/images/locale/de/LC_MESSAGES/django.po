@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: develop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-12 21:47+0000\n"
+"POT-Creation-Date: 2020-07-13 20:16+0000\n"
 "PO-Revision-Date: 2020-07-12 22:00\n"
 "Last-Translator: Till Wesselmann <till@cryptec.at\n"
 "Language: German\n"
@@ -37,10 +37,14 @@ msgstr "Titel"
 msgid "Files"
 msgstr "Dateien"
 
-#: images/models.py:28
+#: images/models.py:29
 msgid "Creation date"
 msgstr "Erstellungsdatum"
 
-#: images/models.py:36
+#: images/models.py:32
+msgid "In feed"
+msgstr "Im Feed"
+
+#: images/models.py:40
 msgid "Thumbnail"
 msgstr "Miniaturansicht"

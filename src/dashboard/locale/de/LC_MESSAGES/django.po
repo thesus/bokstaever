@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: develop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-12 21:47+0000\n"
+"POT-Creation-Date: 2020-07-13 20:16+0000\n"
 "PO-Revision-Date: 2020-07-12 22:00\n"
 "Last-Translator: Till Wesselmann <till@cryptec.at\n"
 "Language: German\n"
@@ -203,7 +203,7 @@ msgid "Create image"
 msgstr "Bilder hochladen"
 
 #: dashboard/templates/dashboard/image_list.html:36
-#: dashboard/templates/dashboard/widgets/image_select.html:54
+#: dashboard/templates/dashboard/widgets/image_select.html:60
 msgid "No images."
 msgstr "Keine Bilder"
 
@@ -269,7 +269,7 @@ msgstr "Bestätigung erforderlich"
 
 #: dashboard/templates/dashboard/snippets/delete_confirm.html:13
 #: dashboard/templates/dashboard/snippets/delete_confirm.html:21
-#: dashboard/templates/dashboard/widgets/image_select.html:30
+#: dashboard/templates/dashboard/widgets/image_select.html:36
 msgid "Close"
 msgstr "Schließen"
 
@@ -279,29 +279,29 @@ msgstr "Möchtest du wirklich fortfahren?"
 
 #: dashboard/templates/dashboard/snippets/pagination.html:7
 #: dashboard/templates/dashboard/snippets/pagination.html:10
-#: dashboard/templates/dashboard/widgets/image_select.html:41
+#: dashboard/templates/dashboard/widgets/image_select.html:47
 msgid "Previous"
 msgstr "Vorherige Seite"
 
 #: dashboard/templates/dashboard/snippets/pagination.html:26
 #: dashboard/templates/dashboard/snippets/pagination.html:29
-#: dashboard/templates/dashboard/widgets/image_select.html:42
+#: dashboard/templates/dashboard/widgets/image_select.html:48
 msgid "Next"
 msgstr "Nächste Seite"
 
-#: dashboard/templates/dashboard/widgets/image_select.html:10
+#: dashboard/templates/dashboard/widgets/image_select.html:12
 msgid "Images selected"
 msgstr "Bilder ausgewählt"
 
-#: dashboard/templates/dashboard/widgets/image_select.html:19
+#: dashboard/templates/dashboard/widgets/image_select.html:23
 msgid "Select image"
 msgstr "Bild auswählen"
 
-#: dashboard/templates/dashboard/widgets/image_select.html:29
+#: dashboard/templates/dashboard/widgets/image_select.html:35
 msgid "Select an image"
 msgstr "Bild auswählen"
 
-#: dashboard/templates/dashboard/widgets/image_select.html:53
+#: dashboard/templates/dashboard/widgets/image_select.html:59
 msgid " Images selected"
 msgstr " Bilder ausgewählt"
 
