@@ -27,9 +27,13 @@ class DeleteView(LoginRequiredMixin, DeleteView):
 
 
 class Dashboard(LoginRequiredMixin, TemplateView):
+    """Dashboard homepage featuring statistics about the instance."""
+
     template_name = "dashboard/home.html"
 
     def count_posts():
+        """Count the published posts per month for the last 3 years."""
+
         def scale(value):
             if value == 1:
                 return 0.4
@@ -67,6 +71,8 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         return data
 
     def get_context_data(self, **kwargs):
+        """Inject statistics."""
+
         context = super().get_context_data(**kwargs)
 
         context["statistics"] = {}
@@ -113,6 +119,8 @@ class PageList(DashboardListView):
     template_name = "dashboard/page_list.html"
 
     def get_queryset(self):
+        """Show database pages but also list file pages."""
+
         values = ["pk", "headline", "show_menu", "slug", "t"]
 
         db_page = (

@@ -9,10 +9,20 @@ APPS_DIR = ROOT_DIR
 env = environ.Env()
 environ.Env.read_env(str(ROOT_DIR.path(env.str("ENVIRONMENT_FILE", ".env"))))
 
-# Application settings
-APPLICATION_TITLE = env("DJANGO_APPLICATION_TITLE", default="bokstaever")
-PAGE_SIZE = 4
+### Application settings ###
+# Title of the application used e.g. for the rss feed
+APPLICATION_TITLE = env("BOKSTAEVER_APPLICATION_TITLE", default="bokstaever")
 
+# If the image page is enabled there is a page included that is located under `/images` including all images with `feed` == True
+# On the front page there are PAGE_SIZE images injected.
+INCLUDE_IMAGE_PAGE = env("BOKSTAEVER_IMAGE_PAGE", default=True)
+
+# Images on the `/images` page if `INCLUDE_IMAGE_PATH == True`
+IMAGE_PAGE_SIZE = env("BOKSTAEVER_IMAGE_PAGE_SIZE", default=16)
+
+# Page size
+PAGE_SIZE = env("BOKSTAEVER_PAGE_SIZE", default=4)
+### End Application settings ###
 
 # Secret Key, keep this secure in production!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
@@ -85,19 +95,17 @@ DATABASES = {"default": env.db("DATABASE_URL")}
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation."
-        "UserAttributeSimilarityValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        ),
     },
-    {"NAME": "django.contrib.auth.password_validation." "MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation." "CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation." "NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 # Internationalization
-LANGUAGES = [
-    ("en", "English"),
-    ("de", "Deutsch")
-]
+LANGUAGES = [("en", "English"), ("de", "Deutsch")]
 
 LANGUAGE_CODE = env.str("DJANGO_LANGUAGE_CODE", "en-us")
 TIME_ZONE = env.str("TIME_ZONE", "UTC")
@@ -141,4 +149,3 @@ RQ_QUEUES = {
 LOGIN_REDIRECT_URL = "dashboard:home"
 LOGIN_URL = "dashboard:login"
 LOGOUT_REDIRECT_URL = "dashboard:login"
-

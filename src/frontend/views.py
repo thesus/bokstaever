@@ -7,6 +7,8 @@ from bokstaever.models import Post, FilePage, DatabasePage
 
 from bokstaever.views import DatabaseAwareCacheMixin
 
+from images.models import Image
+
 
 class BundleMixin:
     def get_template_names(self) -> str:
@@ -24,6 +26,30 @@ class IndexView(DatabaseAwareCacheMixin, BundleMixin, ListView):
 
     def get_paginate_by(self, queryset) -> int:
         return settings.PAGE_SIZE
+
+    def get_context_data(self, **kwargs):
+        """Inject statistics."""
+
+        context = super().get_context_data(**kwargs)
+
+        # If the image page is allowed, include a few images on the front page
+        if settings.INCLUDE_IMAGE_PAGE:
+            context["images"] = Image.objects.filter(feed=True).order_by(
+                "-creation_date"
+            )[: settings.PAGE_SIZE]
+
+        return context
+
+
+class ImageView(DatabaseAwareCacheMixin, BundleMixin, ListView):
+    model = Image
+    context_object_name = "images"
+
+    queryset = Image.objects.filter(feed=True).order_by("-creation_date")
+    template = "images.html"
+
+    def get_paginate_by(self, queryset) -> int:
+        return settings.IMAGE_PAGE_SIZE
 
 
 class PostView(DatabaseAwareCacheMixin, BundleMixin, DetailView):
