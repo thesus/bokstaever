@@ -244,7 +244,7 @@ msgstr "Du bist dabei den Beitrag zu löschen."
 
 #: dashboard/templates/dashboard/post_list.html:9
 msgid "Create new post"
-msgstr "Neuen Post erstellen"
+msgstr "Neuen Beitrag erstellen"
 
 #: dashboard/templates/dashboard/post_list.html:19
 msgid "Authors"
