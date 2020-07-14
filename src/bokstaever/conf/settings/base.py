@@ -15,10 +15,13 @@ APPLICATION_TITLE = env("BOKSTAEVER_APPLICATION_TITLE", default="bokstaever")
 
 # If the image page is enabled there is a page included that is located under `/images` including all images with `feed` == True
 # On the front page there are PAGE_SIZE images injected.
-INCLUDE_IMAGE_PAGE = env("BOKSTAEVER_IMAGE_PAGE", default=False)
+INCLUDE_IMAGE_FEED = env("BOKSTAEVER_IMAGE_FEED", default=False)
 
-# Images on the `/images` page if `INCLUDE_IMAGE_PATH == True`
+# Amount of images on the image feed if `INCLUDE_IMAGE_PATH == True`
 IMAGE_PAGE_SIZE = env("BOKSTAEVER_IMAGE_PAGE_SIZE", default=16)
+
+# Path of the image feed
+IMAGE_FEED_PATH = env("BOKSTAEVER_IMAGE_FEED_PATH", default="/images")
 
 # Page size
 PAGE_SIZE = env("BOKSTAEVER_PAGE_SIZE", default=4)

@@ -33,10 +33,10 @@ class IndexView(DatabaseAwareCacheMixin, BundleMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         # If the image page is allowed, include a few images on the front page
-        if settings.INCLUDE_IMAGE_PAGE:
+        if settings.INCLUDE_IMAGE_FEED:
             context["images"] = Image.objects.filter(feed=True).order_by(
                 "-creation_date"
-            )[: settings.PAGE_SIZE]
+            )[: settings.IMAGE_PAGE_SIZE]
 
         return context
 
