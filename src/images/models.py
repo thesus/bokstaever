@@ -43,7 +43,7 @@ class Image(models.Model):
     def get_files(self):
         result = []
         for image in self.files.all().order_by("-width"):
-            result.append((image.width, image.height, image_file.url))
+            result.append((image.width, image.height, image.image_file.url))
 
         return result
 
