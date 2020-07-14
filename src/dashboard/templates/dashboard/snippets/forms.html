@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <form method="post" enctype="{{ enctype|default:"application/x-www-form-urlencoded" }}">
   {% csrf_token %}
 
@@ -22,5 +24,6 @@
     {% endif %}
     </div>
   {% endfor %}
-  <input class="btn btn-primary float-right" type="submit" value="Update">
+  {% trans "Save" as submit_text_default %}
+  <input class="btn btn-primary float-right" type="submit" value="{{ submit_text|default:submit_text_default }}">
 </form>

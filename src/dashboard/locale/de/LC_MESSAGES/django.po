@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: develop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 20:16+0000\n"
+"POT-Creation-Date: 2020-07-14 14:10+0000\n"
 "PO-Revision-Date: 2020-07-12 22:00\n"
 "Last-Translator: Till Wesselmann <till@cryptec.at\n"
 "Language: German\n"
@@ -25,7 +25,7 @@ msgstr "Dieses Feld wird benötigt."
 msgid "The given image does not exist."
 msgstr "Das Bild existiert nicht."
 
-#: dashboard/forms.py:15 dashboard/forms.py:29
+#: dashboard/forms.py:16 dashboard/forms.py:29
 msgid "Image"
 msgstr "Bild"
 
@@ -170,32 +170,23 @@ msgid "Image list"
 msgstr "Bilder"
 
 #: dashboard/templates/dashboard/image_list.html:10
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      One image is still processing in the background.\n"
-#| "      "
-#| msgid_plural ""
-#| "\n"
-#| "      {counter}s images are still processing in the background. They show "
-#| "up once there finished.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "      One image is still processing in the background.\n"
 "      "
 msgid_plural ""
 "\n"
-"      %(counter)s images are still processing in the background. They show "
-"up once there finished.\n"
+"      %(c)s images are still processing in the background. They show up once "
+"there finished.\n"
 "    "
 msgstr[0] ""
 "\n"
 "      Ein Bild wird noch verarbeitet.\n"
-"      "
+"    "
 msgstr[1] ""
 "\n"
-"      {counter} Bilder werden noch verarbeitet.\n"
+"      %(c)s Bilder werden noch verarbeitet.\n"
 "    "
 
 #: dashboard/templates/dashboard/image_list.html:20
@@ -277,6 +268,10 @@ msgstr "Schließen"
 msgid "Are you sure you want to continue?"
 msgstr "Möchtest du wirklich fortfahren?"
 
+#: dashboard/templates/dashboard/snippets/forms.html:27
+msgid "Save"
+msgstr "Speichern"
+
 #: dashboard/templates/dashboard/snippets/pagination.html:7
 #: dashboard/templates/dashboard/snippets/pagination.html:10
 #: dashboard/templates/dashboard/widgets/image_select.html:47
@@ -308,6 +303,10 @@ msgstr " Bilder ausgewählt"
 #: dashboard/templates/registration/login.html:11
 msgid "Username and password didn't match."
 msgstr "Username und Passwort passen nicht zusammen."
+
+#: dashboard/templates/registration/login.html:14
+msgid "Login"
+msgstr "Einloggen"
 
 #~ msgid "List images"
 #~ msgstr "Bildliste"

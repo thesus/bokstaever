@@ -27,11 +27,10 @@ class ImageList(ListView):
     """
 
     paginate_by = 12
-    order_by = ["-creation_date"]
     queryset = Image.objects.filter(thumbnail__isnull=False)
 
     def get(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.get_queryset().order_by("-creation_date")
 
         # Only return all images if requested and the user is authenticated
         # Otherwise only return images marked for the feed if the feed is enabled

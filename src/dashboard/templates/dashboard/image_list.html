@@ -7,10 +7,10 @@
   <!-- Warns if there are unprocessed images -->
   {% if is_processing %}
   <div class="alert alert-warning" role="alert">
-    {% blocktrans count counter=processing_count %}
+    {% blocktrans count c=processing_count %}
       One image is still processing in the background.
       {% plural %}
-      {{ counter }} images are still processing in the background. They show up once there finished.
+      {{ c }} images are still processing in the background. They show up once there finished.
     {% endblocktrans %}
   </div>
   {% endif %}

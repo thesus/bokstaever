@@ -11,6 +11,7 @@
             {% trans "Username and password didn't match." %}
           </div>
         {% endif %}
+        {% trans "Login" as submit_text %}
         {% include "dashboard/snippets/forms.html" with simple=True %}
       </div>
     </div>
