@@ -21,7 +21,7 @@ INCLUDE_IMAGE_FEED = env("BOKSTAEVER_IMAGE_FEED", default=False)
 IMAGE_PAGE_SIZE = env("BOKSTAEVER_IMAGE_PAGE_SIZE", default=16)
 
 # Path of the image feed
-IMAGE_FEED_PATH = env("BOKSTAEVER_IMAGE_FEED_PATH", default="/images")
+IMAGE_FEED_PATH = env("BOKSTAEVER_IMAGE_FEED_PATH", default="images")
 
 # Page size
 PAGE_SIZE = env("BOKSTAEVER_PAGE_SIZE", default=4)

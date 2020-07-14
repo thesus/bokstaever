@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 from bokstaever.models import (
     Post,
@@ -22,8 +23,7 @@ class PostForm(forms.ModelForm):
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ["title"]
-
+        fields = ["title", "feed"] if settings.INCLUDE_IMAGE_FEED else ["title"]
 
 class PageForm(forms.ModelForm):
     image = ImageChoiceField(required=False, label=_("Image"))

@@ -40,6 +40,14 @@ class Image(models.Model):
         verbose_name=_("Thumbnail"),
     )
 
+    def get_files(self):
+        result = []
+        for image in self.files.all().order_by("-width"):
+            result.append((image.width, image.height, image_file.url))
+
+        return result
+
+
     def save(self, *args, **kwargs):
         image = kwargs.pop("image", None)
         title = kwargs.pop("title", None)
@@ -50,9 +58,6 @@ class Image(models.Model):
         super().save(*args, **kwargs)
         if image:
             self.store(image)
-
-    def get_thumbnail_url(self):
-        self.thumbnail.image_file.url
 
     def store(self, image):
         # Take filename from last dot and name it after an id
