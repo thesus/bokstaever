@@ -48,7 +48,7 @@ def resize(pk, filename, name, dimensions, file_class):
 
         # Convert to remove possible alpha channel
         image = image.convert("RGB")
-        image.save(f, format="jpeg")
+        image.save(f, format="jpeg", quality=95)
 
         instance.image_file.save(
             "{0}_{1}.jpg".format(pk, name), ContentFile(f.getvalue()), save=False,
@@ -73,7 +73,7 @@ def process(classes, pk, filename):
     save_on_container(
         classes[0],
         pk,
-        resize(pk, filename, "thumbnail", {"h": 400, "w": 400}, classes[1]),
+        resize(pk, filename, "thumbnail", {"h": 600, "w": 600}, classes[1]),
         thumbnail=True,
     )
 
