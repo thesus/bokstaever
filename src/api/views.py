@@ -52,7 +52,13 @@ class ImageList(ListView):
         if "detailed" in self.request.GET.keys():
             for entry in queryset:
                 result.append(
-                    (entry.id, entry.thumbnail.image_file.url, entry.get_files())
+                    (
+                        entry.id,
+                        entry.thumbnail.image_file.url,
+                        entry.get_files(),
+                        entry.title,
+                        entry.creation_date,
+                    )
                 )
         else:
             for entry in queryset:
