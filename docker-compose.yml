@@ -1,58 +1,90 @@
 version: '3.5'
 
+# Required environment variables
+# (web) DJANGO_ALLOWED_HOSTS: "example.com"
+# (web, worker) DJANGO_DEBUG: "False"
+# (web, worker) DATABASE_URL: postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@db/$POSTGRES_DB
+# (web, worker) DJANGO_SECRET_KEY: "secret"
+# (web, worker) DJANGO_REDIS_QUEUE: "redis://redis:6379/0"
+# (db) POSTGRES_PASSWORD: 3f893ef5c467799
+# (db) POSTGRES_DB: bokstaever
+# (db) POSTGRES_USER: bokstaever
+
 services:
   web:
-    image: dev.cryptec.at:5000/root/bokstaever:develop
+    image: dev.cryptec.at:5000/root/bokstaever:${VERSION:-develop}
+    build: &build
+      context: .
+      dockerfile: deployment/django/Dockerfile
     volumes:
       - "media:/src/bokstaever/media"
       - "images:/src/bokstaever/images"
       - "./bundle:/src/bundle"
-    environment:
-      DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
-      DJANGO_ALLOWED_HOSTS: "example.com"
-      DJANGO_DEBUG: "False"
-      DJANGO_SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
+    environment: &env
+      # Django settings
+      DATABASE_URL: "postgres://${POSTGRES_USER:-bokstaever}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB:-bokstaever}"
       DJANGO_REDIS_QUEUE: "redis://redis:6379/0"
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      # Application settings
+      BOKSTAEVER_APPLICATION_TITLE: ${BOKSTAEVER_APPLICATION_TITLE:-bokstaever}
+      BOKSTAEVER_IMAGE_FEED: "${BOKSTAEVER_IMAGE_FEED:-False}"
     restart: always
+    # networks:
+    #   - internal
 
   worker:
-    image: dev.cryptec.at:5000/root/bokstaever:develop
+    image: dev.cryptec.at:5000/root/bokstaever:${VERSION:-develop}
+    build:
+      <<: *build
     volumes:
       - "media:/src/bokstaever/media"
       - "images:/src/bokstaever/images"
     environment:
-      DATABASE_URL: postgres://bokstaever:3f893ef5c467799@db/bokstaever
-      DJANGO_DEBUG: "False"
-      DJANGO_SECRET_KEY: 0a4d3159be7ce53744b7e79968324503e482257c
-      DJANGO_REDIS_QUEUE: "redis://redis:6379/0"
+      <<: *env
     restart: always
     command: python manage.py rqworker
+    # networks:
+    #   - internal
 
-  caddy:
-    image: dev.cryptec.at:5000/root/bokstaever/caddy:develop
+  nginx:
+    image: dev.cryptec.at:5000/root/bokstaever/nginx:${VERSION:-develop}
+    build:
+      context: .
+      dockerfile: deployment/nginx/Dockerfile
     volumes:
       - "media:/srv/media"
       - "./bundle:/srv/bundle"
     ports:
+      # Change ports if this is one of multiple proxies
       - "80:80"
-      - "8080:8080"
     restart: always
+    # networks:
+    #   - internal
+    #   - expose.bokstaever.web
+
 
   db:
-    image: postgres:latest
+    image: postgres:11
     volumes:
       - "db:/var/lib/postgresql/data"
     environment:
-      POSTGRES_USER: bokstaever
-      POSTGRES_PASSWORD: 3f893ef5c467799
-      POSTGRES_DB: bokstaever
+      POSTGRES_USER: ${POSTGRES_USER:-bokstaever}
+      POSTGRES_DB: ${POSTGRES_DB:-bokstaever}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: always
+    # networks:
+    #   - internal
+
 
   redis:
     image: redis:alpine
     volumes:
       - redis-data:/data
     restart: always
+    # networks:
+    #   - internal
 
 volumes:
   db: {}
@@ -60,3 +92,9 @@ volumes:
   images: {}
   bundle: {}
   redis-data: {}
+
+# networks:
+#   internal:
+#     expose.bokstaever.web:
+#       external:
+#         name: expose.bokstaever.web
