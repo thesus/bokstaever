@@ -8,7 +8,7 @@ cache:
 
 variables:
   IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG
-  IMAGE_NAME_CADDY: $CI_REGISTRY_IMAGE/caddy:$CI_BUILD_REF_SLUG
+  IMAGE_NAME_NGINX: $CI_REGISTRY_IMAGE/nginx:$CI_BUILD_REF_SLUG
 
 build-docker-image:
   stage: build
@@ -20,10 +20,10 @@ build-docker-image:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
   script:
     - docker pull $IMAGE_NAME || /bin/true
-    - docker build --pull -t $IMAGE_NAME .
+    - docker build --pull -f deployment/django/Dockerfile -t $IMAGE_NAME .
     - docker push $IMAGE_NAME
 
-build-docker-image-caddy:
+build-docker-image-nginx:
   stage: build
   tags:
     - docker-cli
@@ -33,8 +33,8 @@ build-docker-image-caddy:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
   script:
     - docker pull $IMAGE_NAME || /bin/true  # sic
-    - docker build --pull -f Dockerfile.caddy -t $IMAGE_NAME_CADDY .
-    - docker push $IMAGE_NAME_CADDY
+    - docker build --pull -f deployment/nginx/Dockerfile -t $IMAGE_NAME_NGINX .
+    - docker push $IMAGE_NAME_NGINX
 
 testing:
   image: $IMAGE_NAME

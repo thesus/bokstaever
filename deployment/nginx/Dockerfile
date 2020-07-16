@@ -19,11 +19,10 @@ RUN python manage.py install_dependencies ../requirements/static.json
 # Collectstatic
 RUN python manage.py collectstatic --noinput
 
-# CADDY IMAGE
-FROM abiosoft/caddy:no-stats
+FROM nginx:alpine
 
 # Copy django's static files
-# Only /srv/static/admin and /srv/static/dashboard are used
 COPY --from=django_builder /src/static /srv/static
 
-COPY Caddyfile /etc/Caddyfile
+COPY /deployment/nginx/default.conf /etc/nginx/conf.d/default.conf
+
