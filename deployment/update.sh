@@ -4,7 +4,6 @@
 VERSION=develop
 
 # Argument parsing
-
 function print_help {
     echo "Update script for bokstaever"
     echo ""
@@ -56,11 +55,19 @@ if [ ! -f docker-compose.yml ]; then
     exit 1
 fi
 
+# Download and extract bundle if specified
 if [ ! -z $BUNDLE_URL ]; then
     echo "bundle is set $BUNDLE_URL"
 
+    if [ ! -f "bundle" ]; then
+        mkdir bundle
+    fi
 
+    # Download bundle
+    wget -O download.zip "$BUNDLE_URL"
 
+    # Unzip and overwrite files in ./bundle
+    unzip download.zip -d bundle -o
 fi
 
 
