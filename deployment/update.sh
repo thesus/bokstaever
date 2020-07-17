@@ -30,7 +30,7 @@ while :; do
             VERSION=$2
             shift
         ;;
-        -i|--include-bundle)
+        -i|--bundle)
             BUNDLE_URL=$2
             shift
         ;;
@@ -43,6 +43,9 @@ while :; do
     esac
     shift
 done
+
+# cd to folder of update script
+cd "$(dirname $0)" || exit $?
 
 # File existence
 if [ ! -f .env ]; then
@@ -66,8 +69,11 @@ if [ ! -z $BUNDLE_URL ]; then
     # Download bundle
     wget -O download.zip "$BUNDLE_URL"
 
+    rm -rf dist
+
     # Unzip and overwrite files in ./bundle
-    unzip download.zip -d bundle -o
+    unzip download.zip -d bundle .
+    cp -r dist/* bundle/
 fi
 
 
