@@ -30,6 +30,7 @@ services:
       # Application settings
       BOKSTAEVER_APPLICATION_TITLE: ${BOKSTAEVER_APPLICATION_TITLE:-bokstaever}
       BOKSTAEVER_IMAGE_FEED: "${BOKSTAEVER_IMAGE_FEED:-False}"
+      BOKSTAEVER_PAGE_SIZE: "${BOKSTAEVER_PAGE_SIZE:-4}"
     restart: always
     # networks:
     #   - internal

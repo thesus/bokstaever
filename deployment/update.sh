@@ -14,6 +14,7 @@ function print_help {
     echo "  -v, --version VERSION     Version of the bokstaever images, default: $VERSION"
     echo "  -i, --bundle BUNDLE       Download bundle from given url and extract it"
     echo "                            under ./bundle"
+    echo "  -c, --current             Use directory of caller instead of the scriptpath."
 
 }
 
@@ -34,6 +35,9 @@ while :; do
             BUNDLE_URL=$2
             shift
         ;;
+        -c|--current)
+            STAY=true
+        ;;
         -h|--help)
             print_help
             exit 0
@@ -44,8 +48,10 @@ while :; do
     shift
 done
 
-# cd to folder of update script
-cd "$(dirname $0)" || exit $?
+if [ ! "$STAY" = true ]; then
+    # cd to folder of update script
+    cd "$(dirname $0)" || exit $?
+fi
 
 # File existence
 if [ ! -f .env ]; then

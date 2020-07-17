@@ -5,7 +5,9 @@
 
 {% block content %}
   <h1>{% trans "Galleries" %}</h1>
-  <a href="{% url "dashboard:gallery-create" %}">{% trans "Create new gallery" %}</a>
+  <p>
+    <a href="{% url "dashboard:gallery-create" %}">{% trans "Create new gallery" %}</a>
+  </p>
 
   {% if object_list %}
     <table class="table">
