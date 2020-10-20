@@ -10,6 +10,7 @@
       <div class="card">
         <img class="card-img-top" src="{{ image.thumbnail.image_file.url }}">
         <div class="card-body">
+          <p class="card-text"><small class="text-muted">{% trans "Creation date:" %} {{ image.creation_date }}</small></p>
           {% include "dashboard/snippets/forms.html" with simple=True %}
 
           {% blocktrans with post_count=object.post_set.count page_count=object.databasepage_set.count gallery_count=object.gallery_set.count asvar warning %}

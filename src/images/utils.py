@@ -2,6 +2,8 @@ import os.path
 import PIL.Image
 import PIL.ImageOps
 
+from datetime import datetime
+
 from io import BytesIO
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -9,8 +11,7 @@ from django.core.files.base import ContentFile
 
 
 def resize(pk, filename, name, dimensions, file_class):
-    fullpath = os.path.join(settings.IMAGE_ROOT, filename)
-    image = PIL.Image.open(fullpath)
+    image = PIL.Image.open(filename)
 
     orig_width, orig_height = image.size
 
@@ -59,23 +60,44 @@ def resize(pk, filename, name, dimensions, file_class):
     return instance
 
 
-def save_on_container(image_class, pk, instance, thumbnail=False):
-    container = image_class.objects.get(pk=pk)
+def save_on_container(image, instance, thumbnail=False):
     if thumbnail:
-        container.thumbnail = instance
-        container.save()
+        image.thumbnail = instance
+        image.save()
     else:
-        container.files.add(instance)
+        image.files.add(instance)
+
+
+def guess_and_update_date(image, filename):
+    """Uses the exif date of an image to set the `creation_date`."""
+    exif = PIL.Image.open(filename).getexif()
+    try:
+        # Exif tag for DateTimeOriginal
+        date = datetime.strptime(exif[36867], "%Y:%m:%d %H:%M:%S")
+        image.creation_date = date
+        image.save()
+    except KeyError:
+        pass
 
 
 def process(classes, pk, filename):
+    """Process an image.
+
+    Takes the `image.models.Image` and `image.models.ImageFile` classes
+    as a first parameter in order to prevent a circular input.
+    """
+
+    image = classes[0].objects.get(pk=pk)
+    filename = os.path.join(settings.IMAGE_ROOT, filename)
+
+    guess_and_update_date(image, filename)
+
     # Generate thumbnail
     save_on_container(
-        classes[0],
-        pk,
+        image,
         resize(pk, filename, "thumbnail", {"h": 600, "w": 600}, classes[1]),
         thumbnail=True,
     )
 
     for (k, v) in settings.IMAGE_SIZES.items():
-        save_on_container(classes[0], pk, resize(pk, filename, k, v, classes[1]))
+        save_on_container(image, resize(pk, filename, k, v, classes[1]))
