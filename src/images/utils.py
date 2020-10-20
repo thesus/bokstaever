@@ -10,8 +10,33 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.files.base import ContentFile
 
 
+def rotate(image):
+    """Rotate the image based on it's exif tag.
+
+    If the exif tag is missing or the value
+    unknown the image is returned unchanged.
+    """
+
+    try:
+        # Exif tag for orientation
+        orientation = image.getexif()[274]
+
+        if orientation == 3:
+            return image.rotate(180, expand=True)
+        elif orientation == 6:
+            return image.rotate(270, expand=True)
+        elif orientation == 8:
+            return image.rotate(90, expand=True)
+    except KeyError:
+        pass
+
+    return image
+
+
 def resize(pk, filename, name, dimensions, file_class):
+    """Resizes an image and stores it as an `ImageFile`."""
     image = PIL.Image.open(filename)
+    image = rotate(image)
 
     orig_width, orig_height = image.size
 
