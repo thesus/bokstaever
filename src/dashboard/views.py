@@ -157,13 +157,31 @@ class PageCreate(PageEdit, CreateView):
 class PageDelete(PageEdit, DeleteView):
     pass
 
+# Orderings for an imagelist
+IMAGE_LIST_ORDERING = {
+    "desc": "-creation_date",
+    "asc": "creation_date",
+    "new": "-pk"
+}
 
 class ImageList(DashboardListView):
     paginate_by = 36
 
     template_name = "dashboard/image_list.html"
-    ordering = ["-creation_date"]
+    ordering = "-creation_date"
     queryset = Image.objects.filter(thumbnail__isnull=False)
+
+    def get_ordering(self):
+        """Returns default ordering or value defined on
+        the ordering GET parameter.
+        """
+
+        if order := self.request.GET.get("ordering"):
+            try:
+                return IMAGE_LIST_ORDERING[order]
+            except KeyError:
+                pass
+        return self.ordering
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

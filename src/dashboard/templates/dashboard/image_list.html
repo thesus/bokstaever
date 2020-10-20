@@ -16,9 +16,28 @@
   {% endif %}
 
   <h1>{% trans "Images" %}</h1>
-  <p>
-    <a href="{% url "dashboard:image-create" %}">{% trans "Create image" %}</a>
-  </p>
+
+  <div class="list-options">
+    <form class="form-inline">
+      <label for="ordering">{% trans "Ordering" %}</label>
+      <select id="ordering" name="ordering" class="form-control" onchange="this.form.submit()">
+        <option value="desc" {% if request.GET.ordering == "desc"  or not request.GET.ordering %}selected{% endif %}>
+          {% trans "Creation Date - Descending" %}
+        </option>
+        <option value="asc" {% if request.GET.ordering == "asc" %}selected{% endif %}>
+          {% trans "Creation Date - Ascending" %}
+        </option>
+        <option value="new" {% if request.GET.ordering == "new" %}selected{% endif %}>
+          {% trans "Upload Date - Descending" %}
+        </option>
+      </select>
+      <noscript>
+        <input class="btn btn-primary" type="submit" value="{% trans "Submit" %}">
+      </noscript>
+    </form>
+  </div>
+
+  <p><a href="{% url "dashboard:image-create" %}">{% trans "Create image" %}</a></p>
 
   {% if object_list %}
     <div class="images">
