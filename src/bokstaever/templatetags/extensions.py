@@ -38,6 +38,7 @@ class ImagePattern(InlineProcessor):
 
         root_element.set("srcset", srcset)
         root_element.set("alt", image.title)
+        root_element.set("src", image.files.last().image_file.url)
         return root_element, m.start(0), m.end(0)
 
 
