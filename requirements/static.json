@@ -1,9 +1,9 @@
 [
     {
         "name": "bootstrap",
-        "url": "https://github.com/twbs/bootstrap/releases/download/v5.0.0-alpha1/bootstrap-5.0.0-alpha1-dist.zip",
+        "url": "https://github.com/twbs/bootstrap/releases/download/v5.0.0-alpha2/bootstrap-5.0.0-alpha2-dist.zip",
         "destination": "dashboard/static/dashboard/extern",
-        "shasum": "9199d01100071847dd00fc46d450c6dc3c4e46ab"
+        "shasum": "4a8be20b57b450b23442a2e2b4705c245fccf608"
     }
 ]
 
