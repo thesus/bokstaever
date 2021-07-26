@@ -1,13 +1,15 @@
 """Settings for the bokstaever project."""
 
+from pathlib import Path
+
 import environ
 import datetime
 
-ROOT_DIR = environ.Path(__file__) - 4
+ROOT_DIR = Path(__file__).parent.parent.parent.parent
 APPS_DIR = ROOT_DIR
 
 env = environ.Env()
-environ.Env.read_env(str(ROOT_DIR.path(env.str("ENVIRONMENT_FILE", ".env"))))
+environ.Env.read_env(str(ROOT_DIR / env.str("ENVIRONMENT_FILE", ".env")))
 
 ### Application settings ###
 # Title of the application used e.g. for the rss feed
@@ -75,7 +77,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # This is used to include templates from packaged bundles
-        "DIRS": [ROOT_DIR.path("bundle/templates"),],
+        "DIRS": [ROOT_DIR / "bundle/templates",],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -107,6 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Internationalization
 LANGUAGES = [("en", "English"), ("de", "Deutsch")]
 
@@ -124,15 +128,15 @@ STATIC_URL = "/static/"
 
 # Used to include external bundle
 STATICFILES_DIRS = [
-    str(APPS_DIR.path("bundle/static")),
+    str(APPS_DIR / "bundle/static"),
 ]
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = str(APPS_DIR.path("bokstaever/media"))
+MEDIA_ROOT = str(APPS_DIR / "bokstaever/media")
 
 # Location of the uploaded images
 # At the moment they are not cleared after resizing
-IMAGE_ROOT = env("IMAGE_ROOT", default=str(APPS_DIR.path("bokstaever/images")))
+IMAGE_ROOT = env("IMAGE_ROOT", default=str(APPS_DIR / "bokstaever/images"))
 
 # Image configuration
 # Note that old images are not regenerated if this changes.
