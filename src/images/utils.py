@@ -98,9 +98,10 @@ def guess_and_update_date(image, filename):
     exif = PIL.Image.open(filename).getexif()
     try:
         # Exif tag for DateTimeOriginal
-        date = datetime.strptime(exif[36867], "%Y:%m:%d %H:%M:%S")
-        image.creation_date = date
-        image.save()
+        # Tag can exist as an empty string
+        if date := exif[36867]:
+            image.creation_date = datetime.strptime(date, "%Y:%m:%d %H:%M:%S")
+            image.save()
     except KeyError:
         pass
 
