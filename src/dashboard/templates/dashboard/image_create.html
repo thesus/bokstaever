@@ -18,17 +18,12 @@
   <form id="imageUpload">
     {% csrf_token %}
 
-    <div class="form-file">
-      <input autocomplete="off" class="form-file-input" type="file" id="imageInput" accept="image/*" multiple>
-      <label class="form-file-label" for="imageInput">
-        <span class="form-file-text">{% trans "Choose images" %}</span>
-        <span class="form-file-button">{% trans "Browse" %}</span>
-      </label>
+    <input autocomplete="off" class="form-control" type="file" id="imageInput" accept="image/*" multiple>
 
     <!-- Used for displaying images selected via the input above -->
     <div id="anchor" class="images"></div>
 
-    <button id="trigger" type="button" class="btn btn-primary float-right">{% trans "Upload" %}</button>
+    <button id="trigger" type="button" class="btn btn-primary float-end">{% trans "Upload" %}</button>
   </form>
 
   <script>

@@ -130,7 +130,7 @@ class ImageSelectWidget {
 
       // If a thumbnail is clicked, close the modal on single mode
       if (!this.multiple) {
-        element.setAttribute('data-dismiss','modal')
+        element.setAttribute('data-bs-dismiss','modal')
       }
 
       element.addEventListener("click", this.selectFunction(image).bind(this))

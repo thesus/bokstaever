@@ -20,7 +20,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
@@ -39,21 +39,20 @@
             {% trans "Galleries" as title %}
             {% include "dashboard/snippets/navigation.html" with name="dashboard:gallery-list" %}
           </ul>
-
-          {% if request.user.is_authenticated %}
-            <ul class="navbar-nav d-flex">
-              <li class="nav-item">
-                {% spaceless %}
-                <a class="nav-link" href="{% url "dashboard:logout" %}">
-                  {% trans "Hello, " %}
-                  {% firstof request.user.first_name request.user.username %}
-                  {% trans " (logout)" %}
-                </a>
-                {% endspaceless %}
-              </li>
-            </ul>
-          {% endif %}
         </div>
+        {% if request.user.is_authenticated %}
+          <ul class="navbar-nav d-flex">
+            <li class="nav-item">
+              {% spaceless %}
+              <a class="nav-link" href="{% url "dashboard:logout" %}">
+                {% trans "Hello, " %}
+                {% firstof request.user.first_name request.user.username %}
+                {% trans " (logout)" %}
+              </a>
+              {% endspaceless %}
+            </li>
+          </ul>
+        {% endif %}
       </div>
     </nav>
 
