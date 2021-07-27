@@ -39,7 +39,7 @@ class Command(BaseCommand):
                     " name`."
                 )
 
-            path = str(settings.APPS_DIR.path(dependency["destination"]))
+            path = str(settings.APPS_DIR / dependency["destination"])
 
             # Download
             response = urlopen(dependency["url"])
