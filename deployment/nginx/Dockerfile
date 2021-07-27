@@ -20,7 +20,7 @@ RUN mkdir -p bundle/static/
 RUN python manage.py install_dependencies ../requirements/static.json
 
 # Compile scss and remove sources
-RUN sass bokstaever dashboard && rm **/*.scss
+RUN sass bokstaever dashboard
 
 # Collectstatic
 RUN python manage.py collectstatic --noinput
