@@ -7,6 +7,9 @@
 __pycache__
 *.pyc
 
+# Junit report
+report.xml
+
 # Static files and external dependencies
 /src/bokstaever/media
 /src/bokstaever/images

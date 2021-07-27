@@ -53,4 +53,8 @@ testing:
     - mkdir bundle
     - cp -r dist/* bundle
   script:
-    - pytest --cov-report term
+    - pytest --cov-report term --junitxml=report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
