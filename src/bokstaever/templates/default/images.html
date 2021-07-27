@@ -1,0 +1,34 @@
+{% extends "default/base.html" %}
+{% load static %}
+
+{% block title %}Images - {% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static "default/styles/images.css" %}">
+{% endblock head %}
+
+{% block content %}
+<div class="modal" id="modal">
+  <div id="modalContent" class="modal-content">
+    <span class="close" id="modalClose">&times;</span>
+    <button class="btn prev" type="button" role="button" id="buttonPrevImage">←</button>
+    <button class="btn next" type="button" role="button" id="buttonNextImage">→</button>
+    <div class="modal-footer" id="modalFooter">
+      <span class="image-name" id="imageName"></span>
+      <span class="image-date" id="imageDate"></span>
+    </div>
+  </div>
+</div>
+
+<div class="site">
+  <div id="images"></div>
+  <div class="pagination">
+    <nav aria-label="Image navigation">
+      <button class="btn" type="button" role="button" id="buttonPrevPage" aria-label="Previous">←</button>
+      <button class="btn" type="button" role="button" id="buttonNextPage" aria-label="Next">→</button>
+    </nav>
+  </div>
+</div>
+
+<script src="{% static "default/scripts/images.js" %}"></script>
+{% endblock content %}
